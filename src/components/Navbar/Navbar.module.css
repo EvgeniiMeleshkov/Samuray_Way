@@ -1,0 +1,28 @@
+.nav {
+    background-color: snow;
+    grid-area: n;
+    text-align: center;
+    margin: 3rem;
+    border-radius: 20px;
+    height: auto;
+}
+
+.navItem {
+    margin: 2rem 2rem 0 2rem ;
+    background-color: #88a2a8;
+    border-radius: 20px;
+    color: snow;
+    padding: 5px;
+}
+
+.navItem a {
+    padding: 0 1rem 0 1rem;
+    color: white;
+    text-decoration: none;
+    width: 60px;
+}
+
+.navItem a.active {
+    font-style: oblique;
+    color: rgba(0,7,19,0.89);
+}

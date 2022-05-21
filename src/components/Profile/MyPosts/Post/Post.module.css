@@ -1,0 +1,11 @@
+
+.post {
+    padding: 1rem;
+}
+.smallLogo {
+    width: 50px;
+}
+.likeButton {
+    margin-right: 2rem;
+    border-radius: 50%;
+}
