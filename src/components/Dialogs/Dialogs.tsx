@@ -1,8 +1,41 @@
-import React from "react";
-import {NavLink} from "react-router-dom";
-import styles from "./Dialogs.module.css"
+import React, {useState} from 'react';
+import styles from './Dialogs.module.css'
+import {DialogItem} from './DialogItem/DialogItem';
+import {DialogMessage} from './DialogMessage/DialogMessage';
 
-const Dialogs = () => {
+function Dialogs() {
+
+    let friends = [
+        {name: 'Dimich', id: 1},
+        {name: 'Viktor', id: 2},
+        {name: 'Igor', id: 3},
+        {name: 'Sveta', id: 4},
+        {name: 'Masha', id: 5},
+        {name: 'Zhenya', id: 6},
+        {name: 'Viktor', id: 7},
+        {name: 'Ignat', id: 8},
+        {name: 'Oleg', id: 9},
+    ]
+//------------------------------------------------------------------------
+    let [messages, setMessages] = useState([
+        {id: 1, text: 'Ohiyo, samurai!', name: 'Samurai', time: ''},
+    ])
+
+    let [value, setValue] = useState('')
+//------------------------------------------------------------------------
+    const onTextChanged = (e: any) => {
+        setValue(e.currentTarget.value)
+    }
+    const onButtonHandler = () => {
+        setMessages([...messages, {
+            id: messages[0].id,
+            text: value,
+            time: new Date().toLocaleTimeString(),
+            name: messages[0].name
+        }]);
+        setValue('')
+    }
+//------------------------------------------------------------------------
     return (
         <div className={styles.dialogs}>
             <div>
@@ -12,45 +45,20 @@ const Dialogs = () => {
             <div className={styles.pageBody}>
                 <div className={styles.dAndM}>
                     <div className={styles.dialog}>
-                        <NavLink to={'/dialogs/dimich'} className={styles.dialogItem} activeClassName={styles.active}>
-                            Dimich
-                        </NavLink>
-                        <NavLink to={'/dialogs/sveta'} className={styles.dialogItem} activeClassName={styles.active}>
-                            Sveta
-                        </NavLink>
-                        <NavLink to={'/dialogs/Ignat'} className={styles.dialogItem} activeClassName={styles.active}>
-                            Ignat
-                        </NavLink>
-                        <NavLink to={'/dialogs/viktor'} className={styles.dialogItem} activeClassName={styles.active}>
-                            Viktor
-                        </NavLink>
-                        <NavLink to={'/dialogs/valera'} className={styles.dialogItem} activeClassName={styles.active}>
-                            Valera
-                        </NavLink>
+                        <DialogItem friends={friends}/>
                     </div>
-
-                    <div className={styles.messages}>
-                        <div className={styles.message}>
-                            Hi!
-                        </div>
-                        <div className={styles.message}>
-                            How are you?
-                        </div>
-                        <div className={styles.message}>
-                            Yo!
-                        </div>
-                        <div className={styles.message}>
-                            This is just a message
-                        </div>
-                        <div className={styles.message}>
-                            Some kind of text
-                        </div>
+                    <div>
+                        <DialogMessage friends={friends} messages={messages}/>
                     </div>
                 </div>
                 <div className={styles.messageTextBody}>
-                    <textarea className={styles.messageText}></textarea>
                     <div>
-                        <button>send</button>
+                        <textarea className={styles.messageText} value={value} onChange={onTextChanged}></textarea>
+                    </div>
+                    <div className={styles.button}>
+                        {value !== '' && value.match(/\w/)
+                            ? <button onClick={onButtonHandler}>send</button>
+                            : <button disabled={true}>write a message</button>}
                     </div>
                 </div>
             </div>

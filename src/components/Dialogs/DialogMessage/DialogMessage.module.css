@@ -1,0 +1,54 @@
+.name {
+    padding: 10px;
+}
+.messageText {
+    opacity: 50%;
+    margin-left: 1rem;
+    position:relative;
+    background-color: rgb(0,36,13);
+    color: antiquewhite;
+    min-width: 100px;
+    width: max-content;
+    max-width: 400px;
+    border-radius: 10px 10px 10px 0;
+}
+.messageText:before {
+    content: "";
+    position:absolute;
+    bottom: 0;
+    left:-40px;
+    height:20px;
+    width: 40px;
+    border-bottom-right-radius: 50%;
+    box-shadow: 20px 0 0 0 rgb(0,36,13);
+}
+
+.messageInstance{
+    display: flex;
+    align-items: flex-end;
+}
+.userName {
+    color: aliceblue;
+    display: flex;
+    align-items: flex-start;
+    padding-top: 0.2rem;
+    padding-left: 0.4rem;
+}
+.userMessage {
+    display: flex;
+    align-items: center;
+    padding: 5px 10px 5px 20px;
+}
+.userMessageTime {
+    color: chartreuse;
+    text-align: end;
+    padding-bottom: 0.2rem;
+    padding-right: 0.4rem;
+}
+
+.img {
+    height: 50px;
+    align-items: flex-end;
+    border-radius: 50%;
+}
+

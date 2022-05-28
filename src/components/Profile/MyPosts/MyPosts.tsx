@@ -1,26 +1,46 @@
-import React from "react";
-import styles from "./MyPosts.module.css"
-import Post from "./Post/Post";
+import React, {useState} from 'react';
+import styles from './MyPosts.module.css'
+import Post from './Post/Post';
 
-const MyPosts = () => {
+export function MyPosts() {
+//---------------------------------------------------------------------------
+    let [posts, setPosts] = useState( [
+        {id: 1, message: 'Konitchiwa samurai san!', likesCount: 12, time: ''},
+        {id: 2, message: 'Kore wa samurai netu-worku de gozaimas.', likesCount: 19, time: ''}
+    ])
+    let [value, setValue] = useState('')
+//---------------------------------------------------------------------------
+    const onTextChange = (e: any) => {
+        setValue(e.currentTarget.value)
+    }
+    const onButtonHandler = () => {
+        setPosts([
+            ...posts,
+            {id: new Date().getTime(), message: value, likesCount: 0, time: new Date().toLocaleDateString()}
+        ])
+        setValue('')
+    }
+    // const onLikesPressed = () => {
+    //     setPosts([
+    //         ...posts,
+    //
+    //     ])
+    // }
     return (
         <div>
             My Posts
             <div className={styles.addPostBody}>
                 <div className={styles.tAreaBody}>
-                <textarea className={styles.textArea}></textarea>
+                    <textarea value={value} onChange={onTextChange} className={styles.textArea}></textarea>
                 </div>
-                <div>
-                <button className={styles.addPostButton}>Add post</button>
-                </div>
+                <div>{value !== '' && value.match(/\w/)
+                    ? <button onClick={onButtonHandler} className={styles.addPostButton}>Add post</button>
+                    : <button disabled={true}>write your post here...</button>
+                }</div>
             </div>
             <div className={styles.posts}>
-                <Post message={'Konitchiwa samurai san!'} likesCount={15}/>
-                <Post message={'O genki des ka?'} likesCount={7}/>
-                <Post message={'Kore wa samurai netu-worku de gozaimas.'} likesCount={10}/>
+                <Post posts={posts}/>
             </div>
         </div>
     )
 }
-
-export default MyPosts
