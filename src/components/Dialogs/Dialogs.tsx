@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {ChangeEvent, useState} from 'react';
 import styles from './Dialogs.module.css'
 import {DialogItem} from './DialogItem/DialogItem';
 import {DialogMessage} from './DialogMessage/DialogMessage';
@@ -21,7 +21,7 @@ function Dialogs({friends, messages}: DialogsPropsType) {
 //
     let [value, setValue] = useState('')
 //------------------------------------------------------------------------
-    const onTextChanged = (e: any) => {
+    const onTextChanged = (e: ChangeEvent<HTMLTextAreaElement>) => {
         setValue(e.currentTarget.value)
     }
     // const onButtonHandler = () => {
