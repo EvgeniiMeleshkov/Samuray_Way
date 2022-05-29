@@ -2,39 +2,37 @@ import React, {useState} from 'react';
 import styles from './Dialogs.module.css'
 import {DialogItem} from './DialogItem/DialogItem';
 import {DialogMessage} from './DialogMessage/DialogMessage';
+import {FriendsType, MessagesType} from '../../redux/state';
 
-function Dialogs() {
 
-    let friends = [
-        {name: 'Dimich', id: 1},
-        {name: 'Viktor', id: 2},
-        {name: 'Igor', id: 3},
-        {name: 'Sveta', id: 4},
-        {name: 'Masha', id: 5},
-        {name: 'Zhenya', id: 6},
-        {name: 'Viktor', id: 7},
-        {name: 'Ignat', id: 8},
-        {name: 'Oleg', id: 9},
-    ]
+type DialogsPropsType = {
+    friends: FriendsType
+    messages: MessagesType
+}
+
+
+function Dialogs({friends, messages}: DialogsPropsType) {
+
+
 //------------------------------------------------------------------------
-    let [messages, setMessages] = useState([
-        {id: 1, text: 'Ohiyo, samurai!', name: 'Samurai', time: ''},
-    ])
-
+//     let [messages, setMessages] = useState([
+//         {id: 1, text: 'Ohiyo, samurai!', name: 'Samurai', time: ''},
+//     ])
+//
     let [value, setValue] = useState('')
 //------------------------------------------------------------------------
     const onTextChanged = (e: any) => {
         setValue(e.currentTarget.value)
     }
-    const onButtonHandler = () => {
-        setMessages([...messages, {
-            id: messages[0].id,
-            text: value,
-            time: new Date().toLocaleTimeString(),
-            name: messages[0].name
-        }]);
-        setValue('')
-    }
+    // const onButtonHandler = () => {
+    //     setMessages([...messages, {
+    //         id: messages[0].id,
+    //         text: value,
+    //         time: new Date().toLocaleTimeString(),
+    //         name: messages[0].name
+    //     }]);
+    //     setValue('')
+    // }
 //------------------------------------------------------------------------
     return (
         <div className={styles.dialogs}>
@@ -57,7 +55,7 @@ function Dialogs() {
                     </div>
                     <div className={styles.button}>
                         {value !== '' && value.match(/\w/)
-                            ? <button onClick={onButtonHandler}>send</button>
+                            ? <button>send</button>
                             : <button disabled={true}>write a message</button>}
                     </div>
                 </div>

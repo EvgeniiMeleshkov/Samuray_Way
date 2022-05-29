@@ -1,20 +1,16 @@
 import {NavLink} from 'react-router-dom';
 import styles from '../Dialogs.module.css';
 import React from 'react';
+import {FriendsType, FriendType} from '../../../redux/state';
 //------------------------------------------
-export type FriendType = {
-    name: string
-    id: number
+type DialogItemPropsType = {
+    friends: FriendsType
 }
-export type Friends = {
-    friends: FriendType[]
-}
-
 //------------------------------------------
-export function DialogItem(props: Friends) {
+export function DialogItem({friends}: DialogItemPropsType) {
     return (
         <div>
-            {props.friends.map((f: FriendType, index: number) => {
+            {friends.map((f: FriendType, index: number) => {
                 return <div key={index}>
                     <NavLink className={styles.dialogItem} activeClassName={styles.active}
                              to={`/dialogs/${f.id}${f.name}`}>

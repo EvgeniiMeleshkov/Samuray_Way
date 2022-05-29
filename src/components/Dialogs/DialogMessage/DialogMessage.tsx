@@ -1,20 +1,13 @@
 import React from 'react';
 import styles from './DialogMessage.module.css';
 import avatar from '../../../assets/images/samurai_small_logo.png'
-import {FriendType} from '../DialogItem/DialogItem';
+import {FriendsType, MessagesType, MessageType} from '../../../redux/state';
 //-----------------------------------------------
-type MessageType = {
-    id: number
-    text: string
-    name: string
-    time: string
-}
-export type MessagesType = {
-    messages: Array<MessageType>
-}
+
+
 type DialogMessagePropsType = {
-    messages: Array<MessageType>
-    friends: Array<FriendType>
+    messages: MessagesType
+    friends: FriendsType
 }
 //-----------------------------------------------
 export function DialogMessage ({messages, friends}: DialogMessagePropsType) {
@@ -22,7 +15,7 @@ let currentFriend = friends[0]
     return (
         <div>
             {
-                messages.map((m, index)=>{
+                messages.map((m:MessageType, index: number)=>{
                     return (
                         <div key={index} className={styles.name}>
                         <div className={styles.messageInstance}>

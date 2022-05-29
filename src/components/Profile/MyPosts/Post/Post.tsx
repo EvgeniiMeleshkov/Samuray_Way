@@ -1,21 +1,16 @@
 import React from 'react';
 import styles from './Post.module.css'
 import smallLogo from '../../../../assets/images/samurai_small_logo.png'
+import {PostsType, PostType} from '../../../../redux/state';
 
-
-export type PostType = {
-    message: string,
-    likesCount: number
+type PostPropsType = {
+    posts: PostsType
 }
 
-export type PostsType = {
-    posts: Array<PostType>
-}
-
-function Post({posts}: PostsType) {
+function Post({posts}: PostPropsType) {
     return (
         <>
-            {posts.map((p, index) => {
+            {posts.map((p: PostType, index: number) => {
                 return (
                     <div key={index} className={styles.post}>
                     <img alt={''} className={styles.smallLogo} src={smallLogo}/>
