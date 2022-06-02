@@ -6,19 +6,21 @@
     display: flex;
     flex-direction: column;
 }
+.imgDiv {
+    text-align: center;
+}
 .img {
     flex-direction: row;
     margin-top: 2rem;
-    height: 100px;
+    max-height: 100px;
     background-color: black;
-    width: border-box;
+    max-width: fit-content;
     border-radius: 50px;
     margin-bottom: 3rem;
 }
 .dAndM {
     display: flex;
     flex-direction: row;
-    justify-content: normal;
 }
 .dialog {
     padding-right: 3rem;

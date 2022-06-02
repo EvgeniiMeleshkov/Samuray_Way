@@ -3,9 +3,12 @@
     align-self: center
 }
 .friendImg {
+    margin: 2px;
     height: 40px;
-    padding: 3px;
     border-radius: 50%;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #232a32;
 }
 .friendsImgDiv {
     text-align: center;
