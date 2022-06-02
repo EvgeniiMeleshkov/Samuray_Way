@@ -1,22 +1,24 @@
 .nav {
+    width: border-box;
     background-color: snow;
     grid-area: n;
     text-align: center;
-    margin: 3rem;
     border-radius: 20px;
     height: auto;
+    margin-left: 0.5rem;
 }
 
 .navItem {
-    margin: 2rem 2rem 0 2rem ;
+    margin: 1rem 1rem 1rem 1rem ;
     background-color: #88a2a8;
     border-radius: 20px;
     color: snow;
-    padding: 5px;
+    padding: 0.5rem;
+
 }
 
 .navItem a {
-    padding: 0 1rem 0 1rem;
+    padding: 0 0 0 0;
     color: white;
     text-decoration: none;
     width: 60px;

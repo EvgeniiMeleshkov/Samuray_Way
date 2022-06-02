@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {ChangeEvent, useState} from 'react';
 import styles from './MyPosts.module.css'
 import Post from './Post/Post';
 import {PostsType} from '../../../redux/state';
@@ -11,7 +11,7 @@ export function MyPosts({posts}: MyPostsPropsType) {
 //---------------------------------------------------------------------------
     let [value, setValue] = useState('')
 //---------------------------------------------------------------------------
-    const onTextChange = (e: any) => {
+    const onTextChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
         setValue(e.currentTarget.value)
     }
 
