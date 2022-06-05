@@ -11,8 +11,12 @@ type AppPropsType = {
     friends: FriendsType
     posts: PostsType
     messages: MessagesType
+    addPost: (postMessage: string)=>void
+    newPostText: string
+    newMessageText: string
+    updateNewPostText: (newText: string) => void
 }
-function App({friends, posts, messages}: AppPropsType) {
+function App({friends, posts, messages, addPost, newMessageText, newPostText, updateNewPostText}: AppPropsType) {
     return (
         <BrowserRouter>
             <div className="app-wrapper">
@@ -20,8 +24,8 @@ function App({friends, posts, messages}: AppPropsType) {
                 <Sidebar/>
 
                 <div className={'app-wrapper-content'}>
-                    <Route path={'/profile'} render={()=><Profile posts={posts}/>}/>
-                    <Route path={'/dialogs'} render={()=><Dialogs messages={messages} friends={friends}/>}/>
+                    <Route path={'/profile'} render={()=><Profile updateNewPostText={updateNewPostText} newPostText={newPostText} addPost={addPost} posts={posts}/>}/>
+                    <Route path={'/dialogs'} render={()=><Dialogs newMessageText={newMessageText} messages={messages} friends={friends}/>}/>
                 </div>
             </div>
         </BrowserRouter>

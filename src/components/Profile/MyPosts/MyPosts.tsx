@@ -1,18 +1,27 @@
-import React, {ChangeEvent, useState} from 'react';
+import React from 'react';
 import styles from './MyPosts.module.css'
 import Post from './Post/Post';
 import {PostsType} from '../../../redux/state';
 
 type MyPostsPropsType = {
     posts: PostsType
+    addPost: (postMessage: string)=>void
+    newPostText: string
+    updateNewPostText: (newText: string)=>void
 }
 
-export function MyPosts({posts}: MyPostsPropsType) {
+export function MyPosts({posts, addPost, newPostText, updateNewPostText}: MyPostsPropsType) {
 //---------------------------------------------------------------------------
-    let [value, setValue] = useState('')
+    let postTextRef: any = React.createRef()
 //---------------------------------------------------------------------------
-    const onTextChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        setValue(e.currentTarget.value)
+    const onButtonHandler = () => {
+        addPost(newPostText)
+        updateNewPostText('')
+    }
+    const onTextChange = () => {
+        let text = postTextRef.current.value
+        console.log(text)
+        updateNewPostText(text)
     }
 
     return (
@@ -20,10 +29,10 @@ export function MyPosts({posts}: MyPostsPropsType) {
             My Posts
             <div className={styles.addPostBody}>
                 <div className={styles.tAreaBody}>
-                    <textarea onChange={onTextChange} className={styles.textArea}></textarea>
+                    <textarea ref={postTextRef} onChange={onTextChange} value={newPostText} className={styles.textArea}></textarea>
                 </div>
-                <div>{ value !== '' && value.match(/\w/)
-                    ? <button className={styles.addPostButton}>Add post</button>
+                <div>{ newPostText !== '' && newPostText.match(/\w/)
+                    ? <button className={styles.addPostButton} onClick={onButtonHandler}>Add post</button>
                     : <button disabled={true}>write your post here...</button>
                 }</div>
             </div>

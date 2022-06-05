@@ -1,3 +1,4 @@
+import {rerenderEntireTree} from '../render';
 
 export type MessageType = {
     id: number
@@ -23,15 +24,27 @@ export type PostsType = Array<PostType>
 
 export type StateType = {
     profilePage: {
-        friends: FriendsType
+        newPostText: string
         posts: PostsType
     }
-   messagesPage: {
-       messages: MessagesType
-   }
+    dialogsPage: {
+        newMessageText: string
+        friends: FriendsType
+        messages: MessagesType
+    }
+    addPost: (newPostText: string) => void
+    updateNewPostText : (newText: string) => void
 }
+//-------------------------------------------------------------
 export let state = {
     profilePage: {
+        newPostText: 'It-Kamasutra',
+        posts: [
+            {id: 1, message: 'Konitchiwa samurai san!', likesCount: 12, time: ''},
+            {id: 2, message: 'Kore wa samurai netu-worku de gozaimas.', likesCount: 19, time: ''}
+        ]
+    },
+    dialogsPage: {
         friends: [
             {name: 'Dimich', id: 1},
             {name: 'Viktor', id: 2},
@@ -43,17 +56,27 @@ export let state = {
             {name: 'Ignat', id: 8},
             {name: 'Oleg', id: 9},
         ],
-        posts: [
-            {id: 1, message: 'Konitchiwa samurai san!', likesCount: 12, time: ''},
-            {id: 2, message: 'Kore wa samurai netu-worku de gozaimas.', likesCount: 19, time: ''}
-        ]
-    },
-    dialogsPage: {
+        newMessageText: '',
         messages: [
             {id: 1, text: 'Ohiyo, samurai!', name: 'Samurai', time: ''},
         ]
-    }
+    },
+    addPost : (newPostText: string) => {
+        let newPost = {
+            id: 5,
+            message: newPostText,
+            likesCount: 0,
+            time: new Date().toLocaleTimeString()
+        }
+        state.profilePage.posts.push(newPost)
+        rerenderEntireTree(state)
+    },
 
+    updateNewPostText : (newText: string) => {
+        state.profilePage.newPostText = newText
+        rerenderEntireTree(state)
+    }
 }
+//--------------------------------------------------
 
 
