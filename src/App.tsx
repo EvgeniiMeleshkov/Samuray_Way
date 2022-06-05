@@ -11,8 +11,8 @@ type AppPropsType = {
     friends: FriendsType
     posts: PostsType
     messages: MessagesType
-    addPost: (postMessage: string)=>void
-    addMessage : (newMessageText: string) => void
+    addPost: ()=>void
+    addMessage : () => void
     newPostText: string
     newMessageText: string
     updateNewPostText: (newText: string) => void

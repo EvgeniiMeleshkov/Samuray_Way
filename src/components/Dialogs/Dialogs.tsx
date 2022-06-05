@@ -10,7 +10,7 @@ type DialogsPropsType = {
     messages: MessagesType
     newMessageText: string
     updateNewMessageText : (newText: string) => void
-    addMessage : (newMessageText: string) => void
+    addMessage : () => void
 }
 
 
@@ -26,8 +26,7 @@ function Dialogs({friends, messages, newMessageText, updateNewMessageText, addMe
         updateNewMessageText(text)
     }
     const onButtonHandler = () => {
-        addMessage(newMessageText)
-        updateNewMessageText('')
+        addMessage()
     }
 //------------------------------------------------------------------------
     return (

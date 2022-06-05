@@ -5,7 +5,7 @@ import {PostsType} from '../../../redux/state';
 
 type MyPostsPropsType = {
     posts: PostsType
-    addPost: (postMessage: string)=>void
+    addPost: ()=>void
     newPostText: string
     updateNewPostText: (newText: string)=>void
 }
@@ -15,8 +15,7 @@ export function MyPosts({posts, addPost, newPostText, updateNewPostText}: MyPost
     let postTextRef: any = React.createRef()
 //---------------------------------------------------------------------------
     const onButtonHandler = () => {
-        addPost(newPostText)
-        updateNewPostText('')
+        addPost()
     }
     const onTextChange = () => {
         let text = postTextRef.current.value

@@ -1,5 +1,6 @@
-import {rerenderEntireTree} from '../render';
-
+let rerenderEntireTree = (state: StateType) => {
+    console.log('State is changed')
+}
 export type MessageType = {
     id: number
     text: string
@@ -32,9 +33,9 @@ export type StateType = {
         friends: FriendsType
         messages: MessagesType
     }
-    addPost: (newPostText: string) => void
+    addPost: () => void
     updateNewPostText : (newText: string) => void
-    addMessage : (newMessageText: string) => void
+    addMessage : () => void
     updateNewMessageText : (newText: string) => void
 }
 //-------------------------------------------------------------
@@ -63,14 +64,15 @@ export let state = {
             {id: 1, text: 'Ohiyo, samurai!', name: 'Samurai', time: ''},
         ]
     },
-    addPost : (newPostText: string) => {
+    addPost : () => {
         let newPost = {
             id: 5,
-            message: newPostText,
+            message: state.profilePage.newPostText,
             likesCount: 0,
             time: new Date().toLocaleTimeString()
         }
         state.profilePage.posts.push(newPost)
+        state.profilePage.newPostText = ''
         rerenderEntireTree(state)
     },
 
@@ -78,14 +80,15 @@ export let state = {
         state.profilePage.newPostText = newText
         rerenderEntireTree(state)
     },
-    addMessage : (newMessageText: string) => {
+    addMessage : () => {
         let newMessage = {
             id: 2,
-            text: newMessageText,
+            text: state.dialogsPage.newMessageText,
             name: 'Samuray',
             time: new Date().toLocaleTimeString()
         }
         state.dialogsPage.messages.push(newMessage)
+        state.dialogsPage.newMessageText = ''
         rerenderEntireTree(state)
     },
     updateNewMessageText : (newText: string) => {
@@ -95,4 +98,6 @@ export let state = {
 }
 //--------------------------------------------------
 
-
+export let subscribe = (observer: { (state: StateType): void; (state: StateType): void }) => {
+    rerenderEntireTree = observer
+}
