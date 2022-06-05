@@ -1,4 +1,4 @@
-import React, {ChangeEvent, RefObject, useState} from 'react';
+import React from 'react';
 import styles from './Dialogs.module.css'
 import {DialogItem} from './DialogItem/DialogItem';
 import {DialogMessage} from './DialogMessage/DialogMessage';
@@ -9,18 +9,25 @@ type DialogsPropsType = {
     friends: FriendsType
     messages: MessagesType
     newMessageText: string
+    updateNewMessageText : (newText: string) => void
+    addMessage : (newMessageText: string) => void
 }
 
 
-function Dialogs({friends, messages, newMessageText}: DialogsPropsType) {
+function Dialogs({friends, messages, newMessageText, updateNewMessageText, addMessage}: DialogsPropsType) {
 
 
 //------------------------------------------------------------------------
 
-    let messageTextRef: RefObject<HTMLTextAreaElement> = React.createRef()
+    let messageTextRef: any = React.createRef()
 //------------------------------------------------------------------------
-    const onTextChanged = (messageTextRef: any) => {
-        newMessageText = messageTextRef.currentTarget.value
+    const onTextChanged = () => {
+        let text = messageTextRef.current.value
+        updateNewMessageText(text)
+    }
+    const onButtonHandler = () => {
+        addMessage(newMessageText)
+        updateNewMessageText('')
     }
 //------------------------------------------------------------------------
     return (
@@ -44,7 +51,7 @@ function Dialogs({friends, messages, newMessageText}: DialogsPropsType) {
                     </div>
                     <div className={styles.button}>
                         {newMessageText !== '' && newMessageText.match(/\w/)
-                            ? <button>send</button>
+                            ? <button onClick={onButtonHandler}>send</button>
                             : <button disabled={true}>write a message</button>}
                     </div>
                 </div>

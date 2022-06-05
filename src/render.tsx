@@ -7,6 +7,8 @@ import {StateType} from './redux/state';
 export const rerenderEntireTree = (state: StateType) => {
     ReactDOM.render(
         <App
+            updateNewMessageText={state.updateNewMessageText}
+            addMessage={state.addMessage}
             newPostText={state.profilePage.newPostText}
             newMessageText={state.dialogsPage.newMessageText}
             friends={state.dialogsPage.friends}

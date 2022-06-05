@@ -21,6 +21,7 @@
 .dAndM {
     display: flex;
     flex-direction: row;
+
 }
 .dialog {
     padding-right: 3rem;

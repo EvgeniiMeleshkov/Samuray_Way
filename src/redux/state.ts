@@ -34,6 +34,8 @@ export type StateType = {
     }
     addPost: (newPostText: string) => void
     updateNewPostText : (newText: string) => void
+    addMessage : (newMessageText: string) => void
+    updateNewMessageText : (newText: string) => void
 }
 //-------------------------------------------------------------
 export let state = {
@@ -74,6 +76,20 @@ export let state = {
 
     updateNewPostText : (newText: string) => {
         state.profilePage.newPostText = newText
+        rerenderEntireTree(state)
+    },
+    addMessage : (newMessageText: string) => {
+        let newMessage = {
+            id: 2,
+            text: newMessageText,
+            name: 'Samuray',
+            time: new Date().toLocaleTimeString()
+        }
+        state.dialogsPage.messages.push(newMessage)
+        rerenderEntireTree(state)
+    },
+    updateNewMessageText : (newText: string) => {
+        state.dialogsPage.newMessageText = newText
         rerenderEntireTree(state)
     }
 }
