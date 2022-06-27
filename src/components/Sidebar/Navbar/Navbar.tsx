@@ -6,19 +6,19 @@ function Navbar() {
     return (
         <nav className={styles.nav}>
             <div className={styles.navItem}>
-                <NavLink to={'/profile'} activeClassName={styles.active}>Profile</NavLink>
+                <NavLink to={'/profile'} className={styles.active}>Profile</NavLink>
             </div>
             <div className={styles.navItem}>
-                <NavLink to={'/dialogs'} activeClassName={styles.active}>Messages</NavLink>
+                <NavLink to={'/dialogs'} className={styles.active}>Messages</NavLink>
             </div>
             <div className={styles.navItem}>
-                <NavLink to={'/users'} activeClassName={styles.active}>Users</NavLink>
+                <NavLink to={'/users'} className={styles.active}>Users</NavLink>
             </div>
             <div className={styles.navItem}>
-                <NavLink to={'/music'} activeClassName={styles.active}>Music</NavLink>
+                <NavLink to={'/music'} className={styles.active}>Music</NavLink>
             </div>
             <div className={styles.navItem}>
-                <NavLink to={'/settings'} activeClassName={styles.active}>Settings</NavLink>
+                <NavLink to={'/settings'} className={styles.active}>Settings</NavLink>
             </div>
         </nav>
     )
