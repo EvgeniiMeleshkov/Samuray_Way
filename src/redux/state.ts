@@ -98,6 +98,6 @@ export let state = {
 }
 //--------------------------------------------------
 
-export let subscribe = (observer: { (state: StateType): void; (state: StateType): void }) => {
+export const subscribe = (observer: { (state: StateType): void; (state: StateType): void }) => {
     rerenderEntireTree = observer
 }

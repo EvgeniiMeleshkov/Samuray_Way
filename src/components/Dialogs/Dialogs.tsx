@@ -19,14 +19,17 @@ function Dialogs({friends, messages, newMessageText, updateNewMessageText, addMe
 
 //------------------------------------------------------------------------
 
-    let messageTextRef: any = React.createRef()
+    let messageTextRef = React.createRef<HTMLTextAreaElement>()
 
 //------------------------------------------------------------------------
     const onTextChanged = () => {
-        let text = messageTextRef.current.value
-        updateNewMessageText(text)
+        if(messageTextRef.current) {
+            let text = messageTextRef.current.value
+            updateNewMessageText(text)
+        }
     }
     const onEnterPressed = (e: KeyboardEvent<HTMLTextAreaElement>) => {
+        if(messageTextRef.current)
         e.key === 'Enter' && messageTextRef.current.value.match(/\w/) && addMessage()
     }
     const onButtonHandler = () => {

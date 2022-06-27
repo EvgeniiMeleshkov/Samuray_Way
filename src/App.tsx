@@ -5,7 +5,7 @@ import Profile from './components/Profile/Profile';
 import Dialogs from './components/Dialogs/Dialogs';
 import {FriendsType, MessagesType, PostsType} from './redux/state';
 import {Sidebar} from './components/Sidebar/Sidebar';
-import {BrowserRouter, Route, Routes} from 'react-router-dom';
+import {Route, Routes} from 'react-router-dom';
 
 type AppPropsType = {
     friends: FriendsType
@@ -25,18 +25,17 @@ function App({
                  updateNewMessageText, addMessage
              }: AppPropsType) {
     return (
-
             <div className="app-wrapper">
                 <Header/>
                 <Sidebar/>
 
                 <div className={'app-wrapper-content'}>
                     <Routes>
-                        <Route path={'/profile'} element={<Profile updateNewPostText={updateNewPostText}
+                        <Route path={'/profile/'} element={<Profile updateNewPostText={updateNewPostText}
                                                                    newPostText={newPostText}
                                                                    addPost={addPost}
                                                                    posts={posts}/>}/>
-                        <Route path={'/dialogs'} element={<Dialogs updateNewMessageText={updateNewMessageText}
+                        <Route path={'/dialogs/*'} element={<Dialogs updateNewMessageText={updateNewMessageText}
                                                                    newMessageText={newMessageText}
                                                                    messages={messages}
                                                                    addMessage={addMessage}

@@ -12,7 +12,7 @@ export function DialogItem({friends}: DialogItemPropsType) {
         <div>
             {friends.map((f: FriendType, index: number) => {
                 return <div key={index}>
-                    <NavLink className={styles.dialogItem}
+                    <NavLink className={(p)=>p.isActive ? styles.act : styles.dialogItem}
                              to={`/dialogs/${f.id}${f.name}`}>
                         {f.name}
                     </NavLink>

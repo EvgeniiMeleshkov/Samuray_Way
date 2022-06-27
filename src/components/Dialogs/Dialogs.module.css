@@ -34,9 +34,11 @@
     color: dimgray;
     text-decoration: none;
 }
-.dialogItem.active {
+.act {
+    margin: 0.5rem;
     color: #232a32;
     text-decoration: none;
+    font-weight: bold;
 }
 /*.messages {*/
 /*    padding: 2rem;*/

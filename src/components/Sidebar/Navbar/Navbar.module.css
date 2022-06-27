@@ -9,22 +9,20 @@
 }
 
 .navItem {
+    justify-content: center;
+    font-weight: bold;
     margin: 1rem 1rem 1rem 1rem ;
     background-color: #88a2a8;
     border-radius: 20px;
     color: snow;
-    padding: 0.5rem;
-
 }
 
 .navItem a {
     padding: 0 0 0 0;
     color: white;
     text-decoration: none;
-    width: 60px;
 }
 
 .navItem a.active {
-    font-style: oblique;
     color: rgba(0,7,19,0.89);
 }
