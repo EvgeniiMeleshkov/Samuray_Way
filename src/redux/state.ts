@@ -1,6 +1,5 @@
-let rerenderEntireTree = (state: StateType) => {
-    console.log('State is changed')
-}
+
+//-----------types---------------
 export type MessageType = {
     id: number
     text: string
@@ -33,71 +32,86 @@ export type StateType = {
         friends: FriendsType
         messages: MessagesType
     }
-    addPost: () => void
-    updateNewPostText : (newText: string) => void
-    addMessage : () => void
-    updateNewMessageText : (newText: string) => void
 }
+export type StoreType = {
+    _state: StateType
+    addPost: () => void
+    updateNewPostText: (newText: string) => void
+    addMessage: () => void
+    updateNewMessageText: (newText: string) => void
+    onChange: () => void
+    subscriber: (callBack: () => void) => void
+    getState: () => StateType
+}
+
 //-------------------------------------------------------------
-export let state = {
-    profilePage: {
-        newPostText: 'It-Kamasutra',
-        posts: [
-            {id: 1, message: 'Konitchiwa samurai san!', likesCount: 12, time: ''},
-            {id: 2, message: 'Kore wa samurai netu-worku de gozaimas.', likesCount: 19, time: ''}
-        ]
+export const store: StoreType = {
+    _state: {
+        profilePage: {
+            newPostText: 'It-Kamasutra',
+            posts: [
+                {id: 1, message: 'Konitchiwa samurai san!', likesCount: 12, time: ''},
+                {id: 2, message: 'Kore wa samurai netu-worku de gozaimas.', likesCount: 19, time: ''}
+            ]
+        },
+        dialogsPage: {
+            friends: [
+                {name: 'Dimich', id: 1},
+                {name: 'Viktor', id: 2},
+                {name: 'Igor', id: 3},
+                {name: 'Sveta', id: 4},
+                {name: 'Masha', id: 5},
+                {name: 'Zhenya', id: 6},
+                {name: 'Viktor', id: 7},
+                {name: 'Ignat', id: 8},
+                {name: 'Oleg', id: 9},
+            ],
+            newMessageText: '',
+            messages: [
+                {id: 1, text: 'Ohiyo, samurai!', name: 'Samurai', time: ''},
+            ]
+        }
     },
-    dialogsPage: {
-        friends: [
-            {name: 'Dimich', id: 1},
-            {name: 'Viktor', id: 2},
-            {name: 'Igor', id: 3},
-            {name: 'Sveta', id: 4},
-            {name: 'Masha', id: 5},
-            {name: 'Zhenya', id: 6},
-            {name: 'Viktor', id: 7},
-            {name: 'Ignat', id: 8},
-            {name: 'Oleg', id: 9},
-        ],
-        newMessageText: '',
-        messages: [
-            {id: 1, text: 'Ohiyo, samurai!', name: 'Samurai', time: ''},
-        ]
+    getState() {
+        return this._state
     },
-    addPost : () => {
+    onChange() {
+        console.log('State is changed')
+    },
+    subscriber(callBack: () => void) {
+        this.onChange = callBack
+    },
+    addPost () {
         let newPost = {
             id: 5,
-            message: state.profilePage.newPostText,
+            message: this._state.profilePage.newPostText,
             likesCount: 0,
             time: new Date().toLocaleTimeString()
         }
-        state.profilePage.posts.push(newPost)
-        state.profilePage.newPostText = ''
-        rerenderEntireTree(state)
+        this._state.profilePage.posts.push(newPost)
+        this._state.profilePage.newPostText = ''
+        this.onChange()
     },
 
-    updateNewPostText : (newText: string) => {
-        state.profilePage.newPostText = newText
-        rerenderEntireTree(state)
+    updateNewPostText (newText: string) {
+        this._state.profilePage.newPostText = newText
+        this.onChange()
     },
-    addMessage : () => {
+    addMessage() {
         let newMessage = {
             id: 2,
-            text: state.dialogsPage.newMessageText,
+            text: this._state.dialogsPage.newMessageText,
             name: 'Samuray',
             time: new Date().toLocaleTimeString()
         }
-        state.dialogsPage.messages.push(newMessage)
-        state.dialogsPage.newMessageText = ''
-        rerenderEntireTree(state)
+        this._state.dialogsPage.messages.push(newMessage)
+        this._state.dialogsPage.newMessageText = ''
+        this.onChange()
     },
-    updateNewMessageText : (newText: string) => {
-        state.dialogsPage.newMessageText = newText
-        rerenderEntireTree(state)
+    updateNewMessageText(newText: string) {
+        this._state.dialogsPage.newMessageText = newText
+        this.onChange()
     }
 }
 //--------------------------------------------------
 
-export const subscribe = (observer: { (state: StateType): void; (state: StateType): void }) => {
-    rerenderEntireTree = observer
-}
