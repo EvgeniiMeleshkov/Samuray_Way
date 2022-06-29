@@ -2,7 +2,13 @@ import React, {ClassAttributes, KeyboardEvent, LegacyRef, RefObject} from 'react
 import styles from './Dialogs.module.css'
 import {DialogItem} from './DialogItem/DialogItem';
 import {DialogMessage} from './DialogMessage/DialogMessage';
-import {ActionsTypes, FriendsType, MessagesType} from '../../redux/state';
+import {
+    ActionsTypes,
+    addMessageActionCreator,
+    FriendsType,
+    MessagesType,
+    updateMessageActionCreator
+} from '../../redux/state';
 
 
 type DialogsPropsType = {
@@ -24,15 +30,17 @@ function Dialogs({friends, messages, newMessageText, dispatch}: DialogsPropsType
     const onTextChanged = () => {
         if(messageTextRef.current) {
             let text = messageTextRef.current.value
-            dispatch({type: 'UPDATE_MESSAGE_TEXT', newText: text})
+            dispatch(updateMessageActionCreator(text))
         }
     }
     const onEnterPressed = (e: KeyboardEvent<HTMLTextAreaElement>) => {
         if(messageTextRef.current)
-        e.key === 'Enter' && messageTextRef.current.value.match(/\w/) && dispatch({type: 'ADD_MESSAGE'})
+        e.key === 'Enter' &&
+        messageTextRef.current.value.match(/\w/) &&
+        dispatch(addMessageActionCreator())
     }
     const onButtonHandler = () => {
-        dispatch({type: 'ADD_MESSAGE'})
+        dispatch(addMessageActionCreator())
     }
 
 //------------------------------------------------------------------------
@@ -53,7 +61,9 @@ function Dialogs({friends, messages, newMessageText, dispatch}: DialogsPropsType
                 </div>
                 <div className={styles.messageTextBody}>
                     <div>
-                        <textarea onKeyDown={(e)=>onEnterPressed(e)} ref={messageTextRef} className={styles.messageText} value={newMessageText} onChange={onTextChanged}></textarea>
+                        <textarea onKeyDown={(e)=>onEnterPressed(e)}
+                                  ref={messageTextRef} className={styles.messageText}
+                                  value={newMessageText} onChange={onTextChanged}></textarea>
                     </div>
                     <div className={styles.button}>
                         {newMessageText !== '' && newMessageText.match(/\w/)

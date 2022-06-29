@@ -1,3 +1,10 @@
+//__________CONSTANTS FOR ACTION CREATORS___________
+
+const ADD_POST = 'ADD_POST'
+const ADD_MESSAGE = 'ADD_MESSAGE'
+const UPDATE_POST_TEXT = 'UPDATE_POST_TEXT'
+const UPDATE_MESSAGE_TEXT = 'UPDATE_MESSAGE_TEXT'
+
 
 //-----------types---------------
 
@@ -47,20 +54,10 @@ export type StoreType = {
 
 //____________ACTIONS TYPES__________________________
 
-export type AddPostActionType = {
-    type: 'ADD_POST'
-}
-export type AddMessageActionType = {
-    type: 'ADD_MESSAGE'
-}
-export type UpdatePostText = {
-    type: 'UPDATE_POST_TEXT'
-    newText: string
-}
-export type UpdateMessageText = {
-    type: 'UPDATE_MESSAGE_TEXT'
-    newText: string
-}
+export type AddPostActionType = ReturnType<typeof addPostActionCreator>
+export type AddMessageActionType = ReturnType<typeof addMessageActionCreator>
+export type UpdatePostText = ReturnType<typeof updatePostActionCreator>
+export type UpdateMessageText = ReturnType<typeof updateMessageActionCreator>
 export type ActionsTypes = AddPostActionType | AddMessageActionType | UpdatePostText | UpdateMessageText
 
 
@@ -136,4 +133,20 @@ export const store: StoreType = {
     }
 }
 
-//--------------------------------------------------
+//----------------ACTION CREATORS------------------------
+
+export const addPostActionCreator = () => ({
+        type: ADD_POST,
+}as const)
+
+export const addMessageActionCreator = () => ({
+        type: ADD_MESSAGE
+}as const)
+export const updatePostActionCreator = (text: string) => ({
+        type: UPDATE_POST_TEXT,
+        newText: text
+}as const)
+export const updateMessageActionCreator = (text: string) => ({
+    type: UPDATE_MESSAGE_TEXT,
+    newText: text
+}as const)
