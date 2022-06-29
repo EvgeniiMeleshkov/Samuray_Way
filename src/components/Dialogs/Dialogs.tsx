@@ -2,19 +2,18 @@ import React, {ClassAttributes, KeyboardEvent, LegacyRef, RefObject} from 'react
 import styles from './Dialogs.module.css'
 import {DialogItem} from './DialogItem/DialogItem';
 import {DialogMessage} from './DialogMessage/DialogMessage';
-import {FriendsType, MessagesType} from '../../redux/state';
+import {ActionsTypes, FriendsType, MessagesType} from '../../redux/state';
 
 
 type DialogsPropsType = {
     friends: FriendsType
     messages: MessagesType
     newMessageText: string
-    updateNewMessageText : (newText: string) => void
-    addMessage : () => void
+    dispatch: (action: ActionsTypes) => void
 }
 
 
-function Dialogs({friends, messages, newMessageText, updateNewMessageText, addMessage}: DialogsPropsType) {
+function Dialogs({friends, messages, newMessageText, dispatch}: DialogsPropsType) {
 
 
 //------------------------------------------------------------------------
@@ -25,15 +24,15 @@ function Dialogs({friends, messages, newMessageText, updateNewMessageText, addMe
     const onTextChanged = () => {
         if(messageTextRef.current) {
             let text = messageTextRef.current.value
-            updateNewMessageText(text)
+            dispatch({type: 'UPDATE_MESSAGE_TEXT', newText: text})
         }
     }
     const onEnterPressed = (e: KeyboardEvent<HTMLTextAreaElement>) => {
         if(messageTextRef.current)
-        e.key === 'Enter' && messageTextRef.current.value.match(/\w/) && addMessage()
+        e.key === 'Enter' && messageTextRef.current.value.match(/\w/) && dispatch({type: 'ADD_MESSAGE'})
     }
     const onButtonHandler = () => {
-        addMessage()
+        dispatch({type: 'ADD_MESSAGE'})
     }
 
 //------------------------------------------------------------------------

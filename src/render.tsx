@@ -6,18 +6,16 @@ import React from 'react';
 
 export const rerenderEntireTree = () => {
     const state = store.getState()
+    const dispatch = store.dispatch.bind(store)
     ReactDOM.render(
         <BrowserRouter>
             <App
-                updateNewMessageText={store.updateNewMessageText.bind(store)}
-                addMessage={store.addMessage.bind(store)}
                 newPostText={state.profilePage.newPostText}
                 newMessageText={state.dialogsPage.newMessageText}
                 friends={state.dialogsPage.friends}
                 posts={state.profilePage.posts}
                 messages={state.dialogsPage.messages}
-                addPost={store.addPost.bind(store)}
-                updateNewPostText={store.updateNewPostText.bind(store)}
+                dispatch={dispatch}
             />
         </BrowserRouter>,
         document.getElementById('root')

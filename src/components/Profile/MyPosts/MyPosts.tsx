@@ -1,32 +1,30 @@
 import React, {KeyboardEvent} from 'react';
 import styles from './MyPosts.module.css'
 import Post from './Post/Post';
-import {PostsType} from '../../../redux/state';
+import {ActionsTypes, AddPostActionType, PostsType} from '../../../redux/state';
 
 type MyPostsPropsType = {
     posts: PostsType
-    addPost: ()=>void
     newPostText: string
-    updateNewPostText: (newText: string)=>void
+    dispatch: (action: ActionsTypes) => void
 }
 
-export function MyPosts({posts, addPost, newPostText, updateNewPostText}: MyPostsPropsType) {
+export function MyPosts({posts, newPostText, dispatch}: MyPostsPropsType) {
 //---------------------------------------------------------------------------
     let postTextRef = React.createRef<HTMLTextAreaElement>()
 //---------------------------------------------------------------------------
     const onButtonHandler = () => {
-        addPost()
+        dispatch({type: 'ADD_POST'})
     }
     const onTextChange = () => {
         if(postTextRef.current) {
             let text = postTextRef.current.value
-            console.log(text)
-            updateNewPostText(text)
+            dispatch({type: 'UPDATE_POST_TEXT', newText: text})
         }
     }
     const onEnterPressed = (e: KeyboardEvent<HTMLTextAreaElement>) => {
         if(postTextRef.current)
-            e.key === 'Enter' && postTextRef.current.value.match(/\w/) && addPost()
+            e.key === 'Enter' && postTextRef.current.value.match(/\w/) && dispatch({type: 'ADD_POST'})
     }
     return (
         <div>

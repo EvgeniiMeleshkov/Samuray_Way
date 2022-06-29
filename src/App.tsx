@@ -3,7 +3,7 @@ import './App.css';
 import Header from './components/Header/Header';
 import Profile from './components/Profile/Profile';
 import Dialogs from './components/Dialogs/Dialogs';
-import {FriendsType, MessagesType, PostsType} from './redux/state';
+import {ActionsTypes, FriendsType, MessagesType, PostsType} from './redux/state';
 import {Sidebar} from './components/Sidebar/Sidebar';
 import {Route, Routes} from 'react-router-dom';
 
@@ -11,38 +11,33 @@ type AppPropsType = {
     friends: FriendsType
     posts: PostsType
     messages: MessagesType
-    addPost: () => void
-    addMessage: () => void
     newPostText: string
     newMessageText: string
-    updateNewPostText: (newText: string) => void
-    updateNewMessageText: (newText: string) => void
+    dispatch: (action: ActionsTypes) => void
 }
 
 function App({
-                 friends, posts, messages, addPost,
-                 newMessageText, newPostText, updateNewPostText,
-                 updateNewMessageText, addMessage
+                 friends, posts, messages,
+                 newMessageText, newPostText,
+                 dispatch
              }: AppPropsType) {
     return (
-            <div className="app-wrapper">
-                <Header/>
-                <Sidebar/>
+        <div className="app-wrapper">
+            <Header/>
+            <Sidebar/>
 
-                <div className={'app-wrapper-content'}>
-                    <Routes>
-                        <Route path={'/profile/'} element={<Profile updateNewPostText={updateNewPostText}
-                                                                   newPostText={newPostText}
-                                                                   addPost={addPost}
-                                                                   posts={posts}/>}/>
-                        <Route path={'/dialogs/*'} element={<Dialogs updateNewMessageText={updateNewMessageText}
-                                                                   newMessageText={newMessageText}
-                                                                   messages={messages}
-                                                                   addMessage={addMessage}
-                                                                   friends={friends}/>}/>
-                    </Routes>
-                </div>
+            <div className={'app-wrapper-content'}>
+                <Routes>
+                    <Route path={'/profile/'} element={<Profile newPostText={newPostText}
+                                                                posts={posts}
+                                                                dispatch={dispatch}/>}/>
+                    <Route path={'/dialogs/*'} element={<Dialogs dispatch={dispatch}
+                                                                 newMessageText={newMessageText}
+                                                                 messages={messages}
+                                                                 friends={friends}/>}/>
+                </Routes>
             </div>
+        </div>
     );
 }
 

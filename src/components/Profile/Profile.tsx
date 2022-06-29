@@ -2,20 +2,21 @@ import React from 'react';
 import styles from './Profile.module.css'
 import {ProfileInfo} from './ProfileInfo/ProfileInfo';
 import {MyPosts} from './MyPosts/MyPosts';
-import {PostsType} from '../../redux/state';
+import {ActionsTypes, PostsType} from '../../redux/state';
 
 type ProfilePropsType ={
     posts: PostsType
-    addPost: ()=>void
     newPostText: string
-    updateNewPostText: (newText: string)=>void
+    dispatch: (action: ActionsTypes) => void
 }
 
-function Profile({posts, addPost, newPostText, updateNewPostText}: ProfilePropsType) {
+function Profile({posts, newPostText, dispatch}: ProfilePropsType) {
     return (
         <div className={styles.content}>
             <ProfileInfo/>
-            <MyPosts updateNewPostText={updateNewPostText} newPostText={newPostText} addPost={addPost} posts={posts}/>
+            <MyPosts dispatch={dispatch}
+                     newPostText={newPostText}
+                     posts={posts}/>
         </div>
     )
 }

@@ -1,5 +1,6 @@
 
 //-----------types---------------
+
 export type MessageType = {
     id: number
     text: string
@@ -7,13 +8,11 @@ export type MessageType = {
     time: string
 }
 export type MessagesType = Array<MessageType>
-
 export type FriendType = {
     name: string
     id: number
 }
 export type FriendsType = Array<FriendType>
-
 export type PostType = {
     id: number
     message: string
@@ -21,6 +20,8 @@ export type PostType = {
     time: string
 }
 export type PostsType = Array<PostType>
+
+//______________STATE TYPE_____________________
 
 export type StateType = {
     profilePage: {
@@ -33,18 +34,40 @@ export type StateType = {
         messages: MessagesType
     }
 }
+
+//____________STORE TYPE_________________________
+
 export type StoreType = {
     _state: StateType
-    addPost: () => void
-    updateNewPostText: (newText: string) => void
-    addMessage: () => void
-    updateNewMessageText: (newText: string) => void
     onChange: () => void
     subscriber: (callBack: () => void) => void
     getState: () => StateType
+    dispatch: (action: ActionsTypes) => void
 }
 
-//-------------------------------------------------------------
+//____________ACTIONS TYPES__________________________
+
+export type AddPostActionType = {
+    type: 'ADD_POST'
+}
+export type AddMessageActionType = {
+    type: 'ADD_MESSAGE'
+}
+export type UpdatePostText = {
+    type: 'UPDATE_POST_TEXT'
+    newText: string
+}
+export type UpdateMessageText = {
+    type: 'UPDATE_MESSAGE_TEXT'
+    newText: string
+}
+export type ActionsTypes = AddPostActionType | AddMessageActionType | UpdatePostText | UpdateMessageText
+
+
+//-------------STORE-------------------------------
+
+
+
 export const store: StoreType = {
     _state: {
         profilePage: {
@@ -81,37 +104,36 @@ export const store: StoreType = {
     subscriber(callBack: () => void) {
         this.onChange = callBack
     },
-    addPost () {
-        let newPost = {
-            id: 5,
-            message: this._state.profilePage.newPostText,
-            likesCount: 0,
-            time: new Date().toLocaleTimeString()
+    //---------DISPATCH--------------------------------------
+    dispatch(action: ActionsTypes) {
+        if(action.type === 'ADD_POST') {
+            let newPost = {
+                id: 5,
+                message: this._state.profilePage.newPostText,
+                likesCount: 0,
+                time: new Date().toLocaleTimeString()
+            }
+            this._state.profilePage.posts.push(newPost)
+            this._state.profilePage.newPostText = ''
+            this.onChange()
+        } else if(action.type === 'ADD_MESSAGE') {
+            let newMessage = {
+                id: 2,
+                text: this._state.dialogsPage.newMessageText,
+                name: 'Samuray',
+                time: new Date().toLocaleTimeString()
+            }
+            this._state.dialogsPage.messages.push(newMessage)
+            this._state.dialogsPage.newMessageText = ''
+            this.onChange()
+        } else if(action.type === 'UPDATE_POST_TEXT') {
+            this._state.profilePage.newPostText = action.newText
+            this.onChange()
+        } else if(action.type === 'UPDATE_MESSAGE_TEXT') {
+            this._state.dialogsPage.newMessageText = action.newText
+            this.onChange()
         }
-        this._state.profilePage.posts.push(newPost)
-        this._state.profilePage.newPostText = ''
-        this.onChange()
-    },
-
-    updateNewPostText (newText: string) {
-        this._state.profilePage.newPostText = newText
-        this.onChange()
-    },
-    addMessage() {
-        let newMessage = {
-            id: 2,
-            text: this._state.dialogsPage.newMessageText,
-            name: 'Samuray',
-            time: new Date().toLocaleTimeString()
-        }
-        this._state.dialogsPage.messages.push(newMessage)
-        this._state.dialogsPage.newMessageText = ''
-        this.onChange()
-    },
-    updateNewMessageText(newText: string) {
-        this._state.dialogsPage.newMessageText = newText
-        this.onChange()
     }
 }
-//--------------------------------------------------
 
+//--------------------------------------------------

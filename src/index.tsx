@@ -3,6 +3,5 @@ import React from 'react';
 import './index.css';
 import {rerenderEntireTree} from './render';
 
-
-rerenderEntireTree()
 store.subscriber(rerenderEntireTree)
+rerenderEntireTree()
