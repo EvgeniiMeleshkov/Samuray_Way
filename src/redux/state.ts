@@ -60,10 +60,16 @@ export type StoreType = {
 //____________ACTIONS TYPES__________________________
 
 export type AddPostActionType = ReturnType<typeof addPostActionCreator>
+export type AddLikeActionType = ReturnType<typeof addLikeActionCreator>
 export type AddMessageActionType = ReturnType<typeof addMessageActionCreator>
 export type UpdatePostText = ReturnType<typeof updatePostActionCreator>
 export type UpdateMessageText = ReturnType<typeof updateMessageActionCreator>
-export type ActionsTypes = AddPostActionType | AddMessageActionType | UpdatePostText | UpdateMessageText
+export type ActionsTypes =
+    AddLikeActionType
+    | AddPostActionType
+    | AddMessageActionType
+    | UpdatePostText
+    | UpdateMessageText
 
 
 //-------------STORE-------------------------------
@@ -108,24 +114,29 @@ export const store: StoreType = {
     dispatch(action: ActionsTypes) {
         this._state.profilePage = profileReducer(this._state.profilePage, action)
         this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action)
-            this.onChange()
+        this.onChange()
     }
 }
 
 //----------------ACTION CREATORS------------------------
 
 export const addPostActionCreator = () => ({
-        type: 'ADD_POST',
-}as const)
+    type: 'ADD_POST',
+} as const)
+
+export const addLikeActionCreator = (id: number) => ({
+    type: 'ADD_LIKE',
+    id: id
+} as const)
 
 export const addMessageActionCreator = () => ({
-        type: 'ADD_MESSAGE'
-}as const)
+    type: 'ADD_MESSAGE'
+} as const)
 export const updatePostActionCreator = (text: string) => ({
-        type: 'UPDATE_POST_TEXT',
-        newText: text
-}as const)
+    type: 'UPDATE_POST_TEXT',
+    newText: text
+} as const)
 export const updateMessageActionCreator = (text: string) => ({
     type: 'UPDATE_MESSAGE_TEXT',
     newText: text
-}as const)
+} as const)

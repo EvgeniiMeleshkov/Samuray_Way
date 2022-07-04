@@ -2,7 +2,7 @@ import React, {KeyboardEvent} from 'react';
 import styles from './MyPosts.module.css'
 import Post from './Post/Post';
 import {
-    ActionsTypes,
+    ActionsTypes, addLikeActionCreator,
     addPostActionCreator,
     PostsType,
     updatePostActionCreator
@@ -37,6 +37,9 @@ export function MyPosts({posts, newPostText, dispatch}: MyPostsPropsType) {
             postTextRef.current.value.match(/\w/) &&
             dispatch(addPostActionCreator())
     }
+    const addLike = (id: number) => {
+        dispatch(addLikeActionCreator(id))
+    }
     return (
         <div>
             My Posts
@@ -54,7 +57,7 @@ export function MyPosts({posts, newPostText, dispatch}: MyPostsPropsType) {
                 }</div>
             </div>
             <div className={styles.posts}>
-                <Post posts={posts}/>
+                <Post addLike={addLike} posts={posts}/>
             </div>
         </div>
     )
