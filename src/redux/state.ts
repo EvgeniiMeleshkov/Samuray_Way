@@ -1,9 +1,12 @@
 //__________CONSTANTS FOR ACTION CREATORS___________
 
-const ADD_POST = 'ADD_POST'
-const ADD_MESSAGE = 'ADD_MESSAGE'
-const UPDATE_POST_TEXT = 'UPDATE_POST_TEXT'
-const UPDATE_MESSAGE_TEXT = 'UPDATE_MESSAGE_TEXT'
+import {profileReducer} from './profileReducer';
+import {dialogsReducer} from './dialogsReducer';
+
+// const ADD_POST = 'ADD_POST'
+// const ADD_MESSAGE = 'ADD_MESSAGE'
+// const UPDATE_POST_TEXT = 'UPDATE_POST_TEXT'
+// const UPDATE_MESSAGE_TEXT = 'UPDATE_MESSAGE_TEXT'
 
 
 //-----------types---------------
@@ -27,19 +30,21 @@ export type PostType = {
     time: string
 }
 export type PostsType = Array<PostType>
+export type ProfilePageType = {
+    newPostText: string
+    posts: PostsType
+}
+export type DialogsPageType = {
+    newMessageText: string
+    friends: FriendsType
+    messages: MessagesType
+}
 
 //______________STATE TYPE_____________________
 
 export type StateType = {
-    profilePage: {
-        newPostText: string
-        posts: PostsType
-    }
-    dialogsPage: {
-        newMessageText: string
-        friends: FriendsType
-        messages: MessagesType
-    }
+    profilePage: ProfilePageType
+    dialogsPage: DialogsPageType
 }
 
 //____________STORE TYPE_________________________
@@ -62,8 +67,6 @@ export type ActionsTypes = AddPostActionType | AddMessageActionType | UpdatePost
 
 
 //-------------STORE-------------------------------
-
-
 
 export const store: StoreType = {
     _state: {
@@ -103,50 +106,26 @@ export const store: StoreType = {
     },
     //---------DISPATCH--------------------------------------
     dispatch(action: ActionsTypes) {
-        if(action.type === 'ADD_POST') {
-            let newPost = {
-                id: 5,
-                message: this._state.profilePage.newPostText,
-                likesCount: 0,
-                time: new Date().toLocaleTimeString()
-            }
-            this._state.profilePage.posts.push(newPost)
-            this._state.profilePage.newPostText = ''
+        this._state.profilePage = profileReducer(this._state.profilePage, action)
+        this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action)
             this.onChange()
-        } else if(action.type === 'ADD_MESSAGE') {
-            let newMessage = {
-                id: 2,
-                text: this._state.dialogsPage.newMessageText,
-                name: 'Samuray',
-                time: new Date().toLocaleTimeString()
-            }
-            this._state.dialogsPage.messages.push(newMessage)
-            this._state.dialogsPage.newMessageText = ''
-            this.onChange()
-        } else if(action.type === 'UPDATE_POST_TEXT') {
-            this._state.profilePage.newPostText = action.newText
-            this.onChange()
-        } else if(action.type === 'UPDATE_MESSAGE_TEXT') {
-            this._state.dialogsPage.newMessageText = action.newText
-            this.onChange()
-        }
     }
 }
 
 //----------------ACTION CREATORS------------------------
 
 export const addPostActionCreator = () => ({
-        type: ADD_POST,
+        type: 'ADD_POST',
 }as const)
 
 export const addMessageActionCreator = () => ({
-        type: ADD_MESSAGE
+        type: 'ADD_MESSAGE'
 }as const)
 export const updatePostActionCreator = (text: string) => ({
-        type: UPDATE_POST_TEXT,
+        type: 'UPDATE_POST_TEXT',
         newText: text
 }as const)
 export const updateMessageActionCreator = (text: string) => ({
-    type: UPDATE_MESSAGE_TEXT,
+    type: 'UPDATE_MESSAGE_TEXT',
     newText: text
 }as const)
