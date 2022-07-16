@@ -1,7 +1,7 @@
 import {NavLink} from 'react-router-dom';
 import styles from '../Dialogs.module.css';
 import React from 'react';
-import {FriendsType, FriendType} from '../../../redux/state';
+import {FriendsType, FriendType} from '../../../redux/store';
 //------------------------------------------
 type DialogItemPropsType = {
     friends: FriendsType

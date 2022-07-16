@@ -1,6 +1,16 @@
-import {ActionsTypes, ProfilePageType} from './state';
+import {ActionsTypes, ProfilePageType} from './store';
 
-export const profileReducer = (state: ProfilePageType, action: ActionsTypes) => {
+
+const initialState: ProfilePageType = {
+    newPostText: 'It-Kamasutra',
+    posts: [
+        {id: 1, message: 'Konitchiwa samurai san!', likesCount: 12, time: ''},
+        {id: 2, message: 'Kore wa samurai netu-worku de gozaimas.', likesCount: 19, time: ''}
+    ]
+}
+
+
+export const profileReducer = (state = initialState, action: ActionsTypes) => {
     switch (action.type) {
         case 'ADD_POST':
             let newPost = {

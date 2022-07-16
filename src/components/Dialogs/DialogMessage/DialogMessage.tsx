@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './DialogMessage.module.css';
 import avatar from '../../../assets/images/samurai_small_logo.png'
-import {FriendsType, MessagesType, MessageType} from '../../../redux/state';
+import {FriendsType, MessagesType, MessageType} from '../../../redux/store';
 //-----------------------------------------------
 
 

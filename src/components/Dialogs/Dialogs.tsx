@@ -8,7 +8,7 @@ import {
     FriendsType,
     MessagesType,
     updateMessageActionCreator
-} from '../../redux/state';
+} from '../../redux/store';
 
 
 type DialogsPropsType = {

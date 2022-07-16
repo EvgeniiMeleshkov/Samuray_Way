@@ -3,7 +3,7 @@ import './App.css';
 import Header from './components/Header/Header';
 import Profile from './components/Profile/Profile';
 import Dialogs from './components/Dialogs/Dialogs';
-import {ActionsTypes, FriendsType, MessagesType, PostsType} from './redux/state';
+import {ActionsTypes, FriendsType, MessagesType, PostsType} from './redux/store';
 import {Sidebar} from './components/Sidebar/Sidebar';
 import {Route, Routes} from 'react-router-dom';
 
