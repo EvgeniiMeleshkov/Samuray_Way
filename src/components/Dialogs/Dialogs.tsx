@@ -15,11 +15,12 @@ type DialogsPropsType = {
     friends: FriendsType
     messages: MessagesType
     newMessageText: string
-    dispatch: (action: ActionsTypes) => void
+    addMessage:()=>void
+    onTextChanged: (text:string)=>void
 }
 
 
-function Dialogs({friends, messages, newMessageText, dispatch}: DialogsPropsType) {
+function Dialogs({friends, messages, newMessageText, addMessage, onTextChanged}: DialogsPropsType) {
 
 
 //------------------------------------------------------------------------
@@ -27,20 +28,20 @@ function Dialogs({friends, messages, newMessageText, dispatch}: DialogsPropsType
     let messageTextRef = React.createRef<HTMLTextAreaElement>()
 
 //------------------------------------------------------------------------
-    const onTextChanged = () => {
+    const onTextChangedHandler = () => {
         if(messageTextRef.current) {
             let text = messageTextRef.current.value
-            dispatch(updateMessageActionCreator(text))
+            onTextChanged(text)
         }
     }
     const onEnterPressed = (e: KeyboardEvent<HTMLTextAreaElement>) => {
         if(messageTextRef.current)
         e.key === 'Enter' &&
         messageTextRef.current.value.match(/\w/) &&
-        dispatch(addMessageActionCreator())
+        addMessage()
     }
     const onButtonHandler = () => {
-        dispatch(addMessageActionCreator())
+        addMessage()
     }
 
 //------------------------------------------------------------------------
@@ -63,7 +64,7 @@ function Dialogs({friends, messages, newMessageText, dispatch}: DialogsPropsType
                     <div>
                         <textarea onKeyDown={(e)=>onEnterPressed(e)}
                                   ref={messageTextRef} className={styles.messageText}
-                                  value={newMessageText} onChange={onTextChanged}></textarea>
+                                  value={newMessageText} onChange={onTextChangedHandler}></textarea>
                     </div>
                     <div className={styles.button}>
                         {newMessageText !== '' && newMessageText.match(/\w/)

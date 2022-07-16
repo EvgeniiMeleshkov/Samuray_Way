@@ -1,6 +1,4 @@
-import React, {KeyboardEvent} from 'react';
-import styles from './MyPosts.module.css'
-import Post from './Post/Post';
+import React from 'react';
 import {
     ActionsTypes, addLikeActionCreator,
     addPostActionCreator,
@@ -9,17 +7,13 @@ import {
 } from '../../../redux/store';
 import {MyPosts} from './MyPosts';
 
-type MyPostsPropsType = {
+type MyPostsContainerPropsType = {
     posts: PostsType
     newPostText: string
     dispatch: (action: ActionsTypes) => void
 }
 
-export function MyPostsContainer({posts, newPostText, dispatch}: MyPostsPropsType) {
-//---------------------------------------------------------------------------
-    let postTextRef = React.createRef<HTMLTextAreaElement>()
-//---------------------------------------------------------------------------
-
+export function MyPostsContainer({posts, newPostText, dispatch}: MyPostsContainerPropsType) {
 
     const addPost = () => {
         dispatch(addPostActionCreator())

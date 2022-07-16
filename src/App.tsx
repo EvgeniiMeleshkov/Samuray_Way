@@ -6,6 +6,7 @@ import Dialogs from './components/Dialogs/Dialogs';
 import {ActionsTypes, FriendsType, MessagesType, PostsType} from './redux/store';
 import {Sidebar} from './components/Sidebar/Sidebar';
 import {Route, Routes} from 'react-router-dom';
+import {DialogsContainer} from './components/Dialogs/DialogsContainer';
 
 type AppPropsType = {
     friends: FriendsType
@@ -31,7 +32,7 @@ function App({
                     <Route path={'/profile/'} element={<Profile newPostText={newPostText}
                                                                 posts={posts}
                                                                 dispatch={dispatch}/>}/>
-                    <Route path={'/dialogs/*'} element={<Dialogs dispatch={dispatch}
+                    <Route path={'/dialogs/*'} element={<DialogsContainer dispatch={dispatch}
                                                                  newMessageText={newMessageText}
                                                                  messages={messages}
                                                                  friends={friends}/>}/>
