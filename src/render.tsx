@@ -4,6 +4,8 @@ import {BrowserRouter} from 'react-router-dom';
 import App from './App';
 import React from 'react';
 
+
+
 export const rerenderEntireTree = () => {
     const state = store.getState()
     const dispatch = store.dispatch.bind(store)

@@ -2,43 +2,47 @@ import React, {KeyboardEvent} from 'react';
 import styles from './MyPosts.module.css'
 import Post from './Post/Post';
 import {
-    ActionsTypes, addLikeActionCreator,
-    addPostActionCreator,
+    ActionsTypes,
     PostsType,
-    updatePostActionCreator
 } from '../../../redux/store';
 
 type MyPostsPropsType = {
+    updateNewPostText: (text: string) => void
+    addPost: () => void
+    addLike: (id: number) => void
+
     posts: PostsType
     newPostText: string
-    dispatch: (action: ActionsTypes) => void
 }
 
-export function MyPosts({posts, newPostText, dispatch}: MyPostsPropsType) {
+export function MyPosts({
+                            posts,
+                            addPost,
+                            addLike,
+                            newPostText,
+                            updateNewPostText
+                        }: MyPostsPropsType) {
 //---------------------------------------------------------------------------
     let postTextRef = React.createRef<HTMLTextAreaElement>()
 //---------------------------------------------------------------------------
 
-
-
-
     const onButtonHandler = () => {
-        dispatch(addPostActionCreator())
+        addPost()
     }
     const onTextChange = () => {
-        if(postTextRef.current) {
+        if (postTextRef.current) {
             let text = postTextRef.current.value
-            dispatch(updatePostActionCreator(text))
+            updateNewPostText(text)
         }
     }
     const onEnterPressed = (e: KeyboardEvent<HTMLTextAreaElement>) => {
-        if(postTextRef.current)
+        if (postTextRef.current)
             e.key === 'Enter' &&
             postTextRef.current.value.match(/\w/) &&
-            dispatch(addPostActionCreator())
+            addPost()
     }
-    const addLike = (id: number) => {
-        dispatch(addLikeActionCreator(id))
+    const addLikeHandler = (id: number) => {
+        addLike(id)
     }
     return (
         <div>
@@ -51,13 +55,13 @@ export function MyPosts({posts, newPostText, dispatch}: MyPostsPropsType) {
                               value={newPostText}
                               className={styles.textArea}></textarea>
                 </div>
-                <div>{ newPostText !== '' && newPostText.match(/\w/)
+                <div>{newPostText !== '' && newPostText.match(/\w/)
                     ? <button className={styles.addPostButton} onClick={onButtonHandler}>Add post</button>
                     : <button disabled={true}>write your post here...</button>
                 }</div>
             </div>
             <div className={styles.posts}>
-                <Post addLike={addLike} posts={posts}/>
+                <Post addLike={addLikeHandler} posts={posts}/>
             </div>
         </div>
     )
