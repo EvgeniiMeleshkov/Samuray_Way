@@ -6,7 +6,9 @@ import {
     MessagesType,
     updateMessageActionCreator
 } from '../../redux/store';
+import {StoreContext} from '../../StoreContext';
 import Dialogs from './Dialogs';
+import {store} from '../../redux/redux_store';
 
 
 type DialogsContainerPropsType = {
@@ -17,23 +19,31 @@ type DialogsContainerPropsType = {
 }
 
 
-export const DialogsContainer = ({friends, messages, newMessageText, dispatch}: DialogsContainerPropsType) => {
+export const DialogsContainer = () => {
 
 //------------------------------------------------------------------------
-    const onTextChanged = (text: string) => {
-            dispatch(updateMessageActionCreator(text))
-    }
-    const addMessage = () => {
-        dispatch(addMessageActionCreator())
-    }
+
 
 //------------------------------------------------------------------------
     return (
-        <Dialogs friends={friends}
-                 messages={messages}
-                 newMessageText={newMessageText}
-                 addMessage={addMessage}
-                 onTextChanged={onTextChanged}
-        />
+        <StoreContext.Consumer>
+            {(store) => {
+                const onTextChanged = (text: string) => {
+                    store.dispatch(updateMessageActionCreator(text))
+                }
+                const addMessage = () => {
+                    store.dispatch(addMessageActionCreator())
+                }
+                return (
+                    <Dialogs friends={store.getState().dialogsPage.friends}
+                             messages={store.getState().dialogsPage.messages}
+                             newMessageText={store.getState().dialogsPage.newMessageText}
+                             addMessage={addMessage}
+                             onTextChanged={onTextChanged}
+                    />
+                )
+            }
+            }
+        </StoreContext.Consumer>
     )
 }

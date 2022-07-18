@@ -5,7 +5,9 @@ import {
     PostsType,
     updatePostActionCreator
 } from '../../../redux/store';
+import {StoreContext} from '../../../StoreContext';
 import {MyPosts} from './MyPosts';
+import {store} from '../../../redux/redux_store';
 
 type MyPostsContainerPropsType = {
     posts: PostsType
@@ -13,23 +15,32 @@ type MyPostsContainerPropsType = {
     dispatch: (action: ActionsTypes) => void
 }
 
-export function MyPostsContainer({posts, newPostText, dispatch}: MyPostsContainerPropsType) {
-
-    const addPost = () => {
-        dispatch(addPostActionCreator())
-    }
-    const onTextChange = (text: string) => {
-            dispatch(updatePostActionCreator(text))
-    }
-    const addLike = (id: number) => {
-        dispatch(addLikeActionCreator(id))
-    }
+export function MyPostsContainer() {
     return (
-       <MyPosts
-           posts={posts}
-           newPostText={newPostText}
-           addPost={addPost}
-           updateNewPostText={onTextChange}
-           addLike={addLike}/>
+        <>
+            <StoreContext.Consumer>
+                {(store) => {
+                    const state = store.getState()
+
+                    const addPost = () => {
+                        store.dispatch(addPostActionCreator())
+                    }
+                    const onTextChange = (text: string) => {
+                        store.dispatch(updatePostActionCreator(text))
+                    }
+                    const addLike = (id: number) => {
+                        store.dispatch(addLikeActionCreator(id))
+                    }
+
+                    return (<MyPosts
+                        posts={state.profilePage.posts}
+                        newPostText={state.profilePage.newPostText}
+                        addPost={addPost}
+                        updateNewPostText={onTextChange}
+                        addLike={addLike}/>)
+                }
+                }
+            </StoreContext.Consumer>
+        </>
     )
 }

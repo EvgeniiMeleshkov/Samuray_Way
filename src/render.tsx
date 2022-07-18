@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import {BrowserRouter} from 'react-router-dom';
 import App from './App';
 import React from 'react';
+import { StoreContext } from './StoreContext';
 
 
 
@@ -11,14 +12,9 @@ export const rerenderEntireTree = () => {
     const dispatch = store.dispatch.bind(store)
     ReactDOM.render(
         <BrowserRouter>
-            <App
-                newPostText={state.profilePage.newPostText}
-                newMessageText={state.dialogsPage.newMessageText}
-                friends={state.dialogsPage.friends}
-                posts={state.profilePage.posts}
-                messages={state.dialogsPage.messages}
-                dispatch={dispatch}
-            />
+            <StoreContext.Provider value={store}>
+            <App />
+            </StoreContext.Provider>
         </BrowserRouter>,
         document.getElementById('root')
     );

@@ -10,13 +10,12 @@ type ProfilePropsType ={
     dispatch: (action: ActionsTypes) => void
 }
 
-function Profile({posts, newPostText, dispatch}: ProfilePropsType) {
+function Profile() {
     return (
         <div className={styles.content}>
             <ProfileInfo/>
-            <MyPostsContainer dispatch={dispatch}
-                     newPostText={newPostText}
-                     posts={posts}/>
+
+            <MyPostsContainer />
         </div>
     )
 }

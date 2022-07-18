@@ -17,11 +17,7 @@ type AppPropsType = {
     dispatch: (action: ActionsTypes) => void
 }
 
-function App({
-                 friends, posts, messages,
-                 newMessageText, newPostText,
-                 dispatch
-             }: AppPropsType) {
+function App() {
     return (
         <div className="app-wrapper">
             <Header/>
@@ -29,13 +25,8 @@ function App({
 
             <div className={'app-wrapper-content'}>
                 <Routes>
-                    <Route path={'/profile/'} element={<Profile newPostText={newPostText}
-                                                                posts={posts}
-                                                                dispatch={dispatch}/>}/>
-                    <Route path={'/dialogs/*'} element={<DialogsContainer dispatch={dispatch}
-                                                                 newMessageText={newMessageText}
-                                                                 messages={messages}
-                                                                 friends={friends}/>}/>
+                    <Route path={'/profile/'} element={<Profile/>}/>
+                    <Route path={'/dialogs/*'} element={<DialogsContainer/>}/>
                 </Routes>
             </div>
         </div>
