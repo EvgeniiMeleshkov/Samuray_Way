@@ -1,4 +1,4 @@
-import {ActionsTypes, DialogsPageType} from './store';
+import {ActionsTypes, DialogsPageType, FriendsType, MessagesType} from './store';
 
 
 const initialState: DialogsPageType = {
@@ -12,15 +12,16 @@ const initialState: DialogsPageType = {
         {name: 'Viktor', id: 7},
         {name: 'Ignat', id: 8},
         {name: 'Oleg', id: 9},
-    ],
+    ] as FriendsType,
     newMessageText: '',
     messages: [
         {id: 1, text: 'Ohiyo, samurai!', name: 'Samurai', time: ''},
-    ]
+    ] as MessagesType
 }
 
+export type DialogsReducerType = ReturnType<typeof dialogsReducer>
 
-export const dialogsReducer = (state = initialState, action: ActionsTypes) => {
+export const dialogsReducer = (state = initialState, action: ActionsTypes): DialogsPageType => {
     switch (action.type) {
         case 'ADD_MESSAGE':
             let newMessage = {
@@ -29,12 +30,9 @@ export const dialogsReducer = (state = initialState, action: ActionsTypes) => {
                 name: 'Samuray',
                 time: new Date().toLocaleTimeString()
             }
-            state.messages.push(newMessage)
-            state.newMessageText = ''
-            return state
+            return {...state, messages: [...state.messages, newMessage], newMessageText: ''}
         case 'UPDATE_MESSAGE_TEXT':
-            state.newMessageText = action.newText
-            return state
+            return {...state, newMessageText: action.newText}
         default:
             return state
     }

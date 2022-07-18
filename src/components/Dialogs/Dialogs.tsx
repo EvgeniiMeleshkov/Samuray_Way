@@ -2,25 +2,11 @@ import React, {ClassAttributes, KeyboardEvent, LegacyRef, RefObject} from 'react
 import styles from './Dialogs.module.css'
 import {DialogItem} from './DialogItem/DialogItem';
 import {DialogMessage} from './DialogMessage/DialogMessage';
-import {
-    ActionsTypes,
-    addMessageActionCreator,
-    FriendsType,
-    MessagesType,
-    updateMessageActionCreator
-} from '../../redux/store';
+import {DialogsPropsType} from './DialogsContainer';
 
 
-type DialogsPropsType = {
-    friends: FriendsType
-    messages: MessagesType
-    newMessageText: string
-    addMessage:()=>void
-    onTextChanged: (text:string)=>void
-}
 
-
-function Dialogs({friends, messages, newMessageText, addMessage, onTextChanged}: DialogsPropsType) {
+function Dialogs({dialogsPage, addMessage, onTextChanged}: DialogsPropsType) {
 
 
 //------------------------------------------------------------------------
@@ -54,20 +40,20 @@ function Dialogs({friends, messages, newMessageText, addMessage, onTextChanged}:
             <div className={styles.pageBody}>
                 <div className={styles.dAndM}>
                     <div className={styles.dialog}>
-                        <DialogItem friends={friends}/>
+                        <DialogItem friends={dialogsPage.friends}/>
                     </div>
                     <div>
-                        <DialogMessage friends={friends} messages={messages}/>
+                        <DialogMessage friends={dialogsPage.friends} messages={dialogsPage.messages}/>
                     </div>
                 </div>
                 <div className={styles.messageTextBody}>
                     <div>
                         <textarea onKeyDown={(e)=>onEnterPressed(e)}
                                   ref={messageTextRef} className={styles.messageText}
-                                  value={newMessageText} onChange={onTextChangedHandler}></textarea>
+                                  value={dialogsPage.newMessageText} onChange={onTextChangedHandler}></textarea>
                     </div>
                     <div className={styles.button}>
-                        {newMessageText !== '' && newMessageText.match(/\w/)
+                        {dialogsPage.newMessageText !== '' && dialogsPage.newMessageText.match(/\w/)
                             ? <button onClick={onButtonHandler}>send</button>
                             : <button disabled={true}>write a message</button>}
                     </div>

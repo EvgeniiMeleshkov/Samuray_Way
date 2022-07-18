@@ -1,22 +1,13 @@
 import React, {KeyboardEvent} from 'react';
 import styles from './MyPosts.module.css'
 import Post from './Post/Post';
-import {PostsType} from '../../../redux/store';
-
-type MyPostsPropsType = {
-    updateNewPostText: (text: string) => void
-    addPost: () => void
-    addLike: (id: number) => void
-    posts: PostsType
-    newPostText: string
-}
+import {MyPostsPropsType} from './MyPostsContainer';
 
 export function MyPosts({
-                            posts,
+                            profilePage,
                             addPost,
                             addLike,
-                            newPostText,
-                            updateNewPostText
+                            onTextChange
                         }: MyPostsPropsType) {
 //---------------------------------------------------------------------------
     let postTextRef = React.createRef<HTMLTextAreaElement>()
@@ -25,10 +16,10 @@ export function MyPosts({
     const onButtonHandler = () => {
         addPost()
     }
-    const onTextChange = () => {
+    const onTextChangeHandler = () => {
         if (postTextRef.current) {
             let text = postTextRef.current.value
-            updateNewPostText(text)
+            onTextChange(text)
         }
     }
     const onEnterPressed = (e: KeyboardEvent<HTMLTextAreaElement>) => {
@@ -47,17 +38,17 @@ export function MyPosts({
                 <div className={styles.tAreaBody}>
                     <textarea onKeyDown={onEnterPressed}
                               ref={postTextRef}
-                              onChange={onTextChange}
-                              value={newPostText}
+                              onChange={onTextChangeHandler}
+                              value={profilePage.newPostText}
                               className={styles.textArea}></textarea>
                 </div>
-                <div>{newPostText !== '' && newPostText.match(/\w/)
+                <div>{profilePage.newPostText !== '' && profilePage.newPostText.match(/\w/)
                     ? <button className={styles.addPostButton} onClick={onButtonHandler}>Add post</button>
                     : <button disabled={true}>write your post here...</button>
                 }</div>
             </div>
             <div className={styles.posts}>
-                <Post addLike={addLikeHandler} posts={posts}/>
+                <Post addLike={addLikeHandler} posts={profilePage.posts}/>
             </div>
         </div>
     )

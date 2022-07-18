@@ -1,4 +1,4 @@
-import {ActionsTypes, ProfilePageType} from './store';
+import {ActionsTypes, PostsType, ProfilePageType} from './store';
 
 
 const initialState: ProfilePageType = {
@@ -6,11 +6,12 @@ const initialState: ProfilePageType = {
     posts: [
         {id: 1, message: 'Konitchiwa samurai san!', likesCount: 12, time: ''},
         {id: 2, message: 'Kore wa samurai netu-worku de gozaimas.', likesCount: 19, time: ''}
-    ]
+    ] as PostsType
 }
 
+export type ProfileReducerType = ReturnType<typeof profileReducer>
 
-export const profileReducer = (state = initialState, action: ActionsTypes) => {
+export const profileReducer = (state = initialState, action: ActionsTypes): ProfilePageType => {
     switch (action.type) {
         case 'ADD_POST':
             let newPost = {
@@ -19,17 +20,11 @@ export const profileReducer = (state = initialState, action: ActionsTypes) => {
                 likesCount: 0,
                 time: new Date().toLocaleTimeString()
             }
-            state.posts.push(newPost)
-            state.newPostText = ''
-            return state
-
+            return {...state, posts: [...state.posts, newPost], newPostText: ''}
         case 'UPDATE_POST_TEXT':
-            state.newPostText = action.newText
-            return state
-
+            return {...state, newPostText: action.newText}
         case 'ADD_LIKE':
-            state.posts.map(p => action.id === p.id ? p.likesCount++ : p)
-            return state
+            return {...state, posts: state.posts.map(p => action.id === p.id ? {...p, likesCount: p.likesCount += 1} : p)}
         default:
             return state
     }

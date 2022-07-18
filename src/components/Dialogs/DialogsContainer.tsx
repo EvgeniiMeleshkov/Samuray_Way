@@ -1,49 +1,39 @@
 import React from 'react';
 import {
-    ActionsTypes,
-    addMessageActionCreator,
-    FriendsType,
-    MessagesType,
+    addMessageActionCreator, DialogsPageType,
+    StateType,
     updateMessageActionCreator
 } from '../../redux/store';
-import {StoreContext} from '../../StoreContext';
 import Dialogs from './Dialogs';
-import {store} from '../../redux/redux_store';
+import {connect} from 'react-redux';
+import {Dispatch} from 'redux';
 
 
-type DialogsContainerPropsType = {
-    friends: FriendsType
-    messages: MessagesType
-    newMessageText: string
-    dispatch: (action: ActionsTypes) => void
+export type DialogsPropsType = MapStatePropsType & MapDispatchPropsType
+
+type MapStatePropsType = {
+    dialogsPage: DialogsPageType
+}
+type MapDispatchPropsType = {
+    onTextChanged: (text: string) => void
+    addMessage: () => void
 }
 
-
-export const DialogsContainer = () => {
-
-//------------------------------------------------------------------------
-
-
-//------------------------------------------------------------------------
-    return (
-        <StoreContext.Consumer>
-            {(store) => {
-                const onTextChanged = (text: string) => {
-                    store.dispatch(updateMessageActionCreator(text))
-                }
-                const addMessage = () => {
-                    store.dispatch(addMessageActionCreator())
-                }
-                return (
-                    <Dialogs friends={store.getState().dialogsPage.friends}
-                             messages={store.getState().dialogsPage.messages}
-                             newMessageText={store.getState().dialogsPage.newMessageText}
-                             addMessage={addMessage}
-                             onTextChanged={onTextChanged}
-                    />
-                )
-            }
-            }
-        </StoreContext.Consumer>
-    )
+//-------------------------------------------------------------
+const mapStateToProps = (state: StateType): MapStatePropsType => {
+    return {
+        dialogsPage: state.dialogsPage
+    }
 }
+const mapDispatchToProps = (dispatch: Dispatch): MapDispatchPropsType => {
+    return {
+        onTextChanged: (text: string) => {
+            dispatch(updateMessageActionCreator(text))
+        },
+        addMessage: () => {
+            dispatch(addMessageActionCreator())
+        }
+    }
+}
+
+export const DialogsContainer: any = connect(mapStateToProps, mapDispatchToProps)(Dialogs)

@@ -1,46 +1,47 @@
-import React from 'react';
+import React, {ReactNode} from 'react';
 import {
-    ActionsTypes, addLikeActionCreator,
+    addLikeActionCreator,
     addPostActionCreator,
-    PostsType,
+    ProfilePageType, StateType,
     updatePostActionCreator
 } from '../../../redux/store';
-import {StoreContext} from '../../../StoreContext';
 import {MyPosts} from './MyPosts';
-import {store} from '../../../redux/redux_store';
+import {connect} from 'react-redux';
+import {Dispatch} from 'redux';
 
-type MyPostsContainerPropsType = {
-    posts: PostsType
-    newPostText: string
-    dispatch: (action: ActionsTypes) => void
+
+export type MyPostsPropsType = MapStatePropsType & MapDispatchPropsType
+
+type MapStatePropsType = {
+    profilePage: ProfilePageType
 }
 
-export function MyPostsContainer() {
-    return (
-        <>
-            <StoreContext.Consumer>
-                {(store) => {
-                    const state = store.getState()
-
-                    const addPost = () => {
-                        store.dispatch(addPostActionCreator())
-                    }
-                    const onTextChange = (text: string) => {
-                        store.dispatch(updatePostActionCreator(text))
-                    }
-                    const addLike = (id: number) => {
-                        store.dispatch(addLikeActionCreator(id))
-                    }
-
-                    return (<MyPosts
-                        posts={state.profilePage.posts}
-                        newPostText={state.profilePage.newPostText}
-                        addPost={addPost}
-                        updateNewPostText={onTextChange}
-                        addLike={addLike}/>)
-                }
-                }
-            </StoreContext.Consumer>
-        </>
-    )
+type MapDispatchPropsType = {
+    addPost: () => void
+    onTextChange: (text: string) => void
+    addLike: (id: number) => void
 }
+
+const mapStateToProps = (state: StateType): MapStatePropsType => {
+    return {
+        profilePage: state.profilePage
+    }
+}
+
+const mapDispatchToProps = (dispatch: Dispatch): MapDispatchPropsType => {
+    return {
+        addPost: () => {
+            dispatch(addPostActionCreator())
+        },
+        onTextChange: (text: string) => {
+            dispatch(updatePostActionCreator(text))
+        },
+        addLike: (id: number) => {
+            dispatch(addLikeActionCreator(id))
+        }
+    }
+}
+
+
+
+export const MyPostsContainer: any = connect(mapStateToProps, mapDispatchToProps)(MyPosts)
