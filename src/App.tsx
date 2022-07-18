@@ -11,7 +11,6 @@ function App() {
         <div className="app-wrapper">
             <Header/>
             <Sidebar/>
-
             <div className={'app-wrapper-content'}>
                 <Routes>
                     <Route path={'/profile/'} element={<Profile/>}/>
