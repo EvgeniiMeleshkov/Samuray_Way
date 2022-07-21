@@ -1,4 +1,3 @@
-import React from 'react';
 import {followAC, unFollowAC, UserType} from '../../redux/usersReducer';
 import {RootReducerType} from '../../redux/redux_store';
 import {Dispatch} from 'redux';

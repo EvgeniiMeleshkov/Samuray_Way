@@ -1,7 +1,5 @@
-import React from 'react';
 import {
     addMessageActionCreator, DialogsPageType,
-    StateType,
     updateMessageActionCreator
 } from '../../redux/store';
 import Dialogs from './Dialogs';

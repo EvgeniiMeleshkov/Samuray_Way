@@ -1,8 +1,7 @@
-import React, {ReactNode} from 'react';
 import {
     addLikeActionCreator,
     addPostActionCreator,
-    ProfilePageType, StateType,
+    ProfilePageType,
     updatePostActionCreator
 } from '../../../redux/store';
 import {MyPosts} from './MyPosts';
