@@ -1,4 +1,4 @@
-import {followAC, InitialUsersStateType, setUsersAC, unFollowAC, UserType} from '../../redux/usersReducer';
+import {followAC, setUsersAC, unFollowAC, UserType} from '../../redux/usersReducer';
 import {RootReducerType} from '../../redux/redux_store';
 import {Dispatch} from 'redux';
 import {connect} from 'react-redux';
