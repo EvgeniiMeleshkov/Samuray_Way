@@ -6,12 +6,17 @@ import {UsersPropsType} from './UsersContainer';
 
 export const Users: React.FC<UsersPropsType> = (props) => {
     const mappedUsers = props.users.map(el => {
-        return <div className={styles.userItem}>
+        return <div key={el.id} className={styles.userItem}>
             <div className={styles.logoFollowDiv}>
                 <div>
                     <img alt={''} className={styles.smallLogo} src={smallLogo}/>
                 </div>
-                <div className={styles.followUnfollow}>{el.followed === true ? 'Unfollow' : 'Follow'}</div>
+                <div onClick={el.followed
+                    ? ()=>props.unFollow(el.id)
+                    : ()=>props.follow(el.id)}
+                     className={styles.followUnfollow}>
+                    {el.followed ? 'Unfollow' : 'Follow'}
+                </div>
             </div>
 
             <div className={styles.userInfo}>
