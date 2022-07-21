@@ -1,0 +1,43 @@
+.main{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+.imgDiv {
+    text-align: center;
+}
+.img {
+    flex-direction: row;
+    margin-top: 2rem;
+    max-height: 100px;
+    background-color: black;
+    max-width: fit-content;
+    border-radius: 50px;
+    margin-bottom: 3rem;
+}
+.userInfo{
+    background-color: #88a2a88a;
+    border-radius: 5px;
+    min-width: 200px;
+    min-height: 60px;
+    margin-left: 2rem;
+    text-align: center;
+    padding: 10px;
+}
+.smallLogo {
+    width: 50px;
+}
+.followUnfollow{
+    color: #232a32;
+    text-align: center;
+    border: 1px solid gray;
+    border-radius: 5px;
+}
+.followUnfollow:hover {
+    cursor: pointer;
+}
+.userItem {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
