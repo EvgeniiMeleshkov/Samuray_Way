@@ -4,7 +4,8 @@ import smallLogo from '../../assets/images/samurai_small_logo.png';
 import {UsersPropsType} from './UsersContainer';
 
 
-export const Users: React.FC<UsersPropsType> = (props) => {
+export const Users = (props: UsersPropsType) => {
+
     const mappedUsers = props.users.map(el => {
         return <div key={el.id} className={styles.userItem}>
             <div className={styles.logoFollowDiv}>
