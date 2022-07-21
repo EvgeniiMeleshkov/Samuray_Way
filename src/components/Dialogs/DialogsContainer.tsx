@@ -7,6 +7,7 @@ import {
 import Dialogs from './Dialogs';
 import {connect} from 'react-redux';
 import {Dispatch} from 'redux';
+import {RootReducerType} from '../../redux/redux_store';
 
 
 export type DialogsPropsType = MapStatePropsType & MapDispatchPropsType
@@ -20,7 +21,7 @@ type MapDispatchPropsType = {
 }
 
 //-------------------------------------------------------------
-const mapStateToProps = (state: StateType): MapStatePropsType => {
+const mapStateToProps = (state: RootReducerType): MapStatePropsType => {
     return {
         dialogsPage: state.dialogsPage
     }

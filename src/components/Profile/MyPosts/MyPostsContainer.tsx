@@ -8,6 +8,7 @@ import {
 import {MyPosts} from './MyPosts';
 import {connect} from 'react-redux';
 import {Dispatch} from 'redux';
+import {RootReducerType} from '../../../redux/redux_store';
 
 
 export type MyPostsPropsType = MapStatePropsType & MapDispatchPropsType
@@ -22,7 +23,7 @@ type MapDispatchPropsType = {
     addLike: (id: number) => void
 }
 
-const mapStateToProps = (state: StateType): MapStatePropsType => {
+const mapStateToProps = (state: RootReducerType): MapStatePropsType => {
     return {
         profilePage: state.profilePage
     }
@@ -42,6 +43,5 @@ const mapDispatchToProps = (dispatch: Dispatch): MapDispatchPropsType => {
     }
 }
 
-
-
+                        //Fix 'any' !!!
 export const MyPostsContainer: any = connect(mapStateToProps, mapDispatchToProps)(MyPosts)
