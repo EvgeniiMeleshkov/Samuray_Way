@@ -2,9 +2,14 @@ import React from 'react';
 import styles from './Users.module.css';
 import smallLogo from '../../assets/images/samurai_small_logo.png';
 import {UsersPropsType} from './UsersContainer';
+import axios from 'axios';
 
 
 export const Users = (props: UsersPropsType) => {
+
+    // if(props.users.length === 0){
+    //     axios.get()
+    // }
 
     const mappedUsers = props.users.map(el => {
         return <div key={el.id} className={styles.userItem}>
