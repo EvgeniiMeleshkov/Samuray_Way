@@ -3,13 +3,21 @@ import styles from './Users.module.css';
 import smallLogo from '../../assets/images/samurai_small_logo.png';
 import {UsersPropsType} from './UsersContainer';
 import axios from 'axios';
+import {v1} from 'uuid';
 
 
 export const Users = (props: UsersPropsType) => {
 
-    // if(props.users.length === 0){
-    //     axios.get()
-    // }
+    if(props.users.length === 0){
+         axios.get('https://social-network.samuraijs.com/api/1.0/users').then(responce => {
+             console.log(responce)
+         })
+        props.setUsers([
+            {id: v1(), followed: true, name: 'John', country: 'USA', status: 'Im cool'},
+            {id: v1(), followed: false, name: 'David', country: 'Australia', status: 'Im sailor'},
+            {id: v1(), followed: true, name: 'Ulfrigh', country: 'Norway', status: 'Vikings!!!!'}
+        ])
+    }
 
     const mappedUsers = props.users.map(el => {
         return <div key={el.id} className={styles.userItem}>

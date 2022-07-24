@@ -1,4 +1,16 @@
 import {v1} from 'uuid';
+//
+// user = {
+//     "name": "Arch",
+//     "id": 25065,
+//     "uniqueUrlName": null,
+//     "photos": {
+//     "small": null,
+//         "large": null
+// },
+//     "status": null,
+//     "followed": false
+// }
 
 export type UserType = {
     id: string
