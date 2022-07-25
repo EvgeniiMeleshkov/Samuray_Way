@@ -1,46 +1,66 @@
-import {v1} from 'uuid';
-//
-// user = {
-//     "name": "Arch",
-//     "id": 25065,
-//     "uniqueUrlName": null,
-//     "photos": {
-//     "small": null,
-//         "large": null
-// },
-//     "status": null,
-//     "followed": false
-// }
-
 export type UserType = {
-    id: string
-    name: string
+    name: string,
+    id: number,
+    uniqueUrlName: string | null,
+    photos: {
+    small: string | null,
+        large: string | null
+},
+    status: string | null,
     followed: boolean
-    country: string
-    status: string
 }
-export type InitialUsersStateType = { users: UserType[] }
+
+export type InitialUsersStateType = { items: UserType[] }
 
 const initialUsersState: InitialUsersStateType = {
-    users: [
-        {id: v1(), followed: true, name: 'John', country: 'USA', status: 'Im cool'},
-        {id: v1(), followed: false, name: 'David', country: 'Australia', status: 'Im sailor'},
-        {id: v1(), followed: true, name: 'Ulfrigh', country: 'Norway', status: 'Vikings!!!!'}
-    ]
+    items: [
+        {
+            "name": "Arch",
+            "id": 25065,
+            "uniqueUrlName": null,
+            "photos": {
+                "small": null,
+                "large": null
+            },
+            "status": null,
+            "followed": false
+        },
+        {
+            "name": "ArchersKing",
+            "id": 25064,
+            "uniqueUrlName": null,
+            "photos": {
+                "small": null,
+                "large": null
+            },
+            "status": null,
+            "followed": false
+        },
+        {
+            "name": "Norair",
+            "id": 25063,
+            "uniqueUrlName": null,
+            "photos": {
+                "small": null,
+                "large": null
+            },
+            "status": null,
+            "followed": false
+        }]
 }
 
-export const usersReducer = (state: InitialUsersStateType = initialUsersState, action: UsersActionsType): InitialUsersStateType => {
+export const usersReducer = (state: InitialUsersStateType = { items: [] }, action: UsersActionsType): InitialUsersStateType => {
     switch (action.type) {
         case 'FOLLOW':
-            return {...state, users: state.users.map(el => el.id === action.payload.id
+            return {...state, items: state.items.map(el => el.id === action.payload.id
                 ? {...el, followed: action.payload.follow}
                 : el)}
         case 'UNFOLLOW':
-            return {...state, users: state.users.map(el => el.id === action.payload.id
+            return {...state, items: state.items.map(el => el.id === action.payload.id
                 ? {...el, followed: action.payload.follow}
                 : el)}
         case 'SET_USERS':
-            return {...state, users: [...state.users, ...action.payload.users]}
+            return {...state, items: [...state.items, ...action.payload.items]}
         default:
             return state
     }
@@ -52,7 +72,7 @@ export type FollowACType = ReturnType<typeof followAC>
 export type UnFollowACType = ReturnType<typeof unFollowAC>
 export type SetUsersACType = ReturnType<typeof setUsersAC>
 
-export const followAC = (id: string) => {
+export const followAC = (id: number) => {
     return {
         type: 'FOLLOW',
         payload: {
@@ -61,7 +81,7 @@ export const followAC = (id: string) => {
         }
     } as const
 }
-export const unFollowAC = (id: string) => {
+export const unFollowAC = (id: number) => {
     return {
         type: 'UNFOLLOW',
         payload: {
@@ -70,11 +90,11 @@ export const unFollowAC = (id: string) => {
         }
     } as const
 }
-export const setUsersAC = (users: UserType[]) => {
+export const setUsersAC = (items: UserType[]) => {
     return {
         type: 'SET_USERS',
         payload: {
-            users
+            items
         }
     } as const
 }
