@@ -11,9 +11,9 @@ type PostPropsType = {
 function Post({posts, addLike}: PostPropsType) {
     return (
         <>
-            {posts.map((p: PostType, index: number) => {
+            {posts.map((p: PostType) => {
                 return (
-                    <div key={index} className={styles.post}>
+                    <div key={p.id} className={styles.post}>
                     <img alt={''} className={styles.smallLogo} src={smallLogo}/>
                     {p.message}
                     <div>

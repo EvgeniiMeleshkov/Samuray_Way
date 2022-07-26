@@ -15,7 +15,7 @@ export const profileReducer = (state = initialState, action: ActionsTypes): Prof
     switch (action.type) {
         case 'ADD_POST':
             let newPost = {
-                id: 5,
+                id: new Date().getTime() + new Date().getDate(),
                 message: state.newPostText,
                 likesCount: 0,
                 time: new Date().toLocaleTimeString()
