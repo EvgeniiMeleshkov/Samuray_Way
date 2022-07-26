@@ -42,14 +42,14 @@ export type DialogsPageType = {
 
 //______________STATE TYPE_____________________
 
-export type StateType = {
+ type StateType = {
     profilePage: ProfilePageType
     dialogsPage: DialogsPageType
 }
 
 //____________STORE TYPE_________________________
 
-export type StoreType = {
+ type StoreType = {
     _state: StateType
     onChange: () => void
     subscriber: (callBack: () => void) => void
@@ -74,7 +74,7 @@ export type ActionsTypes =
 
 //-------------STORE-------------------------------
 
-export const store: StoreType = {
+ const store: StoreType = {
     _state: {
         profilePage: {
             newPostText: 'It-Kamasutra',

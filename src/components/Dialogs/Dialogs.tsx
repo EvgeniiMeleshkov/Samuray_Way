@@ -1,12 +1,13 @@
-import React, {ClassAttributes, KeyboardEvent, LegacyRef, RefObject} from 'react';
+import React, {KeyboardEvent} from 'react';
 import styles from './Dialogs.module.css'
 import {DialogItem} from './DialogItem/DialogItem';
 import {DialogMessage} from './DialogMessage/DialogMessage';
 import {DialogsPropsType} from './DialogsContainer';
+import {DialogsPageType} from '../../redux/store';
 
 
 
-function Dialogs({dialogsPage, addMessage, onTextChanged}: DialogsPropsType) {
+export const Dialogs: React.FC<DialogsPropsType> = ({dialogsPage, addMessage, onTextChanged}: DialogsPropsType) => {
 
 
 //------------------------------------------------------------------------
@@ -62,5 +63,3 @@ function Dialogs({dialogsPage, addMessage, onTextChanged}: DialogsPropsType) {
         </div>
     )
 }
-
-export default Dialogs
