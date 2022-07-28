@@ -1,7 +1,6 @@
 .app-wrapper {
   text-align: initial;
   display: grid;
-  background-color: whitesmoke;
 
   grid-template-areas:
   "h h"
