@@ -9,9 +9,9 @@ class Users extends React.Component<UsersPropsType> {
 
     componentDidMount() {
         if (this.props.items.length === 0)
-        axios.get('https://social-network.samuraijs.com/api/1.0/users').then(responce => {
-            this.props.setUsers(responce.data.items)
-        })
+        axios.get('https://social-network.samuraijs.com/api/1.0/users', {params: '61673f24-31ed-4acb-baab-8f77d72b4514'}).then(response => {
+            return response
+        }).then(res => this.props.setUsers(res.data.items)).catch(err=>err)
     }
 
     render = () => {
