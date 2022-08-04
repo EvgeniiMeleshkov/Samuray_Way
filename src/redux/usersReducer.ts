@@ -3,75 +3,76 @@ export type UserType = {
     id: number,
     uniqueUrlName: string | null,
     photos: {
-    small: string | null,
+        small: string | null,
         large: string | null
-},
+    },
     status: string | null,
     followed: boolean
 }
 
-export type InitialUsersStateType = { items: UserType[] }
-
-const initialUsersState: InitialUsersStateType = {
-    items: [
-        {
-            "name": "Arch",
-            "id": 25065,
-            "uniqueUrlName": null,
-            "photos": {
-                "small": null,
-                "large": null
-            },
-            "status": null,
-            "followed": false
-        },
-        {
-            "name": "ArchersKing",
-            "id": 25064,
-            "uniqueUrlName": null,
-            "photos": {
-                "small": null,
-                "large": null
-            },
-            "status": null,
-            "followed": false
-        },
-        {
-            "name": "Norair",
-            "id": 25063,
-            "uniqueUrlName": null,
-            "photos": {
-                "small": null,
-                "large": null
-            },
-            "status": null,
-            "followed": false
-        }]
+export type InitialUsersStateType = {
+    items: UserType[]
+    pageSize: number
+    totalUsersCount: number
+    currentPage: number
 }
 
-export const usersReducer = (state: InitialUsersStateType = { items: [] }, action: UsersActionsType): InitialUsersStateType => {
+const initialUsersState: InitialUsersStateType = {
+    items: [],
+    pageSize: 5,
+    totalUsersCount: 19,
+    currentPage: 2
+}
+
+export const usersReducer = (state: InitialUsersStateType = initialUsersState, action: UsersActionsType): InitialUsersStateType => {
     switch (action.type) {
         case 'FOLLOW':
-            return {...state, items: state.items.map(el => el.id === action.payload.id
-                ? {...el, followed: action.payload.follow}
-                : el)}
+            return {
+                ...state, items: state.items.map(el => el.id === action.payload.id
+                    ? {...el, followed: action.payload.follow}
+                    : el)
+            }
         case 'UNFOLLOW':
-            return {...state, items: state.items.map(el => el.id === action.payload.id
-                ? {...el, followed: action.payload.follow}
-                : el)}
+            return {
+                ...state, items: state.items.map(el => el.id === action.payload.id
+                    ? {...el, followed: action.payload.follow}
+                    : el)
+            }
         case 'SET_USERS':
-            return {...state, items: [...state.items, ...action.payload.items]}
+            return {...state, items: [...action.payload.items]}
+        case 'SET_CURRENT_PAGE':
+            return {...state, currentPage: action.payload.page}
+        case 'SET_TOTAL_USERS_COUNT':
+            return {...state, totalUsersCount: action.payload.count}
         default:
             return state
     }
 }
 
-export type UsersActionsType = FollowACType | UnFollowACType | SetUsersACType
+export type UsersActionsType = FollowACType | UnFollowACType | SetUsersACType | SetCurrentPageACType | SetTotalUsersCountACType
 
 export type FollowACType = ReturnType<typeof followAC>
 export type UnFollowACType = ReturnType<typeof unFollowAC>
 export type SetUsersACType = ReturnType<typeof setUsersAC>
+export type SetCurrentPageACType = ReturnType<typeof setCurrentPageAC>
+export type SetTotalUsersCountACType = ReturnType<typeof setTotalUsersCountAC>
 
+export const setTotalUsersCountAC = (count: number) => {
+    return {
+        type: 'SET_TOTAL_USERS_COUNT',
+        payload: {
+            count
+        }
+    } as const
+}
+export const setCurrentPageAC = (page: number) => {
+    return {
+        type: 'SET_CURRENT_PAGE',
+        payload: {
+            page
+        }
+    } as const
+}
 export const followAC = (id: number) => {
     return {
         type: 'FOLLOW',

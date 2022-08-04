@@ -51,3 +51,6 @@
     align-items: center;
     margin-bottom: 1rem;
 }
+.selectedPage {
+    font-weight: bold;
+}

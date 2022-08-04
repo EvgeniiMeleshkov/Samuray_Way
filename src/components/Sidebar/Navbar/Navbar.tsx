@@ -7,10 +7,10 @@ function Navbar() {
     return (
         <nav className={styles.nav}>
             <div className={styles.navItem}>
-                <NavLink to={'/profile/'} className={(p)=>clName(p.isActive)}>Profile</NavLink>
+                <NavLink to={'/profile'} className={(p)=>clName(p.isActive)}>Profile</NavLink>
             </div>
             <div className={styles.navItem}>
-                <NavLink to={'/dialogs/'} className={(p)=>clName(p.isActive)}>Messages</NavLink>
+                <NavLink to={'/dialogs'} className={(p)=>clName(p.isActive)}>Messages</NavLink>
             </div>
             <div className={styles.navItem}>
                 <NavLink to={'/users'} className={(p)=>clName(p.isActive)}>Users</NavLink>

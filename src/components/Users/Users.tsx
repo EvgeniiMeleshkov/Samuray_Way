@@ -9,21 +9,53 @@ class Users extends React.Component<UsersPropsType> {
 
     componentDidMount() {
         if (this.props.items.length === 0)
-        axios.get('https://social-network.samuraijs.com/api/1.0/users', {headers: {
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`, {headers: {
                 'API-KEY': '61673f24-31ed-4acb-baab-8f77d72b4514'
             }}
-        ).then(response => {
-            return response
-        }).then(res => this.props.setUsers(res.data.items)).catch(err=>err)
+        ).then(res => {
+            this.props.setUsers(res.data.items)
+            this.props.setTotalUsersCount(res.data.totalCount)
+        }).catch(err=>err)
+    }
+
+    onPageChanged = (number: number) => {
+        this.props.setCurrentPage(number)
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${number}&count=${this.props.pageSize}`, {headers: {
+                'API-KEY': '61673f24-31ed-4acb-baab-8f77d72b4514'
+            }}
+        ).then(res => this.props.setUsers(res.data.items)).catch(err=>err)
     }
 
     render = () => {
+
+        let pagesCount = Math.ceil(this.props.totalUsersCount / this.props.pageSize)
+        let pages = []
+        for (let i = 1; i <= pagesCount; i++) {
+            pages.push(i)
+        }
+
+         pages.length = 10
+
+
+
         return (
+
             <div className={styles.main}>
+
                 <div className={styles.imgDiv}>
                     <img alt={''} className={styles.img}
                          src={'https://www.textillia.com/sites/default/files/styles/large/public/img/2022/01/14/1Samurai%20LogoV1pattern.jpg?itok=I2y422PV'}/>
                 </div>
+
+                <div>{pages.map(el => <span
+                    onClick={()=>this.onPageChanged(el)}
+                    className={this.props.currentPage === el
+                        ? styles.selectedPage
+                        : ''}
+                    key={el}>
+                    {el}
+                </span>)}</div>
+
                 {this.props.items.map(el => {
                     return <div key={el.id + el.name} className={styles.userItem}>
                         <div className={styles.logoFollowDiv}>

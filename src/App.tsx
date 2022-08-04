@@ -14,7 +14,7 @@ function App() {
             <Sidebar/>
             <div className={'app-wrapper-content'}>
                 <Routes>
-                    <Route path={'/profile/'} element={<Profile/>}/>
+                    <Route path={'/profile/*'} element={<Profile/>}/>
                     <Route path={'/dialogs/*'} element={<DialogsContainer/>}/>
                     <Route path={'/users/*'} element={<UsersContainer/>}/>
                 </Routes>
