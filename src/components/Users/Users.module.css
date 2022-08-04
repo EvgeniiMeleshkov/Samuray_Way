@@ -21,8 +21,9 @@
     background-color: #88a2a88a;
     border-radius: 5px;
     min-width: 200px;
-    max-width: border-box;
+    max-width: 300px;
     min-height: 60px;
+    max-height: 150px;
     text-align: center;
     padding: 10px;
 }
@@ -51,6 +52,20 @@
     align-items: center;
     margin-bottom: 1rem;
 }
+.pagesDiv {
+    padding: 1rem;
+    margin-bottom: 3rem;
+}
+.page{
+    padding: 10px;
+    cursor: pointer;
+}
 .selectedPage {
+    box-shadow: rgba(35, 42, 50, 0.37) 2px 1px;
+    border: #88a2a8 1px solid;
+    border-radius: 5px;
+    padding: 10px;
+    cursor: pointer;
     font-weight: bold;
+    font-size: 20px;
 }

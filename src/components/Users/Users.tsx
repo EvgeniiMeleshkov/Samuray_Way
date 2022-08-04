@@ -34,10 +34,22 @@ class Users extends React.Component<UsersPropsType> {
             pages.push(i)
         }
 
-         pages.length = 10
-
-
-
+        pages.length = 9
+        if (this.props.currentPage > 4) {
+            pages[0] = this.props.currentPage - 4
+            pages[1] = this.props.currentPage - 3
+            pages[2] = this.props.currentPage - 2
+            pages[3] = this.props.currentPage - 1
+            pages[4] = this.props.currentPage
+            pages[5] = this.props.currentPage + 1
+            pages[6] = this.props.currentPage + 2
+            pages[7] = this.props.currentPage + 3
+            pages[8] = this.props.currentPage + 4
+        } else if (this.props.currentPage === pages.length) {
+            pages[0] = this.props.currentPage - 2
+            pages[1] = this.props.currentPage - 1
+            pages[2] = this.props.currentPage
+        }
         return (
 
             <div className={styles.main}>
@@ -47,11 +59,11 @@ class Users extends React.Component<UsersPropsType> {
                          src={'https://www.textillia.com/sites/default/files/styles/large/public/img/2022/01/14/1Samurai%20LogoV1pattern.jpg?itok=I2y422PV'}/>
                 </div>
 
-                <div>{pages.map(el => <span
+                <div className={styles.pagesDiv}>{pages.map(el => <span
                     onClick={()=>this.onPageChanged(el)}
                     className={this.props.currentPage === el
                         ? styles.selectedPage
-                        : ''}
+                        : styles.page}
                     key={el}>
                     {el}
                 </span>)}</div>
@@ -73,7 +85,7 @@ class Users extends React.Component<UsersPropsType> {
 
                         <div className={styles.userInfo}>
                             <div style={{textAlign: 'start'}}>{el.name}</div>
-                            <div style={{textAlign: 'center'}}>{el.id}</div>
+                            <div style={{textAlign: 'center'}}>{el.status}</div>
                             <div style={{textAlign: 'end'}}>{el.uniqueUrlName}</div>
                         </div>
                     </div>
