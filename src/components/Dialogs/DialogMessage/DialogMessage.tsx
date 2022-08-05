@@ -9,35 +9,36 @@ type DialogMessagePropsType = {
     messages: MessagesType
     friends: FriendsType
 }
+
 //-----------------------------------------------
-export function DialogMessage ({messages, friends}: DialogMessagePropsType) {
-let currentFriend = friends[0]
+export function DialogMessage({messages, friends}: DialogMessagePropsType) {
+    let currentFriend = friends[0]
     return (
         <div>
             {
-                messages.map((m:MessageType, index: number)=>{
+                messages.map((m: MessageType, index: number) => {
                     return (
                         <div key={index} className={styles.name}>
-                        <div className={styles.messageInstance}>
-                            <div>
-                                <img className={styles.img} src={avatar}/>
-                            </div>
-                            <div>
-                                <div className={styles.messageText}>
-                                    <div className={styles.userName}>{currentFriend.name}</div>
-                                    <div className={styles.userMessage}>
-                                        {m.text}
-                                    </div>
-                                    <div className={styles.userMessageTime}>
-                                        {m.time}
+                            <div className={styles.messageInstance}>
+                                <div>
+                                    <img className={styles.img} src={avatar}/>
+                                </div>
+                                <div>
+                                    <div className={styles.messageText}>
+                                        <div className={styles.userName}>{currentFriend.name}</div>
+                                        <div className={styles.userMessage}>
+                                            {m.text}
+                                        </div>
+                                        <div className={styles.userMessageTime}>
+                                            {m.time}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
                     )
                 })
-                }
+            }
         </div>
 
     )

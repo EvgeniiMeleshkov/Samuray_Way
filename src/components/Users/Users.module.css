@@ -14,6 +14,7 @@
     max-width: fit-content;
     border-radius: 50px;
     margin-bottom: 3rem;
+    box-shadow: rgba(18, 32, 37, 0.76) 2px 1px 3px 1px;
 }
 .userInfo{
     display: flex;

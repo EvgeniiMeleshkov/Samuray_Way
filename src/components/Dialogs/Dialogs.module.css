@@ -17,6 +17,7 @@
     max-width: fit-content;
     border-radius: 50px;
     margin-bottom: 3rem;
+    box-shadow: rgba(18, 32, 37, 0.76) 2px 1px 3px 1px;
 }
 .dAndM {
     display: flex;
@@ -40,6 +41,14 @@
     text-decoration: none;
     font-weight: bold;
 }
+
+.sendButton {
+    margin-right: 2rem;
+    border-radius: 50px;
+    box-shadow: rgba(18, 32, 37, 0.76) 2px 1px 3px 1px;
+}
+
+
 /*.messages {*/
 /*    padding: 2rem;*/
 /*    justify-content: center;*/

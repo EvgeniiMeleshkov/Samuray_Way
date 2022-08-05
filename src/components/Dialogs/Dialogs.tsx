@@ -3,7 +3,6 @@ import styles from './Dialogs.module.css'
 import {DialogItem} from './DialogItem/DialogItem';
 import {DialogMessage} from './DialogMessage/DialogMessage';
 import {DialogsPropsType} from './DialogsContainer';
-import {DialogsPageType} from '../../redux/store';
 
 
 
@@ -55,8 +54,8 @@ export const Dialogs: React.FC<DialogsPropsType> = ({dialogsPage, addMessage, on
                     </div>
                     <div className={styles.button}>
                         {dialogsPage.newMessageText !== '' && dialogsPage.newMessageText.match(/\w/)
-                            ? <button onClick={onButtonHandler}>send</button>
-                            : <button disabled={true}>write a message</button>}
+                            ? <button className={styles.sendButton} onClick={onButtonHandler}>send</button>
+                            : <button className={styles.sendButton} disabled={true}>write a message</button>}
                     </div>
                 </div>
             </div>

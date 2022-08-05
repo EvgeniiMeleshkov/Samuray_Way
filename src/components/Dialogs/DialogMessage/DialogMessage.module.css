@@ -11,6 +11,7 @@
     width: max-content;
     max-width: 400px;
     border-radius: 10px 10px 10px 0;
+
 }
 .messageText:before {
     content: "";
@@ -47,8 +48,9 @@
 }
 
 .img {
-    height: 50px;
-    align-items: flex-end;
+    border: rgba(18, 32, 37, 0.76) 1px solid;
+    box-shadow: rgba(18, 32, 37, 0.76) 2px 1px 3px 1px;
     border-radius: 50%;
+    width: 50px;
 }
 

@@ -3,9 +3,13 @@
     padding: 1rem;
 }
 .smallLogo {
+    border: rgba(18, 32, 37, 0.76) 1px solid;
+    box-shadow: rgba(18, 32, 37, 0.76) 2px 1px 3px 1px;
+    border-radius: 50%;
     width: 50px;
 }
 .likeButton {
     margin-right: 2rem;
     border-radius: 50%;
+    box-shadow: rgba(18, 32, 37, 0.76) 2px 1px 3px 1px;
 }
