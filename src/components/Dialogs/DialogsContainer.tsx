@@ -1,11 +1,8 @@
-import {
-    addMessageActionCreator, DialogsPageType,
-    updateMessageActionCreator
-} from '../../redux/store';
 import {Dialogs} from './Dialogs';
 import {connect} from 'react-redux';
 import {Dispatch} from 'redux';
 import {RootReducerType} from '../../redux/redux_store';
+import {addMessageAC, DialogsPageType, updateMessageAC} from '../../redux/dialogsReducer';
 
 
 type MapStatePropsType = {
@@ -26,12 +23,12 @@ const mapStateToProps = (state: RootReducerType): MapStatePropsType => {
 const mapDispatchToProps = (dispatch: Dispatch): MapDispatchPropsType => {
     return {
         onTextChanged: (text: string) => {
-            dispatch(updateMessageActionCreator(text))
+            dispatch(updateMessageAC(text))
         },
         addMessage: () => {
-            dispatch(addMessageActionCreator())
+            dispatch(addMessageAC())
         }
     }
 }
 export type DialogsPropsType = MapStatePropsType & MapDispatchPropsType
-export const DialogsContainer: any = connect<MapStatePropsType, MapDispatchPropsType, {}, RootReducerType>(mapStateToProps, mapDispatchToProps)(Dialogs)
+export const DialogsContainer = connect<MapStatePropsType, MapDispatchPropsType, {}, RootReducerType>(mapStateToProps, mapDispatchToProps)(Dialogs)

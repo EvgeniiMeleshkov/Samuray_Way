@@ -1,11 +1,11 @@
 import React from 'react';
 import './App.css';
 import Header from './components/Header/Header';
-import Profile from './components/Profile/Profile';
 import {Sidebar} from './components/Sidebar/Sidebar';
-import {Route, Routes} from 'react-router-dom';
+import {Route, Switch} from 'react-router-dom';
 import {DialogsContainer} from './components/Dialogs/DialogsContainer'
 import {UsersContainer} from './components/Users/UsersContainer';
+import ProfileContainer from './components/Profile/ProfileContainer';
 
 function App() {
     return (
@@ -13,11 +13,11 @@ function App() {
             <Header/>
             <Sidebar/>
             <div className={'app-wrapper-content'}>
-                <Routes>
-                    <Route path={'/profile/*'} element={<Profile/>}/>
-                    <Route path={'/dialogs/*'} element={<DialogsContainer/>}/>
-                    <Route path={'/users/*'} element={<UsersContainer/>}/>
-                </Routes>
+                <Switch>
+                    <Route path={'/profile/:userId?'} render={ () => <ProfileContainer/> }/>
+                    <Route path={'/dialogs/'} render={ () => <DialogsContainer/> }/>
+                    <Route path={'/users/'} render={ () => <UsersContainer/> }/>
+                </Switch>
             </div>
         </div>
     );

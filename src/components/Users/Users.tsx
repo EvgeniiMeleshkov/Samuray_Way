@@ -2,7 +2,6 @@ import React from 'react';
 import styles from './Users.module.css';
 import smallLogo from '../../assets/images/samurai_small_logo.png';
 import {UserType} from '../../redux/usersReducer';
-import samurai from '../../assets/gifs/samursi-samurai.gif'
 import Preloader from '../common/Preloader';
 import {NavLink} from 'react-router-dom';
 import SamuraiGif from '../common/SamuraiGif';

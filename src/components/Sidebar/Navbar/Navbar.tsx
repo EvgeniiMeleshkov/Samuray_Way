@@ -3,23 +3,23 @@ import {NavLink} from 'react-router-dom';
 import styles from './Navbar.module.css'
 
 function Navbar() {
-    const clName = (p: boolean)=>{return p ? styles.active : styles.navItem}
+
     return (
         <nav className={styles.nav}>
             <div className={styles.navItem}>
-                <NavLink to={'/profile'} className={(p)=>clName(p.isActive)}>Profile</NavLink>
+                <NavLink to={'/profile'} className={styles.navItem} activeClassName={styles.active}>Profile</NavLink>
             </div>
             <div className={styles.navItem}>
-                <NavLink to={'/dialogs'} className={(p)=>clName(p.isActive)}>Messages</NavLink>
+                <NavLink to={'/dialogs'} className={styles.navItem} activeClassName={styles.active}>Messages</NavLink>
             </div>
             <div className={styles.navItem}>
-                <NavLink to={'/users'} className={(p)=>clName(p.isActive)}>Users</NavLink>
+                <NavLink to={'/users'} className={styles.navItem} activeClassName={styles.active}>Users</NavLink>
             </div>
             <div className={styles.navItem}>
-                <NavLink to={'/music'} className={(p)=>clName(p.isActive)}>Music</NavLink>
+                <NavLink to={'/music'} className={styles.navItem} activeClassName={styles.active}>Music</NavLink>
             </div>
             <div className={styles.navItem}>
-                <NavLink to={'/settings'} className={(p)=>clName(p.isActive)}>Settings</NavLink>
+                <NavLink to={'/settings'} className={styles.navItem} activeClassName={styles.active}>Settings</NavLink>
             </div>
         </nav>
     )

@@ -1,19 +1,19 @@
-import {
-    addLikeActionCreator,
-    addPostActionCreator,
-    ProfilePageType,
-    updatePostActionCreator
-} from '../../../redux/store';
 import {MyPosts} from './MyPosts';
 import {connect} from 'react-redux';
 import {Dispatch} from 'redux';
 import {RootReducerType} from '../../../redux/redux_store';
+import {
+    addLikeActionCreator,
+    addPostActionCreator,
+    ProfilePageStateType,
+    updatePostActionCreator
+} from '../../../redux/profileReducer';
 
 
 export type MyPostsPropsType = MapStatePropsType & MapDispatchPropsType
 
 type MapStatePropsType = {
-    profilePage: ProfilePageType
+    profilePage: ProfilePageStateType
 }
 
 type MapDispatchPropsType = {
@@ -42,5 +42,4 @@ const mapDispatchToProps = (dispatch: Dispatch): MapDispatchPropsType => {
     }
 }
 
-                        //Fix 'any' !!!
-export const MyPostsContainer: any = connect(mapStateToProps, mapDispatchToProps)(MyPosts)
+export const MyPostsContainer = connect(mapStateToProps, mapDispatchToProps)(MyPosts)

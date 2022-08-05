@@ -1,17 +1,47 @@
-.img {
-    margin-top: 2rem;
-    height: 100px;
-    background-color: black;
-    width: border-box;
-    border-radius: 50px;
-    box-shadow: rgba(18, 32, 37, 0.76) 2px 1px 3px 1px;
-}
 
 .imgDiv {
-    width: border-box;
     text-align: center;
 }
-
+.img {
+    width: 200px;
+    height: 200px;
+    display: flex;
+    flex-direction: row;
+    margin: 1rem 0 1rem 1rem;
+    border: #232a32 1px solid;
+    border-radius: 20px;
+    box-shadow: rgba(18, 32, 37, 0.76) 2px 1px 3px 1px;
+}
+.profileInfoField{
+    display: flex;
+    flex-direction: column;
+    margin: 1rem;
+    border-radius: 20px;
+    box-shadow: rgb(18 32 37 / 76%) 2px 1px 3px 1px;
+    background-color: rgba(0, 0, 0, 0.12);
+    padding: 10px;
+    text-align: start;
+    justify-content: flex-start;
+    align-items: flex-start;
+    align-content: stretch;
+    font-weight: bold;
+    color: rgba(24, 31, 40, 0.79);
+}
 .profileBody {
-    padding-left: 2rem;
+    display: flex;
+    border-radius: 20px;
+    box-shadow: rgba(18, 32, 37, 0.76) 2px 1px 3px 1px;
+    background-color: rgba(0, 0, 0, 0.12);
+    height: max-content;
+}
+.name {
+    font-size: larger;
+    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+    color: #264b8a;
+    text-shadow: snow 3px 1px 3px;
+    margin-bottom: 5px;
+}
+.contacts {
+    font-size: 10px;
+    font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
 }

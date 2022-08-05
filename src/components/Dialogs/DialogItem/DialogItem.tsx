@@ -1,7 +1,7 @@
 import {NavLink} from 'react-router-dom';
 import styles from '../Dialogs.module.css';
 import React from 'react';
-import {FriendsType, FriendType} from '../../../redux/store';
+import {FriendsType, FriendType} from '../../../redux/dialogsReducer';
 //------------------------------------------
 type DialogItemPropsType = {
     friends: FriendsType
@@ -12,7 +12,8 @@ export function DialogItem({friends}: DialogItemPropsType) {
         <div>
             {friends.map((f: FriendType, index: number) => {
                 return <div key={index}>
-                    <NavLink className={(p)=>p.isActive ? styles.act : styles.dialogItem}
+                    <NavLink className={styles.dialogItem}
+                             activeClassName={styles.act}
                              to={`/dialogs/${f.id}${f.name}`}>
                         {f.name}
                     </NavLink>

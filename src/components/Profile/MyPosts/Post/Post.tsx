@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './Post.module.css'
 import smallLogo from '../../../../assets/images/samurai_small_logo.png'
-import {PostsType, PostType} from '../../../../redux/store';
+import {PostsType, PostType} from '../../../../redux/profileReducer';
 
 type PostPropsType = {
     posts: PostsType

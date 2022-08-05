@@ -10,7 +10,6 @@ import {
     UserType
 } from '../../redux/usersReducer';
 import {RootReducerType} from '../../redux/redux_store';
-import {Dispatch} from 'redux';
 import {connect} from 'react-redux';
 
 export type UsersAPIComponentPropsType = MapStatePropsType & MapDispatchPropsType;
@@ -92,7 +91,7 @@ const mapStateToProps = (state: RootReducerType): MapStatePropsType => {
     }
 }
 
-export const UsersContainer: any = connect(mapStateToProps, {
+export const UsersContainer = connect<MapStatePropsType, MapDispatchPropsType, {}, RootReducerType>(mapStateToProps, {
     follow: followAC,
     unFollow: unFollowAC,
     setUsers: setUsersAC,

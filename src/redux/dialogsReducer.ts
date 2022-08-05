@@ -1,5 +1,22 @@
-import {ActionsTypes, DialogsPageType, FriendsType, MessagesType} from './store';
 
+export type MessageType = {
+    id: number
+    text: string
+    name: string
+    time: string
+}
+export type MessagesType = Array<MessageType>
+export type FriendType = {
+    name: string
+    id: number
+}
+export type FriendsType = Array<FriendType>
+
+export type DialogsPageType = {
+    newMessageText: string
+    friends: FriendsType
+    messages: MessagesType
+}
 
 const initialState: DialogsPageType = {
     friends: [
@@ -19,9 +36,7 @@ const initialState: DialogsPageType = {
     ] as MessagesType
 }
 
-export type DialogsReducerType = ReturnType<typeof dialogsReducer>
-
-export const dialogsReducer = (state: DialogsPageType = initialState, action: ActionsTypes): DialogsPageType => {
+export const dialogsReducer = (state: DialogsPageType = initialState, action: DialogsReducerActionsType): DialogsPageType => {
     switch (action.type) {
         case 'ADD_MESSAGE':
             let newMessage = {
@@ -37,3 +52,17 @@ export const dialogsReducer = (state: DialogsPageType = initialState, action: Ac
             return state
     }
 }
+
+
+type DialogsReducerActionsType = AddMessageACType | UpdateMessageACType
+type AddMessageACType = ReturnType<typeof addMessageAC>
+type UpdateMessageACType = ReturnType<typeof updateMessageAC>
+
+export const addMessageAC = () => ({
+    type: 'ADD_MESSAGE'
+} as const)
+
+export const updateMessageAC = (text: string) => ({
+    type: 'UPDATE_MESSAGE_TEXT',
+    newText: text
+} as const)

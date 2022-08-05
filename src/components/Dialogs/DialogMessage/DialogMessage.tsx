@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './DialogMessage.module.css';
 import avatar from '../../../assets/images/samurai_small_logo.png'
-import {FriendsType, MessagesType, MessageType} from '../../../redux/store';
+import {FriendsType, MessagesType, MessageType} from '../../../redux/dialogsReducer';
 //-----------------------------------------------
 
 
@@ -21,7 +21,7 @@ export function DialogMessage({messages, friends}: DialogMessagePropsType) {
                         <div key={index} className={styles.name}>
                             <div className={styles.messageInstance}>
                                 <div>
-                                    <img className={styles.img} src={avatar}/>
+                                    <img alt={'avatar'} className={styles.img} src={avatar}/>
                                 </div>
                                 <div>
                                     <div className={styles.messageText}>
