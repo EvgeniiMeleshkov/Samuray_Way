@@ -2,7 +2,8 @@ import React from 'react';
 import styles from './Users.module.css';
 import smallLogo from '../../assets/images/samurai_small_logo.png';
 import {UserType} from '../../redux/usersReducer';
-import preloader from '../../assets/preloader/samursi-samurai.gif'
+import samurai from '../../assets/preloader/samursi-samurai.gif'
+import Preloader from '../common/Preloader';
 
 type UsersPropsType = {
     items: UserType[]
@@ -45,22 +46,19 @@ export const Users = (props: UsersPropsType) => {
         <div className={styles.main}>
             {props.isFetching
                 ?
-                <div className={styles.imgDiv}>
-                    <img className={styles.img} alt={'Loading...'}
-                         src={preloader}/>
-                </div>
+                <Preloader/>
                 :
                 <div className={styles.imgDiv}>
                     <img alt={''} className={styles.img}
-                         src={'http://25.media.tumblr.com/8a8b10944d0d618873723f1ecba4b6e6/tumblr_mta5zdXMXG1stjws3o1_500.gif'}/>
+                         src={samurai}/>
                 </div>
             }
-                <div className={styles.pagesDiv}>{pages.map(el => <span
-                    onClick={() => props.onPageChanged(el)}
-                    className={props.currentPage === el
-                        ? styles.selectedPage
-                        : styles.page}
-                    key={el}>
+            <div className={styles.pagesDiv}>{pages.map(el => <span
+                onClick={() => props.onPageChanged(el)}
+                className={props.currentPage === el
+                    ? styles.selectedPage
+                    : styles.page}
+                key={el}>
                     {el}
                 </span>)}</div>
 

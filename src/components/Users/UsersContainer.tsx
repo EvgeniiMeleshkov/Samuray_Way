@@ -91,27 +91,12 @@ const mapStateToProps = (state: RootReducerType): MapStatePropsType => {
         isFetching: state.usersPage.isFetching
     }
 }
-const mapDispatchToProps = (dispatch: Dispatch): MapDispatchPropsType => {
-    return {
-        follow: (id: number) => {
-            dispatch(followAC(id))
-        },
-        unFollow: (id: number) => {
-            dispatch(unFollowAC(id))
-        },
-        setUsers: (items: UserType[]) => {
-            dispatch(setUsersAC(items))
-        },
-        setCurrentPage: (page: number) => {
-            dispatch(setCurrentPageAC(page))
-        },
-        setTotalUsersCount: (count: number) => {
-            dispatch(setTotalUsersCountAC(count))
-        },
-        setFetching: (isFetching: boolean) => {
-            dispatch(setFetchingAC(isFetching))
-        }
-    }
-}
 
-export const UsersContainer: any = connect(mapStateToProps, mapDispatchToProps)(UsersContainerComponent)
+export const UsersContainer: any = connect(mapStateToProps, {
+    follow: followAC,
+    unFollow: unFollowAC,
+    setUsers: setUsersAC,
+    setCurrentPage: setCurrentPageAC,
+    setTotalUsersCount: setTotalUsersCountAC,
+    setFetching: setFetchingAC
+})(UsersContainerComponent)
