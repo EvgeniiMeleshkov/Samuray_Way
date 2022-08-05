@@ -3,7 +3,7 @@ import axios from 'axios';
 import {Users} from './Users';
 import {
     followAC,
-    setCurrentPageAC,
+    setCurrentPageAC, setFetchingAC,
     setTotalUsersCountAC,
     setUsersAC,
     unFollowAC,
@@ -20,53 +20,66 @@ type MapStatePropsType = {
     pageSize: number
     totalUsersCount: number
     currentPage: number
+    isFetching: boolean
 }
 type MapDispatchPropsType = {
-    follow: (id:number)=>void
-    unFollow: (id:number)=>void
-    setUsers: (items:UserType[])=>void
-    setCurrentPage: (page: number)=>void
-    setTotalUsersCount: (count: number)=>void
+    follow: (id: number) => void
+    unFollow: (id: number) => void
+    setUsers: (items: UserType[]) => void
+    setCurrentPage: (page: number) => void
+    setTotalUsersCount: (count: number) => void
+    setFetching: (isFetching: boolean) => void
 }
 
 
 class UsersContainerComponent extends React.Component<UsersAPIComponentPropsType> {
 
     componentDidMount() {
-        if (this.props.items.length === 0)
-            axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`, {headers: {
+        this.props.setFetching(true)
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`, {
+                headers: {
                     'API-KEY': '61673f24-31ed-4acb-baab-8f77d72b4514'
-                }}
-            ).then(res => {
-                this.props.setUsers(res.data.items)
-                this.props.setTotalUsersCount(res.data.totalCount)
-            }).catch(err=>err)
+                }
+            }
+        ).then(res => {
+            this.props.setFetching(false)
+            this.props.setUsers(res.data.items)
+            this.props.setTotalUsersCount(res.data.totalCount)
+        }).catch(err => err)
     }
 
     onPageChanged = (number: number) => {
+        this.props.setFetching(true)
         this.props.setCurrentPage(number)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${number}&count=${this.props.pageSize}`, {headers: {
-                'API-KEY': '61673f24-31ed-4acb-baab-8f77d72b4514'
-            }}
-        ).then(res => this.props.setUsers(res.data.items)).catch(err=>err)
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${number}&count=${this.props.pageSize}`, {
+                headers: {
+                    'API-KEY': '61673f24-31ed-4acb-baab-8f77d72b4514'
+                }
+            }
+        ).then(res => {
+            this.props.setFetching(false)
+            this.props.setUsers(res.data.items)
+        }).catch(err => err)
     }
 
     render = () => {
 
         return (
-            <Users
-                currentPage={this.props.currentPage}
-                totalUsersCount={this.props.totalUsersCount}
-                items={this.props.items}
-                pageSize={this.props.pageSize}
-                follow={this.props.follow}
-                unFollow={this.props.unFollow}
-                onPageChanged={this.onPageChanged}
-            />
+            <>
+                <Users
+                    isFetching={this.props.isFetching}
+                    currentPage={this.props.currentPage}
+                    totalUsersCount={this.props.totalUsersCount}
+                    items={this.props.items}
+                    pageSize={this.props.pageSize}
+                    follow={this.props.follow}
+                    unFollow={this.props.unFollow}
+                    onPageChanged={this.onPageChanged}
+                />
+            </>
         )
     }
 }
-
 
 
 const mapStateToProps = (state: RootReducerType): MapStatePropsType => {
@@ -74,7 +87,8 @@ const mapStateToProps = (state: RootReducerType): MapStatePropsType => {
         items: state.usersPage.items,
         pageSize: state.usersPage.pageSize,
         totalUsersCount: state.usersPage.totalUsersCount,
-        currentPage: state.usersPage.currentPage
+        currentPage: state.usersPage.currentPage,
+        isFetching: state.usersPage.isFetching
     }
 }
 const mapDispatchToProps = (dispatch: Dispatch): MapDispatchPropsType => {
@@ -93,6 +107,9 @@ const mapDispatchToProps = (dispatch: Dispatch): MapDispatchPropsType => {
         },
         setTotalUsersCount: (count: number) => {
             dispatch(setTotalUsersCountAC(count))
+        },
+        setFetching: (isFetching: boolean) => {
+            dispatch(setFetchingAC(isFetching))
         }
     }
 }

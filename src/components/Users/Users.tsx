@@ -2,15 +2,17 @@ import React from 'react';
 import styles from './Users.module.css';
 import smallLogo from '../../assets/images/samurai_small_logo.png';
 import {UserType} from '../../redux/usersReducer';
+import preloader from '../../assets/preloader/samursi-samurai.gif'
 
 type UsersPropsType = {
     items: UserType[]
     pageSize: number
     totalUsersCount: number
     currentPage: number
+    isFetching: boolean
     onPageChanged: (number: number) => void
-    follow: (id:number)=>void
-    unFollow: (id:number)=>void
+    follow: (id: number) => void
+    unFollow: (id: number) => void
 }
 
 export const Users = (props: UsersPropsType) => {
@@ -41,18 +43,24 @@ export const Users = (props: UsersPropsType) => {
     return (
 
         <div className={styles.main}>
-
-            <div className={styles.imgDiv}>
-                <img alt={''} className={styles.img}
-                     src={'https://www.textillia.com/sites/default/files/styles/large/public/img/2022/01/14/1Samurai%20LogoV1pattern.jpg?itok=I2y422PV'}/>
-            </div>
-
-            <div className={styles.pagesDiv}>{pages.map(el => <span
-                onClick={() => props.onPageChanged(el)}
-                className={props.currentPage === el
-                    ? styles.selectedPage
-                    : styles.page}
-                key={el}>
+            {props.isFetching
+                ?
+                <div className={styles.imgDiv}>
+                    <img className={styles.img} alt={'Loading...'}
+                         src={preloader}/>
+                </div>
+                :
+                <div className={styles.imgDiv}>
+                    <img alt={''} className={styles.img}
+                         src={'http://25.media.tumblr.com/8a8b10944d0d618873723f1ecba4b6e6/tumblr_mta5zdXMXG1stjws3o1_500.gif'}/>
+                </div>
+            }
+                <div className={styles.pagesDiv}>{pages.map(el => <span
+                    onClick={() => props.onPageChanged(el)}
+                    className={props.currentPage === el
+                        ? styles.selectedPage
+                        : styles.page}
+                    key={el}>
                     {el}
                 </span>)}</div>
 
@@ -77,7 +85,8 @@ export const Users = (props: UsersPropsType) => {
                             color: 'rgba(25, 36, 18, 0.81)',
                             fontWeight: 'bold'
                         }}>{el.name}</div>
-                        <div style={{textAlign: 'center',
+                        <div style={{
+                            textAlign: 'center',
                             margin: '1rem 5px 1rem 5px',
                             fontFamily: 'monospace',
                             fontWeight: 'bold',
