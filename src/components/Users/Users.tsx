@@ -81,7 +81,8 @@ export const Users = (props: UsersPropsType) => {
                             margin: '1rem 5px 1rem 5px',
                             fontFamily: 'monospace',
                             fontWeight: 'bold',
-                            color: 'rgba(6, 54, 106, 0.75)'
+                            color: 'rgba(6, 54, 106, 0.75)',
+                            overflowWrap: 'anywhere'
                         }}>{el.status ? `status: ${el.status}` : 'Status not found...'}</div>
                         <div style={{textAlign: 'end'}}>{el.uniqueUrlName}</div>
                     </div>
