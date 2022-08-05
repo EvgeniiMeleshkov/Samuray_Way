@@ -9,9 +9,9 @@ import {
 import {RootReducerType} from '../../redux/redux_store';
 import {Dispatch} from 'redux';
 import {connect} from 'react-redux';
-import Users from './Users';
+import UsersAPIComponent from './UsersAPIComponent';
 
-export type UsersPropsType = MapStatePropsType & MapDispatchPropsType;
+export type UsersAPIComponentPropsType = MapStatePropsType & MapDispatchPropsType;
 
 type MapStatePropsType = {
     items: UserType[]
@@ -56,4 +56,4 @@ const mapDispatchToProps = (dispatch: Dispatch): MapDispatchPropsType => {
     }
 }
 
-export const UsersContainer: any = connect(mapStateToProps, mapDispatchToProps)(Users)
+export const UsersContainer: any = connect(mapStateToProps, mapDispatchToProps)(UsersAPIComponent)
