@@ -2,8 +2,10 @@ import React from 'react';
 import styles from './Users.module.css';
 import smallLogo from '../../assets/images/samurai_small_logo.png';
 import {UserType} from '../../redux/usersReducer';
-import samurai from '../../assets/preloader/samursi-samurai.gif'
+import samurai from '../../assets/gifs/samursi-samurai.gif'
 import Preloader from '../common/Preloader';
+import {NavLink} from 'react-router-dom';
+import SamuraiGif from '../common/SamuraiGif';
 
 type UsersPropsType = {
     items: UserType[]
@@ -48,10 +50,7 @@ export const Users = (props: UsersPropsType) => {
                 ?
                 <Preloader/>
                 :
-                <div className={styles.imgDiv}>
-                    <img alt={''} className={styles.img}
-                         src={samurai}/>
-                </div>
+                <SamuraiGif/>
             }
             <div className={styles.pagesDiv}>{pages.map(el => <span
                 onClick={() => props.onPageChanged(el)}
@@ -66,8 +65,10 @@ export const Users = (props: UsersPropsType) => {
                 return <div key={el.id + el.name} className={styles.userItem}>
                     <div className={styles.logoFollowDiv}>
                         <div>
-                            <img alt={''} className={styles.smallLogo}
-                                 src={el.photos.small ? el.photos.small : smallLogo}/>
+                            <NavLink to={'/profile/' + el.id}>
+                                <img alt={''} className={styles.smallLogo}
+                                     src={el.photos.small ? el.photos.small : smallLogo}/>
+                            </NavLink>
                         </div>
                         <div onClick={el.followed
                             ? () => props.unFollow(el.id)

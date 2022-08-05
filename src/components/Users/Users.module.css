@@ -3,19 +3,6 @@
     align-items: center;
     flex-direction: column;
 }
-.imgDiv {
-    text-align: center;
-}
-.img {
-    flex-direction: row;
-    margin-top: 2rem;
-    max-height: 100px;
-    background-color: black;
-    max-width: fit-content;
-    border-radius: 50px;
-    margin-bottom: 3rem;
-    box-shadow: rgba(18, 32, 37, 0.76) 2px 1px 3px 1px;
-}
 .userInfo{
     display: flex;
     flex-direction: column;

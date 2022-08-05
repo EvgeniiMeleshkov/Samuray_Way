@@ -3,6 +3,7 @@ import styles from './Dialogs.module.css'
 import {DialogItem} from './DialogItem/DialogItem';
 import {DialogMessage} from './DialogMessage/DialogMessage';
 import {DialogsPropsType} from './DialogsContainer';
+import SamuraiGif from '../common/SamuraiGif';
 
 
 
@@ -33,10 +34,12 @@ export const Dialogs: React.FC<DialogsPropsType> = ({dialogsPage, addMessage, on
 //------------------------------------------------------------------------
     return (
         <div className={styles.dialogs}>
-            <div className={styles.imgDiv}>
-                <img className={styles.img}
-                     src={'https://www.textillia.com/sites/default/files/styles/large/public/img/2022/01/14/1Samurai%20LogoV1pattern.jpg?itok=I2y422PV'}/>
-            </div>
+            <SamuraiGif/>
+            {/*<div className={styles.imgDiv}>*/}
+            {/*    <img className={styles.img}*/}
+            {/*         alt={'Samurai'}*/}
+            {/*         src={'https://www.textillia.com/sites/default/files/styles/large/public/img/2022/01/14/1Samurai%20LogoV1pattern.jpg?itok=I2y422PV'}/>*/}
+            {/*</div>*/}
             <div className={styles.pageBody}>
                 <div className={styles.dAndM}>
                     <div className={styles.dialog}>

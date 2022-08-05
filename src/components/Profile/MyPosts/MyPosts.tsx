@@ -33,7 +33,6 @@ export function MyPosts({
     }
     return (
         <div>
-            My Posts
             <div className={styles.addPostBody}>
                 <div className={styles.tAreaBody}>
                     <textarea onKeyDown={onEnterPressed}
