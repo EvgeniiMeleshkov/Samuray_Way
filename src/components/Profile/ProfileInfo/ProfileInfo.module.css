@@ -48,3 +48,10 @@
     font-size: 10px;
     font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
 }
+.statusAndLookForJob {
+    display: flex;
+    margin-bottom: 5px;
+    align-items: baseline;
+    justify-content: space-evenly;
+    width: -moz-available;
+}
