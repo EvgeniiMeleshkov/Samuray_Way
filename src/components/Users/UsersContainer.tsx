@@ -1,9 +1,8 @@
 import React from 'react';
-import axios from 'axios';
 import {Users} from './Users';
 import {
     followAC,
-    setCurrentPageAC, setFetchingAC,
+    setCurrentPageAC, setFetchingAC, setToggleFollowingProgressAC,
     setTotalUsersCountAC,
     setUsersAC,
     unFollowAC,
@@ -11,6 +10,7 @@ import {
 } from '../../redux/usersReducer';
 import {RootReducerType} from '../../redux/redux_store';
 import {connect} from 'react-redux';
+import {userApi} from '../DataAccessLayer/DAL';
 
 export type UsersAPIComponentPropsType = MapStatePropsType & MapDispatchPropsType;
 
@@ -20,6 +20,7 @@ type MapStatePropsType = {
     totalUsersCount: number
     currentPage: number
     isFetching: boolean
+    followingProgress: number[]
 }
 type MapDispatchPropsType = {
     follow: (id: number) => void
@@ -28,6 +29,7 @@ type MapDispatchPropsType = {
     setCurrentPage: (page: number) => void
     setTotalUsersCount: (count: number) => void
     setFetching: (isFetching: boolean) => void
+    setToggleFollowing: (isFollowingInProgress: boolean, id: number) => void
 }
 
 
@@ -35,32 +37,19 @@ class UsersContainerComponent extends React.Component<UsersAPIComponentPropsType
 
     componentDidMount() {
         this.props.setFetching(true)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`, {
-
-            withCredentials: true,
-            headers: {
-                    'API-KEY': '61673f24-31ed-4acb-baab-8f77d72b4514'
-                }
-            }
-        ).then(res => {
+        userApi.getUsers(this.props.currentPage, this.props.pageSize).then(res => {
             this.props.setFetching(false)
-            this.props.setUsers(res.data.items)
-            this.props.setTotalUsersCount(res.data.totalCount)
+            this.props.setUsers(res.items)
+            this.props.setTotalUsersCount(res.totalCount)
         }).catch(err => err)
     }
 
     onPageChanged = (number: number) => {
         this.props.setFetching(true)
         this.props.setCurrentPage(number)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${number}&count=${this.props.pageSize}`, {
-            withCredentials: true,
-            headers: {
-                    'API-KEY': '61673f24-31ed-4acb-baab-8f77d72b4514'
-                }
-            }
-        ).then(res => {
+        userApi.getUsers(number, this.props.pageSize).then(res => {
             this.props.setFetching(false)
-            this.props.setUsers(res.data.items)
+            this.props.setUsers(res.items)
         }).catch(err => err)
     }
 
@@ -69,6 +58,7 @@ class UsersContainerComponent extends React.Component<UsersAPIComponentPropsType
         return (
             <>
                 <Users
+                    setToggleFollowing={this.props.setToggleFollowing}
                     isFetching={this.props.isFetching}
                     currentPage={this.props.currentPage}
                     totalUsersCount={this.props.totalUsersCount}
@@ -76,6 +66,7 @@ class UsersContainerComponent extends React.Component<UsersAPIComponentPropsType
                     pageSize={this.props.pageSize}
                     follow={this.props.follow}
                     unFollow={this.props.unFollow}
+                    followingProgress={this.props.followingProgress}
                     onPageChanged={this.onPageChanged}
                 />
             </>
@@ -90,7 +81,8 @@ const mapStateToProps = (state: RootReducerType): MapStatePropsType => {
         pageSize: state.usersPage.pageSize,
         totalUsersCount: state.usersPage.totalUsersCount,
         currentPage: state.usersPage.currentPage,
-        isFetching: state.usersPage.isFetching
+        isFetching: state.usersPage.isFetching,
+        followingProgress: state.usersPage.followingProgress
     }
 }
 
@@ -100,5 +92,6 @@ export const UsersContainer = connect<MapStatePropsType, MapDispatchPropsType, {
     setUsers: setUsersAC,
     setCurrentPage: setCurrentPageAC,
     setTotalUsersCount: setTotalUsersCountAC,
-    setFetching: setFetchingAC
+    setFetching: setFetchingAC,
+    setToggleFollowing: setToggleFollowingProgressAC
 })(UsersContainerComponent)

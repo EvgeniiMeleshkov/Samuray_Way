@@ -16,6 +16,7 @@ export type InitialUsersStateType = {
     totalUsersCount: number
     currentPage: number
     isFetching: boolean
+    followingProgress: number[]
 }
 
 const initialUsersState: InitialUsersStateType = {
@@ -23,7 +24,8 @@ const initialUsersState: InitialUsersStateType = {
     pageSize: 5,
     totalUsersCount: 19,
     currentPage: 1,
-    isFetching: true
+    isFetching: false,
+    followingProgress: []
 }
 
 export const usersReducer = (state: InitialUsersStateType = initialUsersState, action: UsersActionsType): InitialUsersStateType => {
@@ -48,12 +50,19 @@ export const usersReducer = (state: InitialUsersStateType = initialUsersState, a
             return {...state, totalUsersCount: action.payload.count}
         case 'SET_FETCHING':
             return {...state, isFetching: action.payload.isFetching}
+        case 'SET_FOLLOWING_PROGRESS':
+            return {
+                ...state,
+                followingProgress: action.payload.isFollowingInProgress
+                ? [...state.followingProgress, action.payload.id]
+                    : state.followingProgress.filter(el => el !== action.payload.id)
+            }
         default:
             return state
     }
 }
 
-export type UsersActionsType = FollowACType | UnFollowACType | SetUsersACType | SetCurrentPageACType | SetFetchingACType | SetTotalUsersCountACType
+export type UsersActionsType = FollowACType | SetToggleFollowingProgressACType | UnFollowACType | SetUsersACType | SetCurrentPageACType | SetFetchingACType | SetTotalUsersCountACType
 
 export type FollowACType = ReturnType<typeof followAC>
 export type UnFollowACType = ReturnType<typeof unFollowAC>
@@ -61,12 +70,22 @@ export type SetUsersACType = ReturnType<typeof setUsersAC>
 export type SetCurrentPageACType = ReturnType<typeof setCurrentPageAC>
 export type SetTotalUsersCountACType = ReturnType<typeof setTotalUsersCountAC>
 export type SetFetchingACType = ReturnType<typeof setFetchingAC>
+export type SetToggleFollowingProgressACType = ReturnType<typeof setToggleFollowingProgressAC>
 
 export const setFetchingAC = (isFetching: boolean) => {
     return {
         type: 'SET_FETCHING',
         payload: {
             isFetching
+        }
+    } as const
+}
+export const setToggleFollowingProgressAC = (isFollowingInProgress: boolean, id: number) => {
+    return {
+        type: 'SET_FOLLOWING_PROGRESS',
+        payload: {
+            isFollowingInProgress,
+            id
         }
     } as const
 }
