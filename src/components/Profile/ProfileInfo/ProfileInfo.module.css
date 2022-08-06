@@ -35,6 +35,7 @@
     box-shadow: rgba(18, 32, 37, 0.76) 2px 1px 3px 1px;
     background-color: rgba(0, 0, 0, 0.12);
     height: max-content;
+    margin: 1rem;
 }
 .name {
     font-size: larger;
