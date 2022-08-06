@@ -43,7 +43,6 @@
 }
 
 .sendButton {
-    margin-right: 2rem;
     border-radius: 50px;
     box-shadow: rgba(18, 32, 37, 0.76) 2px 1px 3px 1px;
 }
@@ -85,8 +84,12 @@
     margin-bottom: 4rem;
 }
 .messageText {
-    padding: 1rem;
+    width: 300px;
+    height: 30px;
     border-radius: 20px;
+    padding: 0.5rem 1rem 0.5rem 1rem;
+    box-shadow: rgba(18, 32, 37, 0.76) 2px 1px 3px 1px;
+    resize: none;
 }
 
 .button {

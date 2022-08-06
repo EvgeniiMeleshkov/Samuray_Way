@@ -1,6 +1,12 @@
 
 .post {
     padding: 1rem;
+    margin: 1rem;
+    border-radius: 20px;
+    box-shadow: rgba(18, 32, 37, 0.76) 2px 1px 3px 1px;
+    background-color: rgba(0, 0, 0, 0.12);
+    height: max-content;
+
 }
 .smallLogo {
     border: rgba(18, 32, 37, 0.76) 1px solid;
@@ -12,4 +18,25 @@
     margin-right: 2rem;
     border-radius: 50%;
     box-shadow: rgba(18, 32, 37, 0.76) 2px 1px 3px 1px;
+}
+.postMessage {
+    text-align: center;
+    margin-left: 4rem;
+    color: rgba(17, 37, 73, 0.79);
+    font-size: large;
+    text-shadow: rgba(69, 103, 150, 0.57) 2px 1px 4px ;
+    font-style: oblique;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+}
+.likesSpan {
+    display: flex;
+    align-items: flex-end;
+    margin-top: 1rem;
+}
+.likesSpan b{
+    font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+    margin-left: -20px;
+    color: rgba(155, 16, 16, 0.79);
+    font-weight: bold;
+    text-shadow: rgba(69, 103, 150, 0.57) 2px 1px 4px ;
 }

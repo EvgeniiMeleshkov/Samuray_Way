@@ -5,24 +5,27 @@ import {PostsType, PostType} from '../../../../redux/profileReducer';
 
 type PostPropsType = {
     posts: PostsType
-    addLike: (id: number)=>void
+    addLike: (id: number) => void
+    userPhoto: string | null | undefined
 }
 
-function Post({posts, addLike}: PostPropsType) {
+function Post({posts, addLike, userPhoto}: PostPropsType) {
     return (
         <>
             {posts.map((p: PostType) => {
                 return (
                     <div key={p.id} className={styles.post}>
-                    <img alt={''} className={styles.smallLogo} src={smallLogo}/>
-                    {p.message}
-                    <div>
-                        <span>
-                            <button onClick={()=>addLike(p.id)} className={styles.likeButton}>☯🍣︎</button>
+                        <img alt={''} className={styles.smallLogo} src={userPhoto ? userPhoto : smallLogo}/>
+                        <div className={styles.postMessage}>
+                            {p.message}
+                        </div>
+                        <div>
+                        <span className={styles.likesSpan}>
+                            <button onClick={() => addLike(p.id)} className={styles.likeButton}>☯🍣︎</button>
                             <b>{p.likesCount}</b>
                         </span>
-                    </div>
-                </div>)
+                        </div>
+                    </div>)
             })}
         </>
     )

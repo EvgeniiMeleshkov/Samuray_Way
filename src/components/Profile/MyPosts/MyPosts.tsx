@@ -47,7 +47,7 @@ export function MyPosts({
                 }</div>
             </div>
             <div className={styles.posts}>
-                <Post addLike={addLikeHandler} posts={profilePage.posts}/>
+                <Post userPhoto={profilePage.profileData?.photos?.small} addLike={addLikeHandler} posts={profilePage.posts}/>
             </div>
         </div>
     )
