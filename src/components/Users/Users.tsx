@@ -5,6 +5,7 @@ import {UserType} from '../../redux/usersReducer';
 import Preloader from '../common/Preloader';
 import {NavLink} from 'react-router-dom';
 import SamuraiGif from '../common/SamuraiGif';
+import axios from 'axios';
 
 type UsersPropsType = {
     items: UserType[]
@@ -69,12 +70,42 @@ export const Users = (props: UsersPropsType) => {
                                      src={el.photos.small ? el.photos.small : smallLogo}/>
                             </NavLink>
                         </div>
+
+
                         <div onClick={el.followed
-                            ? () => props.unFollow(el.id)
-                            : () => props.follow(el.id)}
+                            ? () => {
+
+                                axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${el.id}`, {
+                                    withCredentials: true,
+                                    headers: {
+                                        'API-KEY': '61673f24-31ed-4acb-baab-8f77d72b4514'
+                                    }
+                                }).then(res => {
+                                    if (res.data.resultCode === 0) {
+                                        props.unFollow(el.id)
+                                    }
+                                })
+
+                            }
+                            : () => {
+
+                                axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${el.id}`, {}, {
+                                    withCredentials: true,
+                                    headers: {
+                                        'API-KEY': '61673f24-31ed-4acb-baab-8f77d72b4514'
+                                    }
+                                }).then(res => {
+                                    if (res.data.resultCode === 0) {
+                                        props.follow(el.id)
+                                    }
+                                })
+                            }
+                        }
                              className={styles.followUnfollow}>
                             {el.followed ? 'Unfollow' : 'Follow'}
                         </div>
+
+
                     </div>
 
                     <div className={styles.userInfo}>

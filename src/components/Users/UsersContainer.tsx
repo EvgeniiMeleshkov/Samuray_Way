@@ -36,7 +36,8 @@ class UsersContainerComponent extends React.Component<UsersAPIComponentPropsType
     componentDidMount() {
         this.props.setFetching(true)
         axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`, {
-                headers: {
+            withCredentials: true,
+            headers: {
                     'API-KEY': '61673f24-31ed-4acb-baab-8f77d72b4514'
                 }
             }
@@ -51,7 +52,8 @@ class UsersContainerComponent extends React.Component<UsersAPIComponentPropsType
         this.props.setFetching(true)
         this.props.setCurrentPage(number)
         axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${number}&count=${this.props.pageSize}`, {
-                headers: {
+            withCredentials: true,
+            headers: {
                     'API-KEY': '61673f24-31ed-4acb-baab-8f77d72b4514'
                 }
             }
