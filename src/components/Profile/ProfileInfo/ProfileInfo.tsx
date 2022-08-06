@@ -27,7 +27,7 @@ export const ProfileInfo = (props: ProfileInfoPropsType) => {
                             <div className={styles.name}>
                                 <div>{props.data?.fullName}</div>
                             </div>
-                           <div className={styles.statusAndLookForJob}>
+                           <div style={{width: '-webkit-fill-available'}} className={styles.statusAndLookForJob}>
                                <div>{props.data?.aboutMe}</div>
                                <div>{props.data?.lookingForAJob ? '🙋🏼‍♂️' : '🙅🏼'}</div>
                            </div>
