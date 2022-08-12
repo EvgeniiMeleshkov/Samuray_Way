@@ -8,11 +8,14 @@ const customHoc = (PassedComponent: any) => {
     return class CustomHoc extends React.Component {
 
         render() {
-            return isAuth
-                ? <PassedComponent
+            if (isAuth === true) {
+                return <Redirect to={'login'}/>
+            } else {
+
+                return <PassedComponent
                     {...this.props}
                 />
-                : <Redirect to={'login'}/>
+            }
         }
     }
 }
