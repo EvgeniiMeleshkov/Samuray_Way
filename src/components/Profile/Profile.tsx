@@ -10,6 +10,7 @@ type ProfilePropsType = {
 }
 
 function Profile(props: ProfilePropsType) {
+
     return (
         <div className={styles.content}>
             <ProfileInfo isFetching={props.isFetching} data={props.data}/>

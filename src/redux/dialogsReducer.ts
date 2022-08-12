@@ -54,7 +54,7 @@ export const dialogsReducer = (state: DialogsPageType = initialState, action: Di
 }
 
 
-type DialogsReducerActionsType = AddMessageACType | UpdateMessageACType
+export type DialogsReducerActionsType = AddMessageACType | UpdateMessageACType
 type AddMessageACType = ReturnType<typeof addMessageAC>
 type UpdateMessageACType = ReturnType<typeof updateMessageAC>
 

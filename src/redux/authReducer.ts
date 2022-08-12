@@ -1,3 +1,6 @@
+import {authApi} from '../components/DataAccessLayer/DAL';
+import {AppDispatch, AppThunk} from './redux_store';
+
 export type AuthDataType = {
     email: string ,
     id : string ,
@@ -32,7 +35,7 @@ export const authReducer = (state: AuthReducerStateType = authInitialState, acti
 
 
 
-type AuthActionsType = SetAuthDataACType | SetAuthDataIsFetchingACType
+export type AuthActionsType = SetAuthDataACType | SetAuthDataIsFetchingACType
 
 type SetAuthDataACType = ReturnType<typeof setAuthDataAC>
 type SetAuthDataIsFetchingACType = ReturnType<typeof setAuthDataIsFetchingAC>
@@ -52,4 +55,17 @@ export const setAuthDataIsFetchingAC = (isFetching: boolean) => {
             isFetching
         }
     } as const
+}
+
+
+export const authMeThunkCreator = (): AppThunk => {
+    return  (dispatch: AppDispatch) => {
+        dispatch(setAuthDataIsFetchingAC(true))
+        authApi.authMe().then(res => {
+            dispatch(setAuthDataIsFetchingAC(false))
+            if (res.data.resultCode === 0) {
+                dispatch(setAuthDataAC(res.data.data))
+            }
+        })
+    }
 }

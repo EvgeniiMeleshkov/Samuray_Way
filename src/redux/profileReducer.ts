@@ -1,3 +1,6 @@
+import {AppDispatch, AppThunk} from './redux_store';
+import {profileApi} from '../components/DataAccessLayer/DAL';
+
 export type UserProfileType = {
     "aboutMe": string | null,
     "contacts": {
@@ -110,3 +113,18 @@ export const addLikeActionCreator = (id: number) => ({
     type: 'ADD_LIKE',
     id: id
 } as const)
+
+
+export const setProfileDataThunkCreator = (userID: number): AppThunk => {
+    return (dispatch: AppDispatch) => {
+        dispatch(setIsFetchingAC(true))
+        if(!userID) {
+            userID = 7402
+        }
+        profileApi.getProfileData(userID).then(res => {
+            dispatch(setIsFetchingAC(false))
+            dispatch(setUserProfileAC(res.data))
+            console.log(res.data)
+        })
+    }
+}

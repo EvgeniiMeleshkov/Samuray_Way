@@ -1,12 +1,13 @@
 import {Dialogs} from './Dialogs';
 import {connect} from 'react-redux';
 import {Dispatch} from 'redux';
-import {RootReducerType} from '../../redux/redux_store';
+import {RootReducerType, RootState} from '../../redux/redux_store';
 import {addMessageAC, DialogsPageType, updateMessageAC} from '../../redux/dialogsReducer';
 
 
 type MapStatePropsType = {
     dialogsPage: DialogsPageType
+    isAuth: boolean
 }
 type MapDispatchPropsType = {
     onTextChanged: (text: string) => void
@@ -15,9 +16,10 @@ type MapDispatchPropsType = {
 
 //-------------------------------------------------------------
 
-const mapStateToProps = (state: RootReducerType): MapStatePropsType => {
+const mapStateToProps = (state: RootState): MapStatePropsType => {
     return {
-        dialogsPage: state.dialogsPage
+        dialogsPage: state.dialogsPage,
+        isAuth: state.auth.isAuth
     }
 }
 const mapDispatchToProps = (dispatch: Dispatch): MapDispatchPropsType => {

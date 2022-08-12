@@ -1,3 +1,6 @@
+import {userApi} from '../components/DataAccessLayer/DAL';
+import {AppThunk} from './redux_store';
+
 export type UserType = {
     name: string,
     id: number,
@@ -130,4 +133,46 @@ export const setUsersAC = (items: UserType[]) => {
             items
         }
     } as const
+}
+
+//=============================THUNK`s===========================//
+
+export const getUsersThunkCreator = (currentPage: number, pageSize: number): AppThunk => {
+    return (dispatch) => {
+        //this.props.setFetching(true)
+        dispatch(setFetchingAC(true))
+        userApi.getUsers(currentPage, pageSize).then(res => {
+            //this.props.setFetching(false)
+            dispatch(setFetchingAC(false))
+            //this.props.setUsers(res.items)
+            dispatch(setUsersAC(res.items))
+            //this.props.setTotalUsersCount(res.totalCount)
+            dispatch(setTotalUsersCountAC(res.totalCount))
+            dispatch(setCurrentPageAC(currentPage))
+        }).catch(err => err)
+    }
+}
+
+export const followSuccessThunkCreator = (userID: number): AppThunk => {
+    return (dispatch) => {
+        dispatch(setToggleFollowingProgressAC(true, userID))
+        userApi.follow(userID).then(res => {
+            if (res.data.resultCode === 0) {
+                dispatch(followAC(userID))
+                dispatch(setToggleFollowingProgressAC(false, userID))
+            }
+        })
+    }
+}
+
+export const unFollowSuccessThunkCreator = (userID: number): AppThunk => {
+    return (dispatch) => {
+        dispatch(setToggleFollowingProgressAC(true, userID))
+        userApi.unFollow(userID).then(res => {
+            if (res.data.resultCode === 0) {
+                dispatch(unFollowAC(userID))
+                dispatch(setToggleFollowingProgressAC(false, userID))
+            }
+        })
+    }
 }

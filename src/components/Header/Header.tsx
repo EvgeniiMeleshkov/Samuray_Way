@@ -3,12 +3,11 @@ import styles from './Header.module.css'
 import {NavLink} from 'react-router-dom';
 
 type HeaderPropsType = {
-    isFetching: boolean
     isAuth: boolean
     login: string
 }
 
-const Header = ({login, isAuth, isFetching}: HeaderPropsType) => {
+const Header = ({login, isAuth}: HeaderPropsType) => {
     return (
         <header className={styles.header}>
             <div>

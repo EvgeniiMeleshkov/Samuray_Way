@@ -21,3 +21,13 @@ export const userApi = {
         return instance.post(`follow/${id}`, {})
     }
 }
+export const authApi = {
+    authMe: () => {
+        return instance.get(`auth/me`)
+    }
+}
+export const profileApi = {
+    getProfileData: (userID: number) => {
+        return instance.get(`profile/${userID}`)
+    }
+}

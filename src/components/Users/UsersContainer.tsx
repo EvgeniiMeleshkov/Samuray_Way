@@ -1,16 +1,14 @@
 import React from 'react';
 import {Users} from './Users';
 import {
-    followAC,
-    setCurrentPageAC, setFetchingAC, setToggleFollowingProgressAC,
+    followSuccessThunkCreator, getUsersThunkCreator,
+    setCurrentPageAC,
     setTotalUsersCountAC,
-    setUsersAC,
-    unFollowAC,
+    unFollowSuccessThunkCreator,
     UserType
 } from '../../redux/usersReducer';
-import {RootReducerType} from '../../redux/redux_store';
+import {RootReducerType, RootState} from '../../redux/redux_store';
 import {connect} from 'react-redux';
-import {userApi} from '../DataAccessLayer/DAL';
 
 export type UsersAPIComponentPropsType = MapStatePropsType & MapDispatchPropsType;
 
@@ -23,34 +21,25 @@ type MapStatePropsType = {
     followingProgress: number[]
 }
 type MapDispatchPropsType = {
-    follow: (id: number) => void
-    unFollow: (id: number) => void
-    setUsers: (items: UserType[]) => void
+
     setCurrentPage: (page: number) => void
     setTotalUsersCount: (count: number) => void
-    setFetching: (isFetching: boolean) => void
-    setToggleFollowing: (isFollowingInProgress: boolean, id: number) => void
+
+    getUsersThunkCreator: (currentPage: number, pageSize: number) => void
+    followSuccessThunkCreator: (userID: number) => void
+    unFollowSuccessThunkCreator: (userID: number) => void
 }
 
 
 class UsersContainerComponent extends React.Component<UsersAPIComponentPropsType> {
 
     componentDidMount() {
-        this.props.setFetching(true)
-        userApi.getUsers(this.props.currentPage, this.props.pageSize).then(res => {
-            this.props.setFetching(false)
-            this.props.setUsers(res.items)
-            this.props.setTotalUsersCount(res.totalCount)
-        }).catch(err => err)
+       this.props.getUsersThunkCreator(this.props.currentPage, this.props.pageSize)
     }
 
     onPageChanged = (number: number) => {
-        this.props.setFetching(true)
-        this.props.setCurrentPage(number)
-        userApi.getUsers(number, this.props.pageSize).then(res => {
-            this.props.setFetching(false)
-            this.props.setUsers(res.items)
-        }).catch(err => err)
+        this.props.getUsersThunkCreator(number, this.props.pageSize)
+
     }
 
     render = () => {
@@ -58,16 +47,16 @@ class UsersContainerComponent extends React.Component<UsersAPIComponentPropsType
         return (
             <>
                 <Users
-                    setToggleFollowing={this.props.setToggleFollowing}
+
                     isFetching={this.props.isFetching}
                     currentPage={this.props.currentPage}
                     totalUsersCount={this.props.totalUsersCount}
                     items={this.props.items}
                     pageSize={this.props.pageSize}
-                    follow={this.props.follow}
-                    unFollow={this.props.unFollow}
                     followingProgress={this.props.followingProgress}
                     onPageChanged={this.onPageChanged}
+                    followSuccessThunkCreator={this.props.followSuccessThunkCreator}
+                    unFollowSuccessThunkCreator={this.props.unFollowSuccessThunkCreator}
                 />
             </>
         )
@@ -75,7 +64,7 @@ class UsersContainerComponent extends React.Component<UsersAPIComponentPropsType
 }
 
 
-const mapStateToProps = (state: RootReducerType): MapStatePropsType => {
+const mapStateToProps = (state: RootState): MapStatePropsType => {
     return {
         items: state.usersPage.items,
         pageSize: state.usersPage.pageSize,
@@ -87,11 +76,9 @@ const mapStateToProps = (state: RootReducerType): MapStatePropsType => {
 }
 
 export const UsersContainer = connect<MapStatePropsType, MapDispatchPropsType, {}, RootReducerType>(mapStateToProps, {
-    follow: followAC,
-    unFollow: unFollowAC,
-    setUsers: setUsersAC,
     setCurrentPage: setCurrentPageAC,
     setTotalUsersCount: setTotalUsersCountAC,
-    setFetching: setFetchingAC,
-    setToggleFollowing: setToggleFollowingProgressAC
+    getUsersThunkCreator,
+    followSuccessThunkCreator,
+    unFollowSuccessThunkCreator
 })(UsersContainerComponent)

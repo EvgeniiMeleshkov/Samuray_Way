@@ -1,12 +1,14 @@
 import React from 'react';
 import styles from './Profile.module.css'
 import Profile from './Profile';
-import axios from 'axios';
 import {connect} from 'react-redux';
-import {RootReducerType} from '../../redux/redux_store';
-import {Dispatch} from 'redux';
-import {setIsFetchingAC, setUserProfileAC, UserProfileType} from '../../redux/profileReducer';
-import {RouteComponentProps, withRouter} from 'react-router-dom';
+import {AppDispatch, RootState} from '../../redux/redux_store';
+import {
+    setProfileDataThunkCreator,
+    setUserProfileAC,
+    UserProfileType
+} from '../../redux/profileReducer';
+import { RouteComponentProps, withRouter} from 'react-router-dom';
 
 type ParamType = {
     userId: string
@@ -19,26 +21,14 @@ class ProfileContainer extends React.Component<ProfileContainerPropsType> {
 
     componentDidMount() {
         let userID = this.props.match.params.userId
-        this.props.setIsFetching(true)
-        if(!this.props.match.params.userId) {
-            userID = '7402'
-        }
-        axios.get(`https://social-network.samuraijs.com/api/1.0/profile/${userID}`, {
-            headers: {
-                'API-KEY': '61673f24-31ed-4acb-baab-8f77d72b4514'
-            }
-        }).then(res => {
-            this.props.setIsFetching(false)
-            this.props.setUserProfileData(res.data)
-            console.log(res.data)
-        })
+        this.props.setProfileDataThunkCreator(Number(userID))
     }
 
-    render () {
+    render() {
         return (
-            <div className={styles.content}>
-                <Profile data={this.props.profileData} {...this.props}/>
-            </div>
+                <div className={styles.content}>
+                    <Profile data={this.props.profileData} {...this.props}/>
+                </div>
         )
     }
 
@@ -47,19 +37,21 @@ class ProfileContainer extends React.Component<ProfileContainerPropsType> {
 type ProfileMapDispatchToPropsType = ReturnType<typeof mapDispatchToProps>
 type ProfileMapStateToPropsType = ReturnType<typeof mapStateToProps>
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-    setIsFetching: (isFetching: boolean) => {
-        dispatch(setIsFetchingAC(isFetching))
+const mapDispatchToProps = (dispatch: AppDispatch) => ({
+    setProfileDataThunkCreator: (userID: number) => {
+        dispatch(setProfileDataThunkCreator(userID))
     },
     setUserProfileData: (data: UserProfileType) => {
         dispatch(setUserProfileAC(data))
     }
 })
-const mapStateToProps = (state: RootReducerType) => ({
+const mapStateToProps = (state: RootState) => ({
     profileData: state.profilePage.profileData,
-    isFetching: state.profilePage.isFetching
+    isFetching: state.profilePage.isFetching,
+    isAuth: state.auth.isAuth
 })
+
 
 export default connect<ProfileMapStateToPropsType,
     ProfileMapDispatchToPropsType, {},
-    RootReducerType>(mapStateToProps, mapDispatchToProps)(withRouter(ProfileContainer))
+    RootState>(mapStateToProps, mapDispatchToProps)(withRouter(ProfileContainer))

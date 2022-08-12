@@ -4,10 +4,11 @@ import {DialogItem} from './DialogItem/DialogItem';
 import {DialogMessage} from './DialogMessage/DialogMessage';
 import {DialogsPropsType} from './DialogsContainer';
 import SamuraiGif from '../common/SamuraiGif';
+import {Redirect} from 'react-router-dom';
 
 
 
-export const Dialogs: React.FC<DialogsPropsType> = ({dialogsPage, addMessage, onTextChanged}: DialogsPropsType) => {
+export const Dialogs: React.FC<DialogsPropsType> = ({dialogsPage, addMessage, onTextChanged, isAuth}: DialogsPropsType) => {
 
 
 //------------------------------------------------------------------------
@@ -32,7 +33,9 @@ export const Dialogs: React.FC<DialogsPropsType> = ({dialogsPage, addMessage, on
     }
 
 //------------------------------------------------------------------------
-    return (
+
+    return isAuth
+        ? (
         <div className={styles.dialogs}>
             <SamuraiGif/>
             {/*<div className={styles.imgDiv}>*/}
@@ -64,4 +67,7 @@ export const Dialogs: React.FC<DialogsPropsType> = ({dialogsPage, addMessage, on
             </div>
         </div>
     )
+        : (
+            <Redirect to={'login'} />
+        )
 }

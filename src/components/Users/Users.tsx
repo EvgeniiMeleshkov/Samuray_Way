@@ -5,7 +5,6 @@ import {UserType} from '../../redux/usersReducer';
 import Preloader from '../common/Preloader';
 import {NavLink} from 'react-router-dom';
 import SamuraiGif from '../common/SamuraiGif';
-import {userApi} from '../DataAccessLayer/DAL';
 
 type UsersPropsType = {
     items: UserType[]
@@ -15,9 +14,9 @@ type UsersPropsType = {
     isFetching: boolean
     followingProgress: number[]
     onPageChanged: (number: number) => void
-    follow: (id: number) => void
-    unFollow: (id: number) => void
-    setToggleFollowing: (isFetching: boolean, id: number) => void
+
+    followSuccessThunkCreator: (userID: number) => void
+    unFollowSuccessThunkCreator: (userID: number) => void
 }
 
 export const Users = (props: UsersPropsType) => {
@@ -76,25 +75,10 @@ export const Users = (props: UsersPropsType) => {
 
                         <button onClick={el.followed
                             ? () => {
-                                props.setToggleFollowing(true, el.id)
-                                userApi.unFollow(el.id).then(res => {
-
-                                    if (res.data.resultCode === 0) {
-                                        props.unFollow(el.id)
-                                        props.setToggleFollowing(false, el.id)
-                                    }
-                                })
-
+                              props.unFollowSuccessThunkCreator(el.id)
                             }
                             : () => {
-                                props.setToggleFollowing(true, el.id)
-                                userApi.follow(el.id).then(res => {
-
-                                    if (res.data.resultCode === 0) {
-                                        props.follow(el.id)
-                                        props.setToggleFollowing(false, el.id)
-                                    }
-                                })
+                                props.followSuccessThunkCreator(el.id)
                             }
                         }
                                 disabled={props.followingProgress.some(i => i === el.id)}
