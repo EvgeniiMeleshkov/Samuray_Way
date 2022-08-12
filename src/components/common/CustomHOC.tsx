@@ -4,18 +4,16 @@ import React from 'react';
 
 
 const customHoc = (PassedComponent: any) => {
-    const isAuth = store.getState().auth.isAuth
+
     return class CustomHoc extends React.Component {
 
         render() {
-            if (isAuth === true) {
-                return <Redirect to={'login'}/>
-            } else {
-
-                return <PassedComponent
+            return store.getState().auth.isAuth
+                ? <PassedComponent
                     {...this.props}
                 />
-            }
+                : <Redirect to={'login'}/>
+
         }
     }
 }
