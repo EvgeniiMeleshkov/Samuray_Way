@@ -11,10 +11,10 @@ class SpanInput extends React.Component<SpanInputPropsType> {
 
     state = {
         editMode: false,
-        val: 'test'
+        val: this.props.status
     }
     setEditOff = () => {
-        if(this.state.val.length === 0) {
+        if(this.state.val?.length === 0) {
             this.props.updateStatus('...write your status')
             this.setState({
                 val: '...write your status'
@@ -23,7 +23,7 @@ class SpanInput extends React.Component<SpanInputPropsType> {
         this.setState({
             editMode: false
         })
-        this.props.updateStatus(this.state.val)
+        this.props.updateStatus(this.state.val!)
     }
     setEditOn = () => {
         this.setState({
@@ -49,7 +49,7 @@ class SpanInput extends React.Component<SpanInputPropsType> {
     render() {
         return this.state.editMode
             ? <div>
-                <input onChange={this.onChange} value={this.state.val} onBlur={this.setEditOff} autoFocus={true} placeholder={this.props.status!} />
+                <input onChange={this.onChange} value={this.state.val!} onBlur={this.setEditOff} autoFocus={true} placeholder={this.props.status!} />
             </div>
             : <div>
                 <p style={{color: 'rgba(5,23,30,0.8)'}} onDoubleClick={this.setEditOn}>{this.props.status}</p>
