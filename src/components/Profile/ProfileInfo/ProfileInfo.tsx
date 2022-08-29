@@ -30,7 +30,7 @@ const ProfileInfo = (props: ProfileInfoPropsType) => {
                     <div className={styles.profileInfoField}>
                         <div className={styles.name}>
                             <div>{props.data?.fullName}</div>
-                            <SpanInput status={props.status}/>
+                            <SpanInput updateStatus={props.updateStatus} status={props.status}/>
                         </div>
                         <div style={{width: '-webkit-fill-available'}} className={styles.statusAndLookForJob}>
                             <div>{props.data?.aboutMe}</div>

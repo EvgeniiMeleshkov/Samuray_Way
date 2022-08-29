@@ -136,9 +136,6 @@ export const addLikeActionCreator = (id: number) => ({
 export const setProfileDataThunkCreator = (userID: number): AppThunk => {
     return (dispatch: AppDispatch) => {
         dispatch(setIsFetchingAC(true))
-        if (!userID) {
-            userID = 7402
-        }
         profileApi.getProfileData(userID).then(res => {
             dispatch(setIsFetchingAC(false))
             dispatch(setUserProfileAC(res.data))
@@ -148,14 +145,9 @@ export const setProfileDataThunkCreator = (userID: number): AppThunk => {
 }
 export const getStatusThunkCreator = (userID: number): AppThunk => {
     return (dispatch: AppDispatch) => {
-        if (!userID) {
-            userID = 7402
-        }
         profileApi.getStatus(userID)
             .then(res => {
-                console.log(res.data)
                 dispatch(setStatusAC(res.data))
-                console.log(userID)
             })
     }
 }
@@ -164,7 +156,7 @@ export const updateStatusThunkCreator = (status: string): AppThunk => {
         profileApi.changeStatus(status)
             .then(res => {
                 if (res.data.resultCode === 0) {
-                    dispatch(setStatusAC(res.data))
+                    dispatch(setStatusAC(status))
                 }
             })
     }

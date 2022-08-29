@@ -23,8 +23,10 @@ type OwnPropsType = ProfileMapDispatchToPropsType & ProfileMapStateToPropsType
 class ProfileContainer extends React.Component<ProfileContainerPropsType> {
 
     componentDidMount() {
-        const userID = this.props.match.params.userId
-        console.log(userID)
+        let userID = this.props.match.params.userId
+        if (!userID) {
+            userID = '7402'
+        }
         this.props.setProfileDataThunkCreator(Number(userID))
         this.props.getStatusThunkCreator(Number(userID))
     }
