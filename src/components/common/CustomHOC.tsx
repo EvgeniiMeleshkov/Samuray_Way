@@ -1,20 +1,17 @@
 import {store} from '../../redux/redux_store';
 import {Redirect} from 'react-router-dom';
-import React from 'react';
+import React, {ComponentType} from 'react';
 
 
-const customHoc = (PassedComponent: any) => {
+function customHoc <T> (PassedComponent: ComponentType<T>) {
 
-    return class CustomHoc extends React.Component {
+    return function CustomHoc(props: any) {
+        return store.getState().auth.isAuth
+            ? <PassedComponent
+                {...props}
+            />
+            : <Redirect to={'login'}/>
 
-        render() {
-            return store.getState().auth.isAuth
-                ? <PassedComponent
-                    {...this.props}
-                />
-                : <Redirect to={'login'}/>
-
-        }
     }
 }
 export default customHoc
