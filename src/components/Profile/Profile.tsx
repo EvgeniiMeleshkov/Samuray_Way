@@ -1,8 +1,8 @@
 import React from 'react';
 import styles from './Profile.module.css'
-import {NewPI} from './ProfileInfo/ProfileInfo';
 import {MyPostsContainer} from './MyPosts/MyPostsContainer';
 import {UserProfileType} from '../../redux/profileReducer';
+import ProfileInfo from './ProfileInfo/ProfileInfo';
 
 type ProfilePropsType = {
     data: UserProfileType
@@ -13,8 +13,7 @@ function Profile(props: ProfilePropsType) {
 
     return (
         <div className={styles.content}>
-            {/*@ts-ignore*/}
-            <NewPI isFetching={props.isFetching} data={props.data}/>
+            <ProfileInfo isFetching={props.isFetching} data={props.data}/>
             <MyPostsContainer/>
         </div>
     )

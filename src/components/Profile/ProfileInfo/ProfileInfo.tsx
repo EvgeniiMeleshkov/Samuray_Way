@@ -4,7 +4,6 @@ import SamuraiGif from '../../common/SamuraiGif';
 import {UserProfileType} from '../../../redux/profileReducer';
 import Preloader from '../../common/Preloader';
 import smallLogo from '../../../assets/images/samurai_small_logo.png'
-import customHoc from '../../common/CustomHOC';
 
 type ProfileInfoPropsType = {
     data: UserProfileType
@@ -53,4 +52,4 @@ const ProfileInfo = (props: ProfileInfoPropsType) => {
         )
     }
 }
-export const NewPI = customHoc(ProfileInfo)
+export default ProfileInfo

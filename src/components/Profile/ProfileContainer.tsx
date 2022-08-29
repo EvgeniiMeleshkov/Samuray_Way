@@ -9,6 +9,7 @@ import {
     UserProfileType
 } from '../../redux/profileReducer';
 import { RouteComponentProps, withRouter} from 'react-router-dom';
+import CustomHOC from '../common/CustomHOC';
 
 type ParamType = {
     userId: string
@@ -52,6 +53,6 @@ const mapStateToProps = (state: RootState) => ({
 })
 
 
-export default connect<ProfileMapStateToPropsType,
+export default CustomHOC(connect<ProfileMapStateToPropsType,
     ProfileMapDispatchToPropsType, {},
-    RootState>(mapStateToProps, mapDispatchToProps)(withRouter(ProfileContainer))
+    RootState>(mapStateToProps, mapDispatchToProps)(withRouter(ProfileContainer)))
