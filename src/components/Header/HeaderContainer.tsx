@@ -3,6 +3,7 @@ import Header from './Header';
 import {connect} from 'react-redux';
 import {authMeThunkCreator} from '../../redux/authReducer';
 import {AppDispatch, RootState} from '../../redux/redux_store';
+import {compose} from 'redux';
 
 class HeaderContainer extends React.Component<PropsType> {
     componentDidMount() {
@@ -30,4 +31,4 @@ const mapDispatchToProps = (dispatch: AppDispatch) => ({
         dispatch(authMeThunkCreator())
     }
 })
-export default connect(mapStateToProps, mapDispatchToProps)(HeaderContainer)
+export default compose(connect(mapStateToProps, mapDispatchToProps)(HeaderContainer))

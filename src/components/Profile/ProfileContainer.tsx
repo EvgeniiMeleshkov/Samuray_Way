@@ -4,8 +4,9 @@ import Profile from './Profile';
 import {connect} from 'react-redux';
 import {AppDispatch, RootState} from '../../redux/redux_store';
 import {
+    getStatusThunkCreator,
     setProfileDataThunkCreator,
-    setUserProfileAC,
+    setUserProfileAC, updateStatusThunkCreator,
     UserProfileType
 } from '../../redux/profileReducer';
 import { RouteComponentProps, withRouter} from 'react-router-dom';
@@ -22,14 +23,16 @@ type OwnPropsType = ProfileMapDispatchToPropsType & ProfileMapStateToPropsType
 class ProfileContainer extends React.Component<ProfileContainerPropsType> {
 
     componentDidMount() {
-        let userID = this.props.match.params.userId
+        const userID = this.props.match.params.userId
+        console.log(userID)
         this.props.setProfileDataThunkCreator(Number(userID))
+        this.props.getStatusThunkCreator(Number(userID))
     }
 
     render() {
         return (
                 <div className={styles.content}>
-                    <Profile data={this.props.profileData} {...this.props}/>
+                    <Profile status={this.props.status} updateStatus={this.props.updateStatusThunkCreator} data={this.props.profileData} isFetching={this.props.isFetching}/>
                 </div>
         )
     }
@@ -40,6 +43,12 @@ type ProfileMapDispatchToPropsType = ReturnType<typeof mapDispatchToProps>
 type ProfileMapStateToPropsType = ReturnType<typeof mapStateToProps>
 
 const mapDispatchToProps = (dispatch: AppDispatch) => ({
+    updateStatusThunkCreator: (status: string) => {
+      dispatch((updateStatusThunkCreator(status)))
+    },
+    getStatusThunkCreator: (userID: number) => {
+        dispatch((getStatusThunkCreator(userID)))
+    },
     setProfileDataThunkCreator: (userID: number) => {
         dispatch(setProfileDataThunkCreator(userID))
     },
@@ -50,7 +59,8 @@ const mapDispatchToProps = (dispatch: AppDispatch) => ({
 const mapStateToProps = (state: RootState) => ({
     profileData: state.profilePage.profileData,
     isFetching: state.profilePage.isFetching,
-    isAuth: state.auth.isAuth
+    isAuth: state.auth.isAuth,
+    status: state.profilePage.status
 })
 
 

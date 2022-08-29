@@ -2,24 +2,24 @@ import {AppDispatch, AppThunk} from './redux_store';
 import {profileApi} from '../components/DataAccessLayer/DAL';
 
 export type UserProfileType = {
-    "aboutMe": string | null,
-    "contacts": {
-        "facebook": string | null,
-        "website": string | null,
-        "vk": string | null,
-        "twitter": string | null,
-        "instagram": string | null,
-        "youtube": string | null,
-        "github": string | null,
-        "mainLink": string | null
+    'aboutMe': string | null,
+    'contacts': {
+        'facebook': string | null,
+        'website': string | null,
+        'vk': string | null,
+        'twitter': string | null,
+        'instagram': string | null,
+        'youtube': string | null,
+        'github': string | null,
+        'mainLink': string | null
     },
-    "lookingForAJob": boolean,
-    "lookingForAJobDescription": string | null,
-    "fullName": string | null,
-    "userId": number,
-    "photos": {
-        "small": string | null,
-        "large": string | null
+    'lookingForAJob': boolean,
+    'lookingForAJobDescription': string | null,
+    'fullName': string | null,
+    'userId': number,
+    'photos': {
+        'small': string | null,
+        'large': string | null
     }
 } | null
 
@@ -35,13 +35,14 @@ export type ProfilePageStateType = {
     newPostText: string
     isFetching: boolean
     posts: PostsType
+    status: string
 }
-
 
 
 const initialState: ProfilePageStateType = {
     profileData: {} as UserProfileType,
     newPostText: 'It-Kamasutra',
+    status: 'Test',
     isFetching: false,
     posts: [
         {id: 1, message: 'Konitchiwa samurai san!', likesCount: 12, time: ''},
@@ -72,19 +73,36 @@ export const profileReducer = (state = initialState, action: ProfileActionsType)
             return {...state, profileData: action.payload.data}
         case 'SET_IS_FETCHING':
             return {...state, isFetching: action.payload.isFetching}
+        case 'SET_STATUS':
+            return {...state, status: action.payload.status}
         default:
             return state
     }
 }
 
-export type ProfileActionsType = UpdatePostTextACType | AddPostActionACType | AddLikeActionACType | SetIsFetchingACType | SetUserProfileACType
+export type ProfileActionsType =
+    SetStatusACType
+    | UpdatePostTextACType
+    | AddPostActionACType
+    | AddLikeActionACType
+    | SetIsFetchingACType
+    | SetUserProfileACType
 
 type UpdatePostTextACType = ReturnType<typeof updatePostActionCreator>
 type AddPostActionACType = ReturnType<typeof addPostActionCreator>
 type AddLikeActionACType = ReturnType<typeof addLikeActionCreator>
 type SetUserProfileACType = ReturnType<typeof setUserProfileAC>
 type SetIsFetchingACType = ReturnType<typeof setIsFetchingAC>
+type SetStatusACType = ReturnType<typeof setStatusAC>
 
+export const setStatusAC = (status: string) => {
+    return {
+        type: 'SET_STATUS',
+        payload: {
+            status
+        }
+    } as const
+}
 export const setIsFetchingAC = (isFetching: boolean) => {
     return {
         type: 'SET_IS_FETCHING',
@@ -118,7 +136,7 @@ export const addLikeActionCreator = (id: number) => ({
 export const setProfileDataThunkCreator = (userID: number): AppThunk => {
     return (dispatch: AppDispatch) => {
         dispatch(setIsFetchingAC(true))
-        if(!userID) {
+        if (!userID) {
             userID = 7402
         }
         profileApi.getProfileData(userID).then(res => {
@@ -126,5 +144,28 @@ export const setProfileDataThunkCreator = (userID: number): AppThunk => {
             dispatch(setUserProfileAC(res.data))
             console.log(res.data)
         })
+    }
+}
+export const getStatusThunkCreator = (userID: number): AppThunk => {
+    return (dispatch: AppDispatch) => {
+        if (!userID) {
+            userID = 7402
+        }
+        profileApi.getStatus(userID)
+            .then(res => {
+                console.log(res.data)
+                dispatch(setStatusAC(res.data))
+                console.log(userID)
+            })
+    }
+}
+export const updateStatusThunkCreator = (status: string): AppThunk => {
+    return (dispatch: AppDispatch) => {
+        profileApi.changeStatus(status)
+            .then(res => {
+                if (res.data.resultCode === 0) {
+                    dispatch(setStatusAC(res.data))
+                }
+            })
     }
 }

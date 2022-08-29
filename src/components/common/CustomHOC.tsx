@@ -11,7 +11,6 @@ function customHoc <T> (PassedComponent: ComponentType<T>) {
                 {...props}
             />
             : <Redirect to={'login'}/>
-
     }
 }
 export default customHoc

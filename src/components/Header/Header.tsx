@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './Header.module.css'
-import {NavLink} from 'react-router-dom';
+import {NavLink, Redirect} from 'react-router-dom';
 
 type HeaderPropsType = {
     isAuth: boolean
@@ -8,6 +8,7 @@ type HeaderPropsType = {
 }
 
 const Header = ({login, isAuth}: HeaderPropsType) => {
+
     return (
         <header className={styles.header}>
             <div>
@@ -19,8 +20,11 @@ const Header = ({login, isAuth}: HeaderPropsType) => {
 
             <div className={styles.loginBlock}>
                 {isAuth
-                    ? <div className={styles.loginName}>{login}</div>
-                    :<NavLink to={'/login'}>Login</NavLink>
+                    ? <div className={styles.loginName}>{login}
+                        <Redirect to={'profile'}/>
+                    </div>
+
+                    : <NavLink to={'/login'}>Login</NavLink>
                 }
             </div>
         </header>

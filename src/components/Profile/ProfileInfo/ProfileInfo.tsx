@@ -9,6 +9,8 @@ import SpanInput from '../../common/SpanInput';
 type ProfileInfoPropsType = {
     data: UserProfileType
     isFetching: boolean
+    status: string
+    updateStatus: (status: string) => void
 }
 
 
@@ -28,9 +30,10 @@ const ProfileInfo = (props: ProfileInfoPropsType) => {
                     <div className={styles.profileInfoField}>
                         <div className={styles.name}>
                             <div>{props.data?.fullName}</div>
+                            <SpanInput status={props.status}/>
                         </div>
                         <div style={{width: '-webkit-fill-available'}} className={styles.statusAndLookForJob}>
-                            <SpanInput status={props.data?.aboutMe}/>
+                            <div>{props.data?.aboutMe}</div>
                             <div>{props.data?.lookingForAJob ? '🙋🏼‍♂️' : '🙅🏼'}</div>
                         </div>
 
