@@ -6,11 +6,20 @@ type SpanInputPropsType = {
 }
 
 class SpanInput extends React.Component<SpanInputPropsType> {
+
+
+
     state = {
         editMode: false,
-        val: this.props.status ? this.props.status : '...reload page'
+        val: 'test'
     }
     setEditOff = () => {
+        if(this.state.val.length === 0) {
+            this.props.updateStatus('...write your status')
+            this.setState({
+                val: '...write your status'
+            })
+        }
         this.setState({
             editMode: false
         })
@@ -22,9 +31,18 @@ class SpanInput extends React.Component<SpanInputPropsType> {
         })
     }
     onChange = (e: ChangeEvent<HTMLInputElement>) => {
-        this.setState({
-            val: e.currentTarget.value
-        })
+        if(e.currentTarget.value.length < 300) {
+            this.setState({
+                val: e.currentTarget.value
+            })
+        }
+    }
+    componentDidUpdate(prevProps: Readonly<SpanInputPropsType>, prevState: Readonly<{}>, snapshot?: any) {
+        if(prevProps.status !== this.props.status) {
+            this.setState({
+                status: this.props.status
+            })
+        }
     }
 
 
@@ -34,7 +52,7 @@ class SpanInput extends React.Component<SpanInputPropsType> {
                 <input onChange={this.onChange} value={this.state.val} onBlur={this.setEditOff} autoFocus={true} placeholder={this.props.status!} />
             </div>
             : <div>
-                <p onDoubleClick={this.setEditOn}>{this.props.status}</p>
+                <p style={{color: 'rgba(5,23,30,0.8)'}} onDoubleClick={this.setEditOn}>{this.props.status}</p>
             </div>
     }
 }
