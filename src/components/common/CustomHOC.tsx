@@ -4,7 +4,6 @@ import React, {ComponentType} from 'react';
 
 
 function customHoc <T> (PassedComponent: ComponentType<T>) {
-
     return function InsideCustomHoc(props: any) {
         return store.getState().auth.isAuth
             ? <PassedComponent
