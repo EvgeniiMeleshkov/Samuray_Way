@@ -1,8 +1,9 @@
 import {Dialogs} from './Dialogs';
 import {connect} from 'react-redux';
-import {Dispatch} from 'redux';
+import {compose, Dispatch} from 'redux';
 import {RootReducerType, RootState} from '../../redux/redux_store';
 import {addMessageAC, DialogsPageType, updateMessageAC} from '../../redux/dialogsReducer';
+import customHoc from '../common/CustomHOC';
 
 
 type MapStatePropsType = {
@@ -33,4 +34,4 @@ const mapDispatchToProps = (dispatch: Dispatch): MapDispatchPropsType => {
     }
 }
 export type DialogsPropsType = MapStatePropsType & MapDispatchPropsType
-export const DialogsContainer = connect<MapStatePropsType, MapDispatchPropsType, {}, RootReducerType>(mapStateToProps, mapDispatchToProps)(Dialogs)
+export const DialogsContainer = compose(customHoc(connect<MapStatePropsType, MapDispatchPropsType, {}, RootReducerType>(mapStateToProps, mapDispatchToProps)(Dialogs)))

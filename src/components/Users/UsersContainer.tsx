@@ -9,6 +9,7 @@ import {
 } from '../../redux/usersReducer';
 import {RootReducerType, RootState} from '../../redux/redux_store';
 import {connect} from 'react-redux';
+import {compose} from 'redux';
 
 export type UsersAPIComponentPropsType = MapStatePropsType & MapDispatchPropsType;
 
@@ -75,10 +76,10 @@ const mapStateToProps = (state: RootState): MapStatePropsType => {
     }
 }
 
-export const UsersContainer = connect<MapStatePropsType, MapDispatchPropsType, {}, RootReducerType>(mapStateToProps, {
+export const UsersContainer = compose(connect<MapStatePropsType, MapDispatchPropsType, {}, RootReducerType>(mapStateToProps, {
     setCurrentPage: setCurrentPageAC,
     setTotalUsersCount: setTotalUsersCountAC,
     getUsersThunkCreator,
     followSuccessThunkCreator,
     unFollowSuccessThunkCreator
-})(UsersContainerComponent)
+})(UsersContainerComponent))

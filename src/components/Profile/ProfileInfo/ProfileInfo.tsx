@@ -4,6 +4,7 @@ import SamuraiGif from '../../common/SamuraiGif';
 import {UserProfileType} from '../../../redux/profileReducer';
 import Preloader from '../../common/Preloader';
 import smallLogo from '../../../assets/images/samurai_small_logo.png'
+import SpanInput from '../../common/SpanInput';
 
 type ProfileInfoPropsType = {
     data: UserProfileType
@@ -29,7 +30,7 @@ const ProfileInfo = (props: ProfileInfoPropsType) => {
                             <div>{props.data?.fullName}</div>
                         </div>
                         <div style={{width: '-webkit-fill-available'}} className={styles.statusAndLookForJob}>
-                            <div>{props.data?.aboutMe}</div>
+                            <SpanInput status={props.data?.aboutMe}/>
                             <div>{props.data?.lookingForAJob ? '🙋🏼‍♂️' : '🙅🏼'}</div>
                         </div>
 
