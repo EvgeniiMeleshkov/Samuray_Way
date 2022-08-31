@@ -15,6 +15,9 @@ export const Dialogs: React.FC<DialogsPropsType> = ({dialogsPage, addMessage, on
     let messageTextRef = React.createRef<HTMLTextAreaElement>()
 
 //------------------------------------------------------------------------
+
+
+
     const onTextChangedHandler = () => {
         if(messageTextRef.current) {
             let text = messageTextRef.current.value
