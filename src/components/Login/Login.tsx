@@ -1,28 +1,37 @@
 import React from 'react';
-import {reduxForm} from 'redux-form';
+import {Field, InjectedFormProps, reduxForm} from 'redux-form';
 
 const Login = () => {
+    const onSubmit = (formData: FormDataType) => {
+        console.log(formData)
+    }
     return (
         <div>
             <h1>Login</h1>
-            <LoginForm/>
+            <LoginForm onSubmit={onSubmit}/>
         </div>
     );
 };
 
 export default Login;
 
-const LoginF = () => {
+
+type FormDataType ={
+    email: string
+    password: string
+    rememberMe: boolean
+}
+const LoginF: React.FC<InjectedFormProps<FormDataType>> = (props) => {
     return (
-        <form>
+        <form onSubmit={props.handleSubmit}>
             <div>
-                <input placeholder={'email'}/>
+                <Field name={'email'} component={'input'} placeholder={'email'}/>
             </div>
             <div>
-                <input placeholder={'password'}/>
+                <Field name={'password'} component={'input'} placeholder={'password'}/>
             </div>
             <div>
-                <input type={'checkbox'}/> remember me
+                <Field name={'remember me'} component={'input'} type={'checkbox'}/> remember me
             </div>
             <div>
                 <button>Login</button>
@@ -30,6 +39,6 @@ const LoginF = () => {
         </form>
     )
 }
-const LoginForm = reduxForm({
+const LoginForm = reduxForm<FormDataType>({
     form: 'login'
 })(LoginF)
