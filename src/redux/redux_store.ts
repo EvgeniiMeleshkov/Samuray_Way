@@ -4,6 +4,7 @@ import {dialogsReducer, DialogsReducerActionsType} from './dialogsReducer';
 import {UsersActionsType, usersReducer} from './usersReducer';
 import {AuthActionsType, authReducer} from './authReducer';
 import thunkMiddleware, { ThunkAction, ThunkDispatch } from 'redux-thunk';
+import { reducer as formReducer } from 'redux-form'
 
 export type ActionsType = UsersActionsType | AuthActionsType | DialogsReducerActionsType | ProfileActionsType
 export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, RootState, unknown, ActionsType>
@@ -15,7 +16,8 @@ const rootReducer = combineReducers({
     dialogsPage: dialogsReducer,
     profilePage: profileReducer,
     usersPage: usersReducer,
-    auth: authReducer
+    auth: authReducer,
+    form: formReducer
 })
 
 export type RootState = ReturnType<typeof store.getState>
