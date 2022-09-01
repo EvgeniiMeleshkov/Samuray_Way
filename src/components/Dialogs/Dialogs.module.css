@@ -47,32 +47,14 @@
     box-shadow: rgba(18, 32, 37, 0.76) 2px 1px 3px 1px;
 }
 
-
-/*.messages {*/
-/*    padding: 2rem;*/
-/*    justify-content: center;*/
-/*    background-color: ivory;*/
-/*    border-radius: 30px;*/
-/*    max-width: 1000px;*/
-/*}*/
-/*.message {*/
-/*    margin: 1rem;*/
-/*    width: fit-content;*/
-/*    padding: 5px;*/
-/*    border-radius: 10px;*/
-/*}*/
-
-/*.message:nth-child(even) {*/
-/*    align-self: end;*/
-/*    background-color: rgba(128,148,156,0.36);*/
-/*}*/
-
-/*.message:nth-child(odd) {*/
-
-/*    align-self: start;*/
-/*    background-color: rgba(126,183,191,0.29);*/
-/*}*/
-
+.textArea {
+    width: 300px;
+    height: 30px;
+    border-radius: 20px;
+    padding: 0.5rem 1rem 0.5rem 1rem;
+    box-shadow: rgba(18, 32, 37, 0.76) 2px 1px 3px 1px;
+    resize: none;
+}
 .messageTextBody {
     padding: 2rem;
     display: flex;

@@ -1,37 +1,36 @@
-import React, {KeyboardEvent} from 'react';
+import React from 'react';
 import styles from './Dialogs.module.css'
 import {DialogItem} from './DialogItem/DialogItem';
 import {DialogMessage} from './DialogMessage/DialogMessage';
 import {DialogsPropsType} from './DialogsContainer';
 import SamuraiGif from '../common/SamuraiGif';
+import {Field, InjectedFormProps, reduxForm} from 'redux-form';
 
 
-
-export const Dialogs: React.FC<DialogsPropsType> = ({dialogsPage, addMessage, onTextChanged}: DialogsPropsType) => {
+export const Dialogs: React.FC<DialogsPropsType> = ({dialogsPage, addMessage}: DialogsPropsType) => {
 
 
 //------------------------------------------------------------------------
 
-    let messageTextRef = React.createRef<HTMLTextAreaElement>()
-
 //------------------------------------------------------------------------
 
+    //
+    // const onTextChangedHandler = () => {
+    //     if (messageTextRef.current) {
+    //         let text = messageTextRef.current.value
+    //         onTextChanged(text)
+    //     }
+    // }
+    // const onEnterPressed = (e: KeyboardEvent<HTMLTextAreaElement>) => {
+    //     if (messageTextRef.current)
+    //         e.key === 'Enter' &&
+    //         messageTextRef.current.value.match(/\w/) &&
+    //         addMessage(messageTextRef.current.value)
+    // }
 
-
-    const onTextChangedHandler = () => {
-        if(messageTextRef.current) {
-            let text = messageTextRef.current.value
-            onTextChanged(text)
-        }
-    }
-    const onEnterPressed = (e: KeyboardEvent<HTMLTextAreaElement>) => {
-        if(messageTextRef.current)
-        e.key === 'Enter' &&
-        messageTextRef.current.value.match(/\w/) &&
-        addMessage()
-    }
-    const onButtonHandler = () => {
-        addMessage()
+    const addNewMessage = (formData: NewMessageFormPropsType) => {
+        addMessage(formData.newMessageText)
+        formData.newMessageText = ''
     }
 
 //------------------------------------------------------------------------
@@ -53,19 +52,32 @@ export const Dialogs: React.FC<DialogsPropsType> = ({dialogsPage, addMessage, on
                         <DialogMessage friends={dialogsPage.friends} messages={dialogsPage.messages}/>
                     </div>
                 </div>
-                <div className={styles.messageTextBody}>
-                    <div>
-                        <textarea onKeyDown={(e)=>onEnterPressed(e)}
-                                  ref={messageTextRef} className={styles.messageText}
-                                  value={dialogsPage.newMessageText} onChange={onTextChangedHandler}></textarea>
-                    </div>
-                    <div className={styles.button}>
-                        {dialogsPage.newMessageText !== '' && dialogsPage.newMessageText.match(/\w/)
-                            ? <button className={styles.sendButton} onClick={onButtonHandler}>send</button>
-                            : <button className={styles.sendButton} disabled={true}>write a message</button>}
-                    </div>
-                </div>
+                <NewMessageReduxForm onSubmit={addNewMessage}/>
             </div>
         </div>
     )
 }
+
+type NewMessageFormPropsType = {
+    newMessageText: string
+}
+
+const NewMessageForm: React.FC<InjectedFormProps<NewMessageFormPropsType>> = (props) => {
+    // const text = store.getState().dialogsPage.newMessageText
+    return (
+        <form  onSubmit={props.handleSubmit} className={styles.messageTextBody}>
+            <div>
+                <Field className={styles.textArea} component="textarea" name="newMessageText" placeholder="Enter your message"/>
+            </div>
+            <div className={styles.button}>
+                {/*{text !== '' && text.match(/\w/)*/}
+                <button className={styles.sendButton}>send</button>
+                {/*: <button className={styles.sendButton} disabled={true}>write a message</button>}*/}
+            </div>
+        </form>
+    )
+}
+
+const NewMessageReduxForm = reduxForm<NewMessageFormPropsType>({
+    form: 'messageForm'
+})(NewMessageForm)

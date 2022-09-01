@@ -5,8 +5,7 @@ import {RootReducerType} from '../../../redux/redux_store';
 import {
     addLikeActionCreator,
     addPostActionCreator,
-    ProfilePageStateType,
-    updatePostActionCreator
+    ProfilePageStateType
 } from '../../../redux/profileReducer';
 
 
@@ -17,8 +16,7 @@ type MapStatePropsType = {
 }
 
 type MapDispatchPropsType = {
-    addPost: () => void
-    onTextChange: (text: string) => void
+    addPost: (newPost: string) => void
     addLike: (id: number) => void
 }
 
@@ -30,11 +28,8 @@ const mapStateToProps = (state: RootReducerType): MapStatePropsType => {
 
 const mapDispatchToProps = (dispatch: Dispatch): MapDispatchPropsType => {
     return {
-        addPost: () => {
-            dispatch(addPostActionCreator())
-        },
-        onTextChange: (text: string) => {
-            dispatch(updatePostActionCreator(text))
+        addPost: (newPost: string) => {
+            dispatch(addPostActionCreator(newPost))
         },
         addLike: (id: number) => {
             dispatch(addLikeActionCreator(id))

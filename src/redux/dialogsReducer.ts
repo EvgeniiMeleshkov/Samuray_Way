@@ -13,7 +13,6 @@ export type FriendType = {
 export type FriendsType = Array<FriendType>
 
 export type DialogsPageType = {
-    newMessageText: string
     friends: FriendsType
     messages: MessagesType
 }
@@ -30,7 +29,6 @@ const initialState: DialogsPageType = {
         {name: 'Ignat', id: 8},
         {name: 'Oleg', id: 9},
     ] as FriendsType,
-    newMessageText: '',
     messages: [
         {id: 1, text: 'Ohiyo, samurai!', name: 'Samurai', time: ''},
     ] as MessagesType
@@ -41,28 +39,22 @@ export const dialogsReducer = (state: DialogsPageType = initialState, action: Di
         case 'ADD_MESSAGE':
             let newMessage = {
                 id: 2,
-                text: state.newMessageText,
+                text: action.text,
                 name: 'Samuray',
                 time: new Date().toLocaleTimeString()
             }
-            return {...state, messages: [...state.messages, newMessage], newMessageText: ''}
-        case 'UPDATE_MESSAGE_TEXT':
-            return {...state, newMessageText: action.newText}
+            return {...state, messages: [...state.messages, newMessage]}
         default:
             return state
     }
 }
 
 
-export type DialogsReducerActionsType = AddMessageACType | UpdateMessageACType
+export type DialogsReducerActionsType = AddMessageACType
 type AddMessageACType = ReturnType<typeof addMessageAC>
-type UpdateMessageACType = ReturnType<typeof updateMessageAC>
 
-export const addMessageAC = () => ({
-    type: 'ADD_MESSAGE'
-} as const)
 
-export const updateMessageAC = (text: string) => ({
-    type: 'UPDATE_MESSAGE_TEXT',
-    newText: text
+export const addMessageAC = (text: string) => ({
+    type: 'ADD_MESSAGE',
+    text
 } as const)

@@ -32,7 +32,6 @@ export type PostType = {
 export type PostsType = Array<PostType>
 export type ProfilePageStateType = {
     profileData: UserProfileType
-    newPostText: string
     isFetching: boolean
     posts: PostsType
     status: string
@@ -41,7 +40,6 @@ export type ProfilePageStateType = {
 
 const initialState: ProfilePageStateType = {
     profileData: {} as UserProfileType,
-    newPostText: 'It-Kamasutra',
     status: 'Test',
     isFetching: false,
     posts: [
@@ -57,13 +55,11 @@ export const profileReducer = (state = initialState, action: ProfileActionsType)
         case 'ADD_POST':
             let newPost = {
                 id: new Date().getTime() + new Date().getDate(),
-                message: state.newPostText,
+                message: action.newPost,
                 likesCount: 0,
                 time: new Date().toLocaleTimeString()
             }
-            return {...state, posts: [...state.posts, newPost], newPostText: ''}
-        case 'UPDATE_POST_TEXT':
-            return {...state, newPostText: action.newText}
+            return {...state, posts: [...state.posts, newPost]}
         case 'ADD_LIKE':
             return {
                 ...state,
@@ -82,13 +78,11 @@ export const profileReducer = (state = initialState, action: ProfileActionsType)
 
 export type ProfileActionsType =
     SetStatusACType
-    | UpdatePostTextACType
     | AddPostActionACType
     | AddLikeActionACType
     | SetIsFetchingACType
     | SetUserProfileACType
 
-type UpdatePostTextACType = ReturnType<typeof updatePostActionCreator>
 type AddPostActionACType = ReturnType<typeof addPostActionCreator>
 type AddLikeActionACType = ReturnType<typeof addLikeActionCreator>
 type SetUserProfileACType = ReturnType<typeof setUserProfileAC>
@@ -118,13 +112,9 @@ export const setUserProfileAC = (data: UserProfileType) => ({
     }
 } as const)
 
-export const updatePostActionCreator = (text: string) => ({
-    type: 'UPDATE_POST_TEXT',
-    newText: text
-} as const)
-
-export const addPostActionCreator = () => ({
+export const addPostActionCreator = (newPost: string) => ({
     type: 'ADD_POST',
+    newPost
 } as const)
 
 export const addLikeActionCreator = (id: number) => ({
