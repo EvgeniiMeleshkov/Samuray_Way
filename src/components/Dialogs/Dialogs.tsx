@@ -5,6 +5,8 @@ import {DialogMessage} from './DialogMessage/DialogMessage';
 import {DialogsPropsType} from './DialogsContainer';
 import SamuraiGif from '../common/SamuraiGif';
 import {Field, InjectedFormProps, reduxForm} from 'redux-form';
+import {Textarea} from '../common/formsControls/Textarea';
+import {maxLength, minLength, requiredField} from '../../utilites/validators/validators';
 
 
 export const Dialogs: React.FC<DialogsPropsType> = ({dialogsPage, addMessage}: DialogsPropsType) => {
@@ -61,13 +63,18 @@ export const Dialogs: React.FC<DialogsPropsType> = ({dialogsPage, addMessage}: D
 type NewMessageFormPropsType = {
     newMessageText: string
 }
-
+const max300 = maxLength(300)
+const min1 = minLength(1)
 const NewMessageForm: React.FC<InjectedFormProps<NewMessageFormPropsType>> = (props) => {
     // const text = store.getState().dialogsPage.newMessageText
     return (
-        <form  onSubmit={props.handleSubmit} className={styles.messageTextBody}>
+        <form onSubmit={props.handleSubmit} className={styles.messageTextBody}>
             <div>
-                <Field className={styles.textArea} component="textarea" name="newMessageText" placeholder="Enter your message"/>
+                <Field
+                    component={Textarea}
+                    validate={[requiredField, max300, min1]}
+                    name="newMessageText"
+                    placeholder="Enter your message"/>
             </div>
             <div className={styles.button}>
                 {/*{text !== '' && text.match(/\w/)*/}

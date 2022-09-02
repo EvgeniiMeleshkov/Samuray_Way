@@ -12,7 +12,7 @@ type DialogMessagePropsType = {
 
 //-----------------------------------------------
 export function DialogMessage({messages, friends}: DialogMessagePropsType) {
-    let currentFriend = friends[0]
+    let currentFriend = friends[1]
     return (
         <div>
             {

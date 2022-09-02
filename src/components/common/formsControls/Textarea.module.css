@@ -1,0 +1,17 @@
+.textArea {
+    width: 30vh;
+    height: 30px;
+    border-radius: 20px;
+    padding: 0.5rem 1rem 0.5rem 1rem;
+    box-shadow: rgba(18, 32, 37, 0.76) 2px 1px 3px 1px;
+    resize: none;
+}
+
+.error {
+    border: 3px solid crimson;
+}
+.errText {
+    color: crimson;
+    font-size: larger;
+    font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+}

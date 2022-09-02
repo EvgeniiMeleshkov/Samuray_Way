@@ -1,12 +1,14 @@
 import React from 'react';
 import {Field, InjectedFormProps, reduxForm} from 'redux-form';
+import {requiredField} from '../../utilites/validators/validators';
+import {Input} from '../common/formsControls/Textarea';
 
 const Login = () => {
     const onSubmit = (formData: FormDataType) => {
         console.log(formData)
     }
     return (
-        <div>
+        <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
             <h1>Login</h1>
             <LoginForm onSubmit={onSubmit}/>
         </div>
@@ -16,26 +18,35 @@ const Login = () => {
 export default Login;
 
 
-type FormDataType ={
+type FormDataType = {
     email: string
     password: string
     rememberMe: boolean
 }
 const LoginF: React.FC<InjectedFormProps<FormDataType>> = (props) => {
     return (
-        <form onSubmit={props.handleSubmit}>
+        <form style={{display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            height: '200px',
+            alignItems: 'center'
+        }} onSubmit={props.handleSubmit}>
+
             <div>
-                <Field name={'email'} component={'input'} placeholder={'email'}/>
+                <Field validate={[requiredField]} name={'email'} component={Input} placeholder={'email'}/>
             </div>
             <div>
-                <Field name={'password'} component={'input'} placeholder={'password'}/>
+                <Field validate={[requiredField]} name={'password'} component={Input} placeholder={'password'}/>
             </div>
+
+
             <div>
-                <Field name={'remember me'} component={'input'} type={'checkbox'}/> remember me
+                <Field name={'remember me'} component={'Input'} type={'checkbox'}/> remember me
             </div>
             <div>
                 <button>Login</button>
             </div>
+
         </form>
     )
 }
