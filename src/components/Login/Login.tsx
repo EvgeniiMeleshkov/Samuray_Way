@@ -2,20 +2,44 @@ import React from 'react';
 import {Field, InjectedFormProps, reduxForm} from 'redux-form';
 import {requiredField} from '../../utilites/validators/validators';
 import {Input} from '../common/formsControls/Textarea';
+import {connect} from 'react-redux';
+import {loginTC} from '../../redux/authReducer';
+import {AppDispatch, RootState} from '../../redux/redux_store';
+import {compose} from 'redux';
+import {Redirect} from 'react-router-dom';
 
-const Login = () => {
-    const onSubmit = (formData: FormDataType) => {
-        console.log(formData)
+
+type LoginType = MapDispatchToPropsType & MapStateToPropsType
+type MapDispatchToPropsType = ReturnType<typeof mapDispatchToProps>
+type MapStateToPropsType = ReturnType<typeof mapStateToProps>
+const mapStateToProps = (state: RootState) => ({
+    isAuth: state.auth.isAuth
+})
+const mapDispatchToProps = (dispatch: AppDispatch) => ({
+    login: (email: string, password: string, rememberMe: boolean) => {
+        dispatch(loginTC(email, password, rememberMe))
     }
+})
+const Login = (props: LoginType) => {
+    const onSubmit = (formData: FormDataType) => {
+        props.login(formData.email, formData.password, formData.rememberMe)
+    }
+
     return (
         <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-            <h1>Login</h1>
-            <LoginForm onSubmit={onSubmit}/>
+            {!props.isAuth
+               ? <div>
+                    <h1>Login</h1>
+                    <LoginForm onSubmit={onSubmit}/>
+                </div>
+                : <Redirect to={'/profile'}/>
+            }
         </div>
     );
+
 };
 
-export default Login;
+export default compose(connect(mapStateToProps, mapDispatchToProps)(Login));
 
 
 type FormDataType = {
@@ -25,7 +49,8 @@ type FormDataType = {
 }
 const LoginF: React.FC<InjectedFormProps<FormDataType>> = (props) => {
     return (
-        <form style={{display: 'flex',
+        <form style={{
+            display: 'flex',
             flexDirection: 'column',
             justifyContent: 'space-between',
             height: '200px',
@@ -36,12 +61,13 @@ const LoginF: React.FC<InjectedFormProps<FormDataType>> = (props) => {
                 <Field validate={[requiredField]} name={'email'} component={Input} placeholder={'email'}/>
             </div>
             <div>
-                <Field validate={[requiredField]} name={'password'} component={Input} placeholder={'password'}/>
+                <Field type={'password'} validate={[requiredField]} name={'password'} component={Input}
+                       placeholder={'password'}/>
             </div>
 
 
             <div>
-                <Field name={'remember me'} component={'Input'} type={'checkbox'}/> remember me
+                <Field name={'rememberMe'} component={'input'} type={'checkbox'}/> remember me
             </div>
             <div>
                 <button>Login</button>

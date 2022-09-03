@@ -1,7 +1,7 @@
 import {Dialogs} from './Dialogs';
 import {connect} from 'react-redux';
-import {compose, Dispatch} from 'redux';
-import {RootReducerType, RootState} from '../../redux/redux_store';
+import {compose} from 'redux';
+import {AppDispatch, RootReducerType, RootState} from '../../redux/redux_store';
 import {addMessageAC, DialogsPageType} from '../../redux/dialogsReducer';
 import customHoc from '../common/CustomHOC';
 
@@ -22,7 +22,7 @@ const mapStateToProps = (state: RootState): MapStatePropsType => {
         isAuth: state.auth.isAuth
     }
 }
-const mapDispatchToProps = (dispatch: Dispatch): MapDispatchPropsType => {
+const mapDispatchToProps = (dispatch: AppDispatch): MapDispatchPropsType => {
     return {
         addMessage: (text: string) => {
             dispatch(addMessageAC(text))

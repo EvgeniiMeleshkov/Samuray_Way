@@ -24,6 +24,12 @@ export const userApi = {
 export const authApi = {
     authMe: () => {
         return instance.get(`auth/me`)
+    },
+    login: (email: string, password: string, rememberMe: boolean = true) => {
+        return instance.post(`auth/login`, {email, password, rememberMe})
+    },
+    logOut: () => {
+        return instance.delete(`auth/login`)
     }
 }
 export const profileApi = {

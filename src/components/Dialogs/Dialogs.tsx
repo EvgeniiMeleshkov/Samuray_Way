@@ -7,9 +7,10 @@ import SamuraiGif from '../common/SamuraiGif';
 import {Field, InjectedFormProps, reduxForm} from 'redux-form';
 import {Textarea} from '../common/formsControls/Textarea';
 import {maxLength, minLength, requiredField} from '../../utilites/validators/validators';
+import {Redirect} from 'react-router-dom';
 
 
-export const Dialogs: React.FC<DialogsPropsType> = ({dialogsPage, addMessage}: DialogsPropsType) => {
+export const Dialogs: React.FC<DialogsPropsType> = ({dialogsPage, addMessage, isAuth}: DialogsPropsType) => {
 
 
 //------------------------------------------------------------------------
@@ -38,24 +39,29 @@ export const Dialogs: React.FC<DialogsPropsType> = ({dialogsPage, addMessage}: D
 //------------------------------------------------------------------------
 
     return (
-        <div className={styles.dialogs}>
-            <SamuraiGif/>
-            {/*<div className={styles.imgDiv}>*/}
-            {/*    <img className={styles.img}*/}
-            {/*         alt={'Samurai'}*/}
-            {/*         src={'https://www.textillia.com/sites/default/files/styles/large/public/img/2022/01/14/1Samurai%20LogoV1pattern.jpg?itok=I2y422PV'}/>*/}
-            {/*</div>*/}
-            <div className={styles.pageBody}>
-                <div className={styles.dAndM}>
-                    <div className={styles.dialog}>
-                        <DialogItem friends={dialogsPage.friends}/>
-                    </div>
-                    <div>
-                        <DialogMessage friends={dialogsPage.friends} messages={dialogsPage.messages}/>
+        <div>
+            {isAuth
+                ? <div className={styles.dialogs}>
+                    <SamuraiGif/>
+                    {/*<div className={styles.imgDiv}>*/}
+                    {/*    <img className={styles.img}*/}
+                    {/*         alt={'Samurai'}*/}
+                    {/*         src={'https://www.textillia.com/sites/default/files/styles/large/public/img/2022/01/14/1Samurai%20LogoV1pattern.jpg?itok=I2y422PV'}/>*/}
+                    {/*</div>*/}
+                    <div className={styles.pageBody}>
+                        <div className={styles.dAndM}>
+                            <div className={styles.dialog}>
+                                <DialogItem friends={dialogsPage.friends}/>
+                            </div>
+                            <div>
+                                <DialogMessage friends={dialogsPage.friends} messages={dialogsPage.messages}/>
+                            </div>
+                        </div>
+                        <NewMessageReduxForm onSubmit={addNewMessage}/>
                     </div>
                 </div>
-                <NewMessageReduxForm onSubmit={addNewMessage}/>
-            </div>
+                : <Redirect to={'/login'}/>
+            }
         </div>
     )
 }

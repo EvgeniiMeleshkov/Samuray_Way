@@ -9,7 +9,7 @@ import {
     setUserProfileAC, updateStatusThunkCreator,
     UserProfileType
 } from '../../redux/profileReducer';
-import { RouteComponentProps, withRouter} from 'react-router-dom';
+import {Redirect, RouteComponentProps, withRouter} from 'react-router-dom';
 import {compose} from 'redux';
 import customHoc from '../common/CustomHOC';
 
@@ -34,8 +34,12 @@ class ProfileContainer extends React.Component<ProfileContainerPropsType> {
     render() {
         return (
                 <div className={styles.content}>
-                    <Profile status={this.props.status} updateStatus={this.props.updateStatusThunkCreator} data={this.props.profileData} isFetching={this.props.isFetching}/>
-                </div>
+                    {
+                        this.props.isAuth
+                        ? <Profile status={this.props.status} updateStatus={this.props.updateStatusThunkCreator} data={this.props.profileData} isFetching={this.props.isFetching}/>
+                        : <Redirect to={'/login'}/>
+                    }
+                     </div>
         )
     }
 

@@ -5,9 +5,10 @@ import {NavLink, Redirect} from 'react-router-dom';
 type HeaderPropsType = {
     isAuth: boolean
     login: string
+    logOutTC: () => void
 }
 
-const Header = ({login, isAuth}: HeaderPropsType) => {
+const Header = ({login, isAuth, logOutTC}: HeaderPropsType) => {
 
     return (
         <header className={styles.header}>
@@ -17,15 +18,20 @@ const Header = ({login, isAuth}: HeaderPropsType) => {
                      src={'https://images.fineartamerica.com/images/artworkimages/medium/3/programmer-coding-samurai-japan-debugging-funny-lisa-stronzi-transparent.png'}/>
 
             </div>
-
             <div className={styles.loginBlock}>
-                {isAuth
-                    ? <div className={styles.loginName}>{login}
-                        <Redirect to={'profile'}/>
-                    </div>
+                {isAuth && <div onClick={logOutTC} className={styles.loginName}>Log Out</div>}
+                <div >
 
-                    : <NavLink to={'/login'}>Login</NavLink>
-                }
+                    {isAuth
+                        ? <div className={styles.loginName}>
+                            {login}
+                            <Redirect to={'profile'}/>
+
+                        </div>
+
+                        : <NavLink to={'/login'}>Login</NavLink>
+                    }
+                </div>
             </div>
         </header>
     )

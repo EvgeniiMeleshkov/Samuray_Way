@@ -1,7 +1,7 @@
 import React from 'react';
 import Header from './Header';
 import {connect} from 'react-redux';
-import {authMeThunkCreator} from '../../redux/authReducer';
+import {authMeThunkCreator, logOutTC} from '../../redux/authReducer';
 import {AppDispatch, RootState} from '../../redux/redux_store';
 import {compose} from 'redux';
 
@@ -13,6 +13,7 @@ class HeaderContainer extends React.Component<PropsType> {
     render () {
         return (
             <Header
+                logOutTC={this.props.logOutTC}
                 login={this.props.login}
                 isAuth={this.props.isAuth}
             />
@@ -29,6 +30,9 @@ type AuthMapDispatchToPropsType = ReturnType<typeof mapDispatchToProps>
 const mapDispatchToProps = (dispatch: AppDispatch) => ({
     authMeThunkCreator: () => {
         dispatch(authMeThunkCreator())
+    },
+    logOutTC: () => {
+        dispatch(logOutTC())
     }
 })
 export default compose(connect(mapStateToProps, mapDispatchToProps)(HeaderContainer))
