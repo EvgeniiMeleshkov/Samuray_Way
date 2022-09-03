@@ -26,12 +26,16 @@ class ProfileContainer extends React.Component<ProfileContainerPropsType> {
         let userID = this.props.match.params.userId
         if (!userID) {
             userID = this.props.authorisedUserId
+            if(!userID) {
+                this.props.history.push('/dialogs')
+            }
         }
         this.props.setProfileDataThunkCreator(Number(userID))
         this.props.getStatusThunkCreator(Number(userID))
     }
 
     render() {
+
         return (
                 <div className={styles.content}>
                     {

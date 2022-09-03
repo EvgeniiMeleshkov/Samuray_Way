@@ -60,17 +60,15 @@ export const setAuthDataIsFetchingAC = (isFetching: boolean) => {
 }
 
 
-export const authMeThunkCreator = (): AppThunk => {
-    return (dispatch: AppDispatch) => {
-        dispatch(setAuthDataIsFetchingAC(true))
-        authApi.authMe().then(res => {
-            dispatch(setAuthDataIsFetchingAC(false))
-            if (res.data.resultCode === 0) {
-                const {id, login, email} = res.data.data
-                dispatch(setAuthDataAC(id, email, login, true ))
-            }
-        })
-    }
+export const authMeThunkCreator = (): AppThunk => (dispatch: AppDispatch) => {
+    dispatch(setAuthDataIsFetchingAC(true))
+    return authApi.authMe().then(res => {
+        dispatch(setAuthDataIsFetchingAC(false))
+        if (res.data.resultCode === 0) {
+            const {id, login, email} = res.data.data
+            dispatch(setAuthDataAC(id, email, login, true))
+        }
+    })
 }
 
 export const loginTC = (email: string, password: string, rememberMe: boolean): AppThunk => (dispatch: AppDispatch) => {
@@ -90,7 +88,7 @@ export const logOutTC = (): AppThunk => (dispatch: AppDispatch) => {
     authApi.logOut()
         .then(res => {
             if (res.data.resultCode === 0) {
-                dispatch(setAuthDataAC( '',  '',  '',  false))
+                dispatch(setAuthDataAC('', '', '', false))
                 dispatch(authMeThunkCreator())
             }
         })
