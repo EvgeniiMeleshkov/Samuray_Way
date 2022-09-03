@@ -20,6 +20,7 @@ const mapDispatchToProps = (dispatch: AppDispatch) => ({
         dispatch(loginTC(email, password, rememberMe))
     }
 })
+
 const Login = (props: LoginType) => {
     const onSubmit = (formData: FormDataType) => {
         props.login(formData.email, formData.password, formData.rememberMe)
