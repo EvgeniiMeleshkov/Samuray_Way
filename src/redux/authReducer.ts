@@ -1,5 +1,6 @@
 import {authApi} from '../components/DataAccessLayer/DAL';
 import {AppDispatch, AppThunk} from './redux_store';
+import {stopSubmit} from 'redux-form';
 
 export type AuthDataType = {
     email: string
@@ -23,10 +24,7 @@ export const authReducer = (state: AuthReducerStateType = authInitialState, acti
         case 'SET_AUTH_DATA':
             return {
                 ...state,
-                id : action.payload.id,
-                email : action.payload.email,
-                login : action.payload.login,
-                isAuth: action.payload.isAuth
+                ...action.payload
             }
         case 'SET_AUTH_IS_FETCHING':
             return {...state, isFetching: action.payload.isFetching}
@@ -81,6 +79,9 @@ export const loginTC = (email: string, password: string, rememberMe: boolean): A
             if (res.data.resultCode === 0) {
                 setAuthDataAC(res.data.data.userId, res.data.data.email, res.data.data.login, true)
                 dispatch(authMeThunkCreator())
+            } else {
+                //@ts-ignore
+                dispatch(stopSubmit('login', {_error: res.data.messages[0]}))
             }
         })
 }
