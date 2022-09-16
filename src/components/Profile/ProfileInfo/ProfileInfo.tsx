@@ -20,7 +20,9 @@ const ProfileInfo = (props: ProfileInfoPropsType) => {
         return <Preloader/>
     } else {
         return (
-            <div>
+            <div style={{display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center'}}>
                 <SamuraiGif/>
                 <div className={styles.profileBody}>
                     <div className={styles.imgDiv}>

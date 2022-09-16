@@ -57,7 +57,16 @@ const LoginF: React.FC<InjectedFormProps<FormDataType>> = (props) => {
             height: '200px',
             alignItems: 'center'
         }} onSubmit={props.handleSubmit}>
-
+            <div>
+                <p>To log in get registered
+                    <a href={'https://social-network.samuraijs.com/'}
+                       target={'_blank'}> here
+                    </a>
+                </p>
+                <p>or use common test account credentials:</p>
+                <p>Email: free@samuraijs.com</p>
+                <p>Password: free</p>
+            </div>
             <div>
                 <Field validate={[requiredField]} name={'email'} component={Input} placeholder={'email'}/>
             </div>

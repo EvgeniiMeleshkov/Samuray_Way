@@ -39,7 +39,9 @@ export const Dialogs: React.FC<DialogsPropsType> = ({dialogsPage, addMessage, is
 //------------------------------------------------------------------------
 
     return (
-        <div>
+        <div style={{display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center'}}>
             {isAuth
                 ? <div className={styles.dialogs}>
                     <SamuraiGif/>

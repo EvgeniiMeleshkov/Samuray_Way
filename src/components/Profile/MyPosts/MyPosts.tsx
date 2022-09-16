@@ -35,7 +35,9 @@ export function MyPosts({
         addLike(id)
     }
     return (
-        <div>
+        <div style={{display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center'}}>
             <NewPostReduxForm onSubmit={onSubmit}/>
             <div className={styles.posts}>
                 <Post userPhoto={profilePage.profileData?.photos?.small} addLike={addLikeHandler}
